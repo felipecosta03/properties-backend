@@ -1,19 +1,17 @@
-name: Build and Test Java Spring Boot Application 
- 
+name: Build and Test Java Spring Boot Application
+
 on:
   push:
     branches: [ "master", "develop" ]
   pull_request:
     branches: [ "master", "develop" ]
- 
+
 jobs:
   build:
- 
+
     runs-on: ubuntu-latest
- 
+
     steps:
-    - name: Gitflow Workflow Action
-      uses: hoangvvo/gitflow-workflow-action@0.3.7
 
     - uses: actions/checkout@v3
     - name: Set up JDK 17
@@ -22,10 +20,10 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    
+
     - name: Build with Maven
       run: mvn clean verify
- 
+
     - name: Test Report
       uses: actions/upload-artifact@v3
       if: success() || failure()
