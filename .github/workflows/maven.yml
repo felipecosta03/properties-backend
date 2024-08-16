@@ -29,3 +29,6 @@ jobs:
       with:
           name: SpringBoot Report               # Name of the folder
           path: target/site/serenity/           # Path to test results
+    
+    - name: Gitflow Workflow Action
+      uses: hoangvvo/gitflow-workflow-action@0.3.7
