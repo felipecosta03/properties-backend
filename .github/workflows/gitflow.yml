@@ -36,8 +36,8 @@ jobs:
             echo "Pull requests to 'main' must come from 'release' or 'hotfix' branches."
             exit 1
           fi
-          if [[ "$BASE_BRANCH" == "develop" && ! "$HEAD_BRANCH" =~ ^(feature|bugfix)/.+ ]]; then
-            echo "Pull requests to 'develop' must come from 'feature' or 'bugfix' branches."
+          if [[ "$BASE_BRANCH" == "develop" && ! "$HEAD_BRANCH" =~ ^(master$|(release|hotfix)/)+ ]]; then
+            echo "Pull requests to 'develop' must come from 'feature', 'bugfix' or 'master' branches."
             exit 1
           fi
           echo "Pull request is valid."
