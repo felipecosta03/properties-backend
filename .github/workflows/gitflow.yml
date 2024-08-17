@@ -19,7 +19,7 @@ jobs:
       - name: Validate branch naming convention
         id: validate-branch-name
         run: |
-          BRANCH_NAME=$(echo "${{ github.ref }}" | sed 's|refs/heads/||')
+          BRANCH_NAME=$(echo "${{ github.base_ref }}" | sed 's|refs/heads/||')
           if [[ ! "$BRANCH_NAME" =~ ^(master$|(feature|bugfix|release|hotfix|develop)/) ]]; then
             echo "Branch name '$BRANCH_NAME' does not follow the GitFlow naming convention."
             exit 1
