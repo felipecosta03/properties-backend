@@ -7,6 +7,9 @@ import com.uade.propertiesbackend.core.usecase.CreateProperty;
 import com.uade.propertiesbackend.repository.CreatePropertyRepository;
 import org.springframework.stereotype.Component;
 
+/**
+ * Use case for create property
+ */
 @Component
 public class DefaultCreateProperty implements CreateProperty {
 
