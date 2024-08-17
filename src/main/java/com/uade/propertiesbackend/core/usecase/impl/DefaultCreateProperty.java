@@ -5,6 +5,7 @@ import static java.util.Objects.isNull;
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.usecase.CreateProperty;
 import com.uade.propertiesbackend.repository.CreatePropertyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
