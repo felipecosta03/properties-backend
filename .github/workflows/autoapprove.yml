@@ -7,7 +7,8 @@ on:
 jobs:
   auto-merge:
     runs-on: ubuntu-latest
-    if: github.base_ref == 'develop' && github.head_ref == 'master'
+    if: (github.base_ref == 'develop' && github.head_ref == 'master') ||
+      (github.base_ref == 'master' && (startsWith(github.head_ref, 'release/') || startsWith(github.head_ref, 'hotfix/')))
     steps:
       - name: Auto-approve
         uses: hmarr/auto-approve-action@v2
