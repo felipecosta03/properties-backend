@@ -22,14 +22,12 @@ jobs:
         cache: maven
 
     - name: Build with Maven
-      env:
-        DATABASE_URL: ${{secrets.DATABASE_URL}}
-      run:  echo "Hola base $DATABASE_URL"
+      run:  echo "Hola base ${{secrets.DATABASE_URL}}"
 
     - name: Build with Maven
       env:
         DATABASE_URL: ${{secrets.DATABASE_URL}}
-      run: DATABASE_URL="$DATABASE_URL" mvn clean verify
+      run: DATABASE_URL=${{secrets.DATABASE_URL}} mvn clean verify
     - name: Test Report
       uses: actions/upload-artifact@v3
       if: success() || failure()
