@@ -1,0 +1,43 @@
+name: Validate GitFlow
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  validate-gitflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Validate branch naming convention
+        id: validate-branch-name
+        run: |
+          BRANCH_NAME=${{ github.head_ref || github.ref_name }}
+          if [[ ! "$BRANCH_NAME" =~ ^((master|develop)$|(feature|bugfix|release|hotfix)/) ]]; then
+            echo "Branch name '$BRANCH_NAME' does not follow the GitFlow naming convention."
+            exit 1
+          fi
+          echo "Branch name '$BRANCH_NAME' is valid."
+
+      - name: Validate PR base branch
+        if: github.event_name == 'pull_request'
+        id: validate-pr-base
+        run: |
+          BASE_BRANCH="${{ github.event.pull_request.base.ref }}"
+          HEAD_BRANCH="${{ github.event.pull_request.head.ref }}"
+          if [[ "$BASE_BRANCH" == "master" && ! "$HEAD_BRANCH" =~ ^(release|hotfix)/.+ ]]; then
+            echo "Pull requests to 'main' must come from 'release' or 'hotfix' branches."
+            exit 1
+          fi
+          if [[ "$BASE_BRANCH" == "develop" && ! "$HEAD_BRANCH" =~ ^(master$|(bugfix|feature)/)+ ]]; then
+            echo "Pull requests to 'develop' must come from 'feature', 'bugfix' or 'master' branches."
+            exit 1
+          fi
+          echo "Pull request is valid."
