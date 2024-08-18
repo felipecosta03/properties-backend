@@ -23,7 +23,12 @@ jobs:
 
     - name: Build with Maven
       env:
-        DATABASE_URL: ${{secrets.DATABASE_URL}}
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      run:  echo "Hola base $DATABASE_URL"
+
+    - name: Build with Maven
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: DATABASE_URL="$DATABASE_URL" mvn clean verify
     - name: Test Report
       uses: actions/upload-artifact@v3
