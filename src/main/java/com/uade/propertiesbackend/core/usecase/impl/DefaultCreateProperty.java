@@ -23,7 +23,7 @@ import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.exception.NotFoundException;
 import com.uade.propertiesbackend.core.usecase.CreateProperty;
 import com.uade.propertiesbackend.core.usecase.UserExists;
-import com.uade.propertiesbackend.repository.CreatePropertyRepository;
+import com.uade.propertiesbackend.repository.PropertyRepository;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,12 +32,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class DefaultCreateProperty implements CreateProperty {
 
-  private final CreatePropertyRepository createPropertyRepository;
+  private final PropertyRepository propertyRepository;
   private final UserExists userExists;
 
-  public DefaultCreateProperty(CreatePropertyRepository createPropertyRepository,
+  public DefaultCreateProperty(PropertyRepository propertyRepository,
       UserExists userExists) {
-    this.createPropertyRepository = createPropertyRepository;
+    this.propertyRepository = propertyRepository;
     this.userExists = userExists;
   }
 
@@ -50,7 +50,7 @@ public class DefaultCreateProperty implements CreateProperty {
       throw new NotFoundException("User does not exist");
     }
 
-    Property property = createPropertyRepository.save(
+    Property property = propertyRepository.save(
         Property.builder().beds(model.getBeds()).bathrooms(model.getBathrooms())
             .country(model.getCountry()).city(model.getCity()).state(model.getState())
             .rooms(model.getRooms()).surface(model.getSurface()).title(model.getTitle())
