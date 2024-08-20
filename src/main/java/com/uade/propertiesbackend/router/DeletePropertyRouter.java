@@ -1,6 +1,7 @@
 package com.uade.propertiesbackend.router;
 
 import com.uade.propertiesbackend.core.usecase.DeleteProperty;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -9,9 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Slf4j
 public class DeletePropertyRouter {
 
-  private static final Logger log = LoggerFactory.getLogger(DeletePropertyRouter.class);
   private final DeleteProperty deleteProperty;
 
   public DeletePropertyRouter(DeleteProperty deleteProperty) {
