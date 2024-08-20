@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
 
     ApiError apiError = ApiError.builder().message(e.getMessage())
         .status(HttpStatus.BAD_REQUEST.value()).error(e.getClass().getSimpleName()).build();
-    log.error(e.getMessage(), e.getCause());
+    log.error(e.getMessage(), e);
     return ResponseEntity.status(apiError.getStatus()).body(apiError);
   }
 
@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ApiError> handleNotFoundException(Exception e) {
     ApiError apiError = ApiError.builder().message(e.getMessage())
         .status(HttpStatus.NOT_FOUND.value()).error(e.getClass().getSimpleName()).build();
-    log.error(e.getMessage(), e.getCause());
+    log.error(e.getMessage(), e);
     return ResponseEntity.status(apiError.getStatus()).body(apiError);
   }
 

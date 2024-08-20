@@ -21,6 +21,7 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validateUserId;
 import com.uade.propertiesbackend.core.domain.Property;
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.exception.NotFoundException;
+import com.uade.propertiesbackend.core.usecase.BuildPropertyDto;
 import com.uade.propertiesbackend.core.usecase.CreateProperty;
 import com.uade.propertiesbackend.core.usecase.UserExists;
 import com.uade.propertiesbackend.repository.PropertyRepository;
@@ -34,11 +35,14 @@ public class DefaultCreateProperty implements CreateProperty {
 
   private final PropertyRepository propertyRepository;
   private final UserExists userExists;
+  private final BuildPropertyDto buildPropertyDto;
 
-  public DefaultCreateProperty(PropertyRepository propertyRepository,
-      UserExists userExists) {
+
+  public DefaultCreateProperty(PropertyRepository propertyRepository, UserExists userExists,
+      BuildPropertyDto buildPropertyDto) {
     this.propertyRepository = propertyRepository;
     this.userExists = userExists;
+    this.buildPropertyDto = buildPropertyDto;
   }
 
   @Override
@@ -59,14 +63,7 @@ public class DefaultCreateProperty implements CreateProperty {
             .street(model.getStreet()).streetNumber(model.getStreetNumber())
             .storeys(model.getStoreys()).price(model.getPrice()).build());
 
-    return PropertyDto.builder().beds(property.getBeds()).bathrooms(property.getBathrooms())
-        .country(property.getCountry()).city(property.getCity()).state(property.getState())
-        .rooms(property.getRooms()).surface(property.getSurface()).title(property.getTitle())
-        .description(property.getDescription()).latitude(property.getLatitude())
-        .longitude(property.getLongitude()).images(property.getImages())
-        .userId(property.getUserId()).street(property.getStreet())
-        .streetNumber(property.getStreetNumber()).storeys(property.getStoreys())
-        .price(property.getPrice()).id(property.getId()).build();
+    return buildPropertyDto.apply(property);
   }
 
   private void validateModel(Model model) {

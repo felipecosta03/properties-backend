@@ -1,15 +1,10 @@
 package com.uade.propertiesbackend.core.usecase;
 
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 import java.util.List;
 import java.util.function.Function;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
 
 @FunctionalInterface
 public interface CreateProperty extends Function<CreateProperty.Model, PropertyDto> {
@@ -17,6 +12,7 @@ public interface CreateProperty extends Function<CreateProperty.Model, PropertyD
   @Getter
   @Builder
   class Model {
+
     private Integer beds;
     private Integer bathrooms;
     private String country;
