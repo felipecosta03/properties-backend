@@ -1,5 +1,6 @@
 package com.uade.propertiesbackend.core.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,8 +26,10 @@ public class PropertyDto {
   private Double latitude;
   private Double longitude;
   private List<String> images;
+  @JsonProperty("user_id")
   private Long userId;
   private String street;
+  @JsonProperty("street_number")
   private Integer streetNumber;
   private Integer storeys;
   private Double price;
