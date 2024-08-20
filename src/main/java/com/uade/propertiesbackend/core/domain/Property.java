@@ -1,8 +1,13 @@
 package com.uade.propertiesbackend.core.domain;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +15,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class Property {
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  private Integer beds;
+  private Integer bathrooms;
+  private String country;
+  private String city;
+  private String state;
+  private Integer rooms;
+  private Double surface;
+  private String title;
+  private String description;
+  private Double latitude;
+  private Double longitude;
+  @ElementCollection
+  private List<String> images;
+  private Long userId;
+  private String street;
+  private Integer streetNumber;
+  private Integer storeys;
+  private Double price;
 }
