@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * Repository for creating a property.
  */
 @Repository
-public interface CreatePropertyRepository extends JpaRepository<Property, Long> {
+public interface PropertyRepository extends JpaRepository<Property, Long> {
 }

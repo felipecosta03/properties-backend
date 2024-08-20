@@ -11,6 +11,11 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ValidationUtils {
 
+  public static void validatePropertyId(Long propertyId) {
+    validateNotNullAndPositive(propertyId, "PropertyId");
+  }
+
+
   public static void validateBeds(Integer beds) {
     validateNotNullAndPositive(beds, "Beds");
   }

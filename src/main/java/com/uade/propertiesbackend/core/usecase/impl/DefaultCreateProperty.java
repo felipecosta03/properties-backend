@@ -21,9 +21,10 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validateUserId;
 import com.uade.propertiesbackend.core.domain.Property;
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.exception.NotFoundException;
+import com.uade.propertiesbackend.core.usecase.PropertyMapper;
 import com.uade.propertiesbackend.core.usecase.CreateProperty;
 import com.uade.propertiesbackend.core.usecase.UserExists;
-import com.uade.propertiesbackend.repository.CreatePropertyRepository;
+import com.uade.propertiesbackend.repository.PropertyRepository;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,12 +33,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class DefaultCreateProperty implements CreateProperty {
 
-  private final CreatePropertyRepository createPropertyRepository;
+  private final PropertyRepository propertyRepository;
   private final UserExists userExists;
 
-  public DefaultCreateProperty(CreatePropertyRepository createPropertyRepository,
-      UserExists userExists) {
-    this.createPropertyRepository = createPropertyRepository;
+
+  public DefaultCreateProperty(PropertyRepository propertyRepository, UserExists userExists) {
+    this.propertyRepository = propertyRepository;
     this.userExists = userExists;
   }
 
@@ -50,7 +51,7 @@ public class DefaultCreateProperty implements CreateProperty {
       throw new NotFoundException("User does not exist");
     }
 
-    Property property = createPropertyRepository.save(
+    Property property = propertyRepository.save(
         Property.builder().beds(model.getBeds()).bathrooms(model.getBathrooms())
             .country(model.getCountry()).city(model.getCity()).state(model.getState())
             .rooms(model.getRooms()).surface(model.getSurface()).title(model.getTitle())
@@ -59,14 +60,7 @@ public class DefaultCreateProperty implements CreateProperty {
             .street(model.getStreet()).streetNumber(model.getStreetNumber())
             .storeys(model.getStoreys()).price(model.getPrice()).build());
 
-    return PropertyDto.builder().beds(property.getBeds()).bathrooms(property.getBathrooms())
-        .country(property.getCountry()).city(property.getCity()).state(property.getState())
-        .rooms(property.getRooms()).surface(property.getSurface()).title(property.getTitle())
-        .description(property.getDescription()).latitude(property.getLatitude())
-        .longitude(property.getLongitude()).images(property.getImages())
-        .userId(property.getUserId()).street(property.getStreet())
-        .streetNumber(property.getStreetNumber()).storeys(property.getStoreys())
-        .price(property.getPrice()).id(property.getId()).build();
+    return PropertyMapper.INSTANCE.propertyToPropertyDto(property);
   }
 
   private void validateModel(Model model) {
