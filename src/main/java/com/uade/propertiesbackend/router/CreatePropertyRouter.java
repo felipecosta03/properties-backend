@@ -10,10 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import lombok.NonNull;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,14 +26,18 @@ public class CreatePropertyRouter {
   }
 
   @Operation(summary = "Create a property")
-  @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Property created", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PropertyDto.class))}),
-      @ApiResponse(responseCode = "400", description = "Bad request", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
-      @ApiResponse(responseCode = "424", description = "Failed dependency", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Property created", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = PropertyDto.class))}),
+      @ApiResponse(responseCode = "400", description = "Bad request", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
+      @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @PostMapping("/properties")
   public ResponseEntity<PropertyDto> createProperty(
       @RequestBody PropertyRequest propertyRequest) {
     return ResponseEntity.ok(createProperty.apply(
-         CreateProperty.Model.builder().title(propertyRequest.getTitle())
+        CreateProperty.Model.builder().title(propertyRequest.getTitle())
             .description(propertyRequest.getDescription())
             .streetNumber(propertyRequest.getStreetNumber())
             .bathrooms(propertyRequest.getBathrooms())

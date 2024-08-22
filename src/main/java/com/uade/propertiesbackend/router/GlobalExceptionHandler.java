@@ -2,6 +2,7 @@ package com.uade.propertiesbackend.router;
 
 import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.exception.NotFoundException;
+import com.uade.propertiesbackend.core.exception.UnauthorizedException;
 import com.uade.propertiesbackend.router.exception.ApiError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,15 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ApiError> handleNotFoundException(Exception e) {
     ApiError apiError = ApiError.builder().message(e.getMessage())
         .status(HttpStatus.NOT_FOUND.value()).error(e.getClass().getSimpleName()).build();
+    log.error(e.getMessage(), e);
+    return ResponseEntity.status(apiError.getStatus()).body(apiError);
+  }
+
+  @ExceptionHandler(UnauthorizedException.class)
+  public ResponseEntity<ApiError> handleUnauthorizedException(Exception e) {
+
+    ApiError apiError = ApiError.builder().message(e.getMessage())
+        .status(HttpStatus.UNAUTHORIZED.value()).error(e.getClass().getSimpleName()).build();
     log.error(e.getMessage(), e);
     return ResponseEntity.status(apiError.getStatus()).body(apiError);
   }

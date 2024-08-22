@@ -9,8 +9,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,8 +27,10 @@ public class DeletePropertyRouter {
 
   @Operation(summary = "Delete a property by id")
   @ApiResponses(value = {@ApiResponse(responseCode = "204", description = "Property deleted"),
-          @ApiResponse(responseCode = "400", description = "Bad request", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
-          @ApiResponse(responseCode = "424", description = "Failed dependency", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
+      @ApiResponse(responseCode = "400", description = "Bad request", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
+      @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @DeleteMapping("/properties/{propertyId}")
   public ResponseEntity<Void> delete(@PathVariable Long propertyId) {
     log.info("Deleting property with id: {}", propertyId);

@@ -28,9 +28,12 @@ public class RetrievePropertyRouter {
 
   @Operation(summary = "Retrieve a property by id")
   @ApiResponses(value = {
-          @ApiResponse(responseCode = "200", description = "Property retrieved", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PropertyDto.class))}),
-          @ApiResponse(responseCode = "404", description = "Property not found", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
-          @ApiResponse(responseCode = "424", description = "Failed dependency", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
+      @ApiResponse(responseCode = "200", description = "Property retrieved", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = PropertyDto.class))}),
+      @ApiResponse(responseCode = "404", description = "Property not found", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
+      @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @GetMapping("/properties/{propertyId}")
   public ResponseEntity<PropertyDto> get(@PathVariable Long propertyId) {
     log.info("Retrieving property with id: {}", propertyId);
