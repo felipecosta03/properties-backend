@@ -5,10 +5,12 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validateBeds;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateCity;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateCountry;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateDescription;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateGarages;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateImages;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateLatitude;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateLongitude;
 import static com.uade.propertiesbackend.util.ValidationUtils.validatePrice;
+import static com.uade.propertiesbackend.util.ValidationUtils.validatePropertyType;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateRooms;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateState;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateStoreys;
@@ -21,8 +23,8 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validateUserId;
 import com.uade.propertiesbackend.core.domain.Property;
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.exception.NotFoundException;
-import com.uade.propertiesbackend.core.usecase.PropertyMapper;
 import com.uade.propertiesbackend.core.usecase.CreateProperty;
+import com.uade.propertiesbackend.core.usecase.PropertyMapper;
 import com.uade.propertiesbackend.core.usecase.UserExists;
 import com.uade.propertiesbackend.repository.PropertyRepository;
 import org.springframework.stereotype.Component;
@@ -52,13 +54,28 @@ public class DefaultCreateProperty implements CreateProperty {
     }
 
     Property property = propertyRepository.save(
-        Property.builder().beds(model.getBeds()).bathrooms(model.getBathrooms())
-            .country(model.getCountry()).city(model.getCity()).state(model.getState())
-            .rooms(model.getRooms()).surface(model.getSurface()).title(model.getTitle())
-            .description(model.getDescription()).latitude(model.getLatitude())
-            .longitude(model.getLongitude()).images(model.getImages()).userId(model.getUserId())
-            .street(model.getStreet()).streetNumber(model.getStreetNumber())
-            .storeys(model.getStoreys()).price(model.getPrice()).build());
+        Property.builder()
+            .beds(model.getBeds())
+            .bathrooms(model.getBathrooms())
+            .country(model.getCountry())
+            .city(model.getCity())
+            .state(model.getState())
+            .rooms(model.getRooms())
+            .surfaceCovered(model.getSurfaceCovered())
+            .surfaceTotal(model.getSurfaceTotal())
+            .title(model.getTitle())
+            .description(model.getDescription())
+            .latitude(model.getLatitude())
+            .longitude(model.getLongitude())
+            .images(model.getImages())
+            .userId(model.getUserId())
+            .street(model.getStreet())
+            .streetNumber(model.getStreetNumber())
+            .storeys(model.getStoreys())
+            .price(model.getPrice())
+            .type(model.getType())
+            .garages(model.getGarages())
+            .build());
 
     return PropertyMapper.INSTANCE.propertyToPropertyDto(property);
   }
@@ -70,7 +87,8 @@ public class DefaultCreateProperty implements CreateProperty {
     validateCity(model.getCity());
     validateState(model.getState());
     validateRooms(model.getRooms());
-    validateSurface(model.getSurface());
+    validateSurface(model.getSurfaceCovered());
+    validateSurface(model.getSurfaceTotal());
     validateTitle(model.getTitle());
     validateDescription(model.getDescription());
     validateLatitude(model.getLatitude());
@@ -81,5 +99,7 @@ public class DefaultCreateProperty implements CreateProperty {
     validateStreetNumber(model.getStreetNumber());
     validateStoreys(model.getStoreys());
     validatePrice(model.getPrice());
+    validatePropertyType(model.getType());
+    validateGarages(model.getGarages());
   }
 }

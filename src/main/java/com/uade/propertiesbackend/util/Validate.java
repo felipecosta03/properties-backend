@@ -16,6 +16,13 @@ public class Validate {
     }
   }
 
+  public static void validateNotNullAndZeroOrPositive(Number value, String fieldName) {
+    validateNotNull(value, fieldName);
+    if (value.doubleValue() < 0) {
+      throw new BadRequestException(fieldName + " must be zero or positive");
+    }
+  }
+
   public static void validateNotBlank(String value, String fieldName) {
     validateNotNull(value, fieldName);
     if (value.isBlank()) {

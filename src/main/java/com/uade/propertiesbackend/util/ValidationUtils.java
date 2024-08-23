@@ -4,7 +4,9 @@ import static com.uade.propertiesbackend.util.Validate.validateNotBlank;
 import static com.uade.propertiesbackend.util.Validate.validateNotEmpty;
 import static com.uade.propertiesbackend.util.Validate.validateNotNull;
 import static com.uade.propertiesbackend.util.Validate.validateNotNullAndPositive;
+import static com.uade.propertiesbackend.util.Validate.validateNotNullAndZeroOrPositive;
 
+import com.uade.propertiesbackend.core.domain.PropertyType;
 import java.util.List;
 import lombok.experimental.UtilityClass;
 
@@ -83,4 +85,13 @@ public class ValidationUtils {
   public static void validatePrice(Double price) {
     validateNotNullAndPositive(price, "Price");
   }
+
+  public static void validatePropertyType(PropertyType propertyType) {
+    validateNotNull(propertyType, "PropertyType");
+  }
+
+  public static void validateGarages(Integer garages) {
+    validateNotNullAndZeroOrPositive(garages, "garages");
+  }
+
 }

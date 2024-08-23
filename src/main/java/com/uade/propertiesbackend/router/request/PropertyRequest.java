@@ -1,9 +1,12 @@
 package com.uade.propertiesbackend.router.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.uade.propertiesbackend.core.domain.PropertyType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PropertyRequest {
+
   @NotNull
   @Min(value = 1, message = "Beds must be greater than 0")
   private Integer beds;
@@ -30,7 +34,12 @@ public class PropertyRequest {
   private Integer rooms;
   @NotNull
   @Positive
-  private Double surface;
+  @JsonProperty("surface_covered")
+  private Double surfaceCovered;
+  @NotNull
+  @Positive
+  @JsonProperty("surface_total")
+  private Double surfaceTotal;
   @NotBlank
   private String title;
   @NotBlank
@@ -46,9 +55,15 @@ public class PropertyRequest {
   @NotBlank
   private String street;
   @Positive
+  @JsonProperty("street_number")
   private Integer streetNumber;
   @Positive
   private Integer storeys;
   @Positive
   private Double price;
+  @PositiveOrZero
+  @NotNull
+  private Integer garages;
+  @NotNull
+  private PropertyType type;
 }
