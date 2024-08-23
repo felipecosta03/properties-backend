@@ -20,9 +20,11 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validateStreetNumb
 import static com.uade.propertiesbackend.util.ValidationUtils.validateSurface;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateTitle;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateUserId;
+import static java.util.Objects.isNull;
 
 import com.uade.propertiesbackend.core.domain.Property;
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
+import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.exception.NotFoundException;
 import com.uade.propertiesbackend.core.exception.UnauthorizedException;
 import com.uade.propertiesbackend.core.usecase.PropertyMapper;
@@ -79,6 +81,9 @@ public class DefaultUpdateProperty implements UpdateProperty {
   }
 
   private void validateModel(UpdateProperty.Model model) {
+    if (isNull(model)) {
+      throw new BadRequestException("Model is required");
+    }
     validatePropertyId(model.getId());
     validateBeds(model.getBeds());
     validateBathrooms(model.getBathrooms());

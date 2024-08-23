@@ -86,6 +86,10 @@ public class ValidationUtils {
     validateNotNullAndPositive(price, "Price");
   }
 
+  public static void validateMinPrice(Double price) {
+    validateNotNullAndZeroOrPositive(price, "Price");
+  }
+
   public static void validatePropertyType(PropertyType propertyType) {
     validateNotNull(propertyType, "PropertyType");
   }
@@ -94,4 +98,7 @@ public class ValidationUtils {
     validateNotNullAndZeroOrPositive(garages, "garages");
   }
 
+  public static void validatePage(Integer page) {
+    validateNotNullAndZeroOrPositive(page, "page");
+  }
 }
