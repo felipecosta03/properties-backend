@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Extra")
 public class PingRouter {
 
-    @GetMapping("/ping")
-    public ResponseEntity<String> ping(){
-        return ResponseEntity.ok("pong");
-    }
+  @GetMapping("/ping")
+  public ResponseEntity<String> ping() {
+    return ResponseEntity.ok("pong");
+  }
 }
