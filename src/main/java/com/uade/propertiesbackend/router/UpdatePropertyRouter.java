@@ -44,17 +44,31 @@ public class UpdatePropertyRouter {
   public ResponseEntity<PropertyDto> update(@PathVariable Long propertyId,
       @RequestBody PropertyRequest propertyRequest) {
     log.info("Updating property with id: {}", propertyId);
-    return ResponseEntity.ok(updateProperty.apply(
+
+    UpdateProperty.Model model =
         UpdateProperty.Model.builder().id(propertyId)
             .title(propertyRequest.getTitle())
             .description(propertyRequest.getDescription())
             .streetNumber(propertyRequest.getStreetNumber())
-            .bathrooms(propertyRequest.getBathrooms()).beds(propertyRequest.getBeds())
-            .city(propertyRequest.getCity()).rooms(propertyRequest.getRooms())
-            .country(propertyRequest.getCountry()).images(propertyRequest.getImages())
-            .price(propertyRequest.getPrice()).state(propertyRequest.getState())
-            .latitude(propertyRequest.getLatitude()).longitude(propertyRequest.getLongitude())
-            .storeys(propertyRequest.getStoreys()).surface(propertyRequest.getSurface())
-            .userId(propertyRequest.getUserId()).street(propertyRequest.getStreet()).build()));
+            .bathrooms(propertyRequest.getBathrooms())
+            .beds(propertyRequest.getBeds())
+            .city(propertyRequest.getCity())
+            .rooms(propertyRequest.getRooms())
+            .country(propertyRequest.getCountry())
+            .images(propertyRequest.getImages())
+            .price(propertyRequest.getPrice())
+            .state(propertyRequest.getState())
+            .latitude(propertyRequest.getLatitude())
+            .longitude(propertyRequest.getLongitude())
+            .storeys(propertyRequest.getStoreys())
+            .surfaceCovered(propertyRequest.getSurfaceCovered())
+            .surfaceTotal(propertyRequest.getSurfaceTotal())
+            .userId(propertyRequest.getUserId())
+            .street(propertyRequest.getStreet())
+            .garages(propertyRequest.getGarages())
+            .type(propertyRequest.getType())
+            .build();
+
+    return ResponseEntity.ok(updateProperty.apply(model));
   }
 }

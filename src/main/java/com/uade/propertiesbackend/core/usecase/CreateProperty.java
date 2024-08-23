@@ -1,5 +1,6 @@
 package com.uade.propertiesbackend.core.usecase;
 
+import com.uade.propertiesbackend.core.domain.PropertyType;
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import java.util.List;
 import java.util.function.Function;
@@ -19,7 +20,8 @@ public interface CreateProperty extends Function<CreateProperty.Model, PropertyD
     private String city;
     private String state;
     private Integer rooms;
-    private Double surface;
+    private Double surfaceCovered;
+    private Double surfaceTotal;
     private String title;
     private String description;
     private Double latitude;
@@ -30,5 +32,7 @@ public interface CreateProperty extends Function<CreateProperty.Model, PropertyD
     private Integer streetNumber;
     private Integer storeys;
     private Double price;
+    private Integer garages;
+    private PropertyType type;
   }
 }

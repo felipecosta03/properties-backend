@@ -51,9 +51,12 @@ public class CreatePropertyRouter {
             .latitude(propertyRequest.getLatitude())
             .longitude(propertyRequest.getLongitude())
             .storeys(propertyRequest.getStoreys())
-            .surface(propertyRequest.getSurface())
+            .surfaceCovered(propertyRequest.getSurfaceCovered())
+            .surfaceTotal(propertyRequest.getSurfaceTotal())
             .userId(propertyRequest.getUserId())
             .street(propertyRequest.getStreet())
+            .garages(propertyRequest.getGarages())
+            .type(propertyRequest.getType())
             .build()));
   }
 }

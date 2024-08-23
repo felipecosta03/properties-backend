@@ -26,7 +26,8 @@ public class Property {
   private String city;
   private String state;
   private Integer rooms;
-  private Double surface;
+  private Double surfaceCovered;
+  private Double surfaceTotal;
   private String title;
   private String description;
   private Double latitude;
@@ -38,4 +39,6 @@ public class Property {
   private Integer streetNumber;
   private Integer storeys;
   private Double price;
+  private Integer garages;
+  private PropertyType type;
 }
