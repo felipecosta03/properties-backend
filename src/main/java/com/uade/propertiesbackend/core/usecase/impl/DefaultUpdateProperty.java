@@ -43,27 +43,29 @@ public class DefaultUpdateProperty implements UpdateProperty {
   public PropertyDto apply(Model model) {
     validateModel(model);
     Property property = propertyRepository.findById(model.getId()).orElseThrow(
-        () -> new NotFoundException(String.format("Property with id=%s not found", model.getId())));
-    if (property.getUserId().equals(model.getUserId())) {
-      property.setBeds(model.getBeds());
-      property.setBathrooms(model.getBathrooms());
-      property.setCountry(model.getCountry());
-      property.setCity(model.getCity());
-      property.setState(model.getState());
-      property.setRooms(model.getRooms());
-      property.setSurface(model.getSurface());
-      property.setTitle(model.getTitle());
-      property.setDescription(model.getDescription());
-      property.setLatitude(model.getLatitude());
-      property.setLongitude(model.getLongitude());
-      property.setImages(model.getImages());
-      property.setStreet(model.getStreet());
-      property.setStreetNumber(model.getStreetNumber());
-      property.setStoreys(model.getStoreys());
-      property.setPrice(model.getPrice());
-    } else {
+        () -> new NotFoundException(String.format("Property with id=%s not found",
+            model.getId())));
+
+    if (!property.getUserId().equals(model.getUserId())) {
       throw new UnauthorizedException("User does not own the property");
     }
+
+    property.setBeds(model.getBeds());
+    property.setBathrooms(model.getBathrooms());
+    property.setCountry(model.getCountry());
+    property.setCity(model.getCity());
+    property.setState(model.getState());
+    property.setRooms(model.getRooms());
+    property.setSurface(model.getSurface());
+    property.setTitle(model.getTitle());
+    property.setDescription(model.getDescription());
+    property.setLatitude(model.getLatitude());
+    property.setLongitude(model.getLongitude());
+    property.setImages(model.getImages());
+    property.setStreet(model.getStreet());
+    property.setStreetNumber(model.getStreetNumber());
+    property.setStoreys(model.getStoreys());
+    property.setPrice(model.getPrice());
     propertyRepository.save(property);
     log.info("Property with id={} updated", model.getId());
     return PropertyMapper.INSTANCE.propertyToPropertyDto(property);
