@@ -5,11 +5,13 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validateBeds;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateCity;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateCountry;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateDescription;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateGarages;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateImages;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateLatitude;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateLongitude;
 import static com.uade.propertiesbackend.util.ValidationUtils.validatePrice;
 import static com.uade.propertiesbackend.util.ValidationUtils.validatePropertyId;
+import static com.uade.propertiesbackend.util.ValidationUtils.validatePropertyType;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateRooms;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateState;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateStoreys;
@@ -56,7 +58,8 @@ public class DefaultUpdateProperty implements UpdateProperty {
     property.setCity(model.getCity());
     property.setState(model.getState());
     property.setRooms(model.getRooms());
-    property.setSurface(model.getSurface());
+    property.setSurfaceCovered(model.getSurfaceCovered());
+    property.setSurfaceTotal(model.getSurfaceTotal());
     property.setTitle(model.getTitle());
     property.setDescription(model.getDescription());
     property.setLatitude(model.getLatitude());
@@ -66,7 +69,11 @@ public class DefaultUpdateProperty implements UpdateProperty {
     property.setStreetNumber(model.getStreetNumber());
     property.setStoreys(model.getStoreys());
     property.setPrice(model.getPrice());
+    property.setType(model.getType());
+    property.setGarages(model.getGarages());
+
     propertyRepository.save(property);
+
     log.info("Property with id={} updated", model.getId());
     return PropertyMapper.INSTANCE.propertyToPropertyDto(property);
   }
@@ -79,7 +86,8 @@ public class DefaultUpdateProperty implements UpdateProperty {
     validateCity(model.getCity());
     validateState(model.getState());
     validateRooms(model.getRooms());
-    validateSurface(model.getSurface());
+    validateSurface(model.getSurfaceCovered());
+    validateSurface(model.getSurfaceTotal());
     validateTitle(model.getTitle());
     validateDescription(model.getDescription());
     validateLatitude(model.getLatitude());
@@ -90,5 +98,7 @@ public class DefaultUpdateProperty implements UpdateProperty {
     validateStreetNumber(model.getStreetNumber());
     validateStoreys(model.getStoreys());
     validatePrice(model.getPrice());
+    validateGarages(model.getGarages());
+    validatePropertyType(model.getType());
   }
 }
