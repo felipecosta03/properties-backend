@@ -78,7 +78,7 @@ public class DefaultCreateProperty implements CreateProperty {
             .type(model.getType())
             .garages(model.getGarages())
             .createdAt(LocalDateTime.now())
-            .active(true)
+            .active(model.getActive())
             .build());
 
     return PropertyMapper.INSTANCE.propertyToPropertyDto(property);
@@ -107,5 +107,6 @@ public class DefaultCreateProperty implements CreateProperty {
     validatePrice(model.getPrice());
     validatePropertyType(model.getType());
     validateGarages(model.getGarages());
+    validateActive(model.getActive());
   }
 }
