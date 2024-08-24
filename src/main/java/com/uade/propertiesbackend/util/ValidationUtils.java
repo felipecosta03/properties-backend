@@ -42,8 +42,12 @@ public class ValidationUtils {
     validateNotNullAndPositive(rooms, "Rooms");
   }
 
-  public static void validateSurface(Double surface) {
-    validateNotNullAndPositive(surface, "Surface");
+  public static void validateSurfaceCovered(Double surface) {
+    validateNotNullAndPositive(surface, "Surface covered");
+  }
+
+  public static void validateSurfaceTotal(Double surface) {
+    validateNotNullAndPositive(surface, "Surface total");
   }
 
   public static void validateTitle(String title) {

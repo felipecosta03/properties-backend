@@ -21,7 +21,9 @@ public class PropertyDto {
   private String city;
   private String state;
   private Integer rooms;
+  @JsonProperty("surface_covered")
   private Double surfaceCovered;
+  @JsonProperty("surface_total")
   private Double surfaceTotal;
   private String title;
   private String description;
