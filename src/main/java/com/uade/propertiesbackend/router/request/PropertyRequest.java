@@ -50,6 +50,7 @@ public class PropertyRequest {
   private Double longitude;
   @NotNull
   private List<String> images;
+  @JsonProperty("user_id")
   @NotNull
   private Long userId;
   @NotBlank
