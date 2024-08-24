@@ -7,12 +7,14 @@ import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.usecase.PropertyMapper;
 import com.uade.propertiesbackend.core.usecase.RetrieveProperties;
+import com.uade.propertiesbackend.core.usecase.RetrievePropertySort;
 import com.uade.propertiesbackend.core.usecase.RetrievePropertySpecs;
 import com.uade.propertiesbackend.repository.PropertyRepository;
 import com.uade.propertiesbackend.util.ValidationUtils;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
@@ -22,11 +24,13 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
   private static final Integer PAGE_SIZE = 20;
   private final PropertyRepository propertyRepository;
   private final RetrievePropertySpecs retrievePropertySpecs;
+  private final RetrievePropertySort retrievePropertySort;
 
   public DefaultRetrieveProperties(PropertyRepository propertyRepository,
-      RetrievePropertySpecs retrievePropertySpecs) {
+      RetrievePropertySpecs retrievePropertySpecs, RetrievePropertySort retrievePropertySort) {
     this.propertyRepository = propertyRepository;
     this.retrievePropertySpecs = retrievePropertySpecs;
+    this.retrievePropertySort = retrievePropertySort;
   }
 
   @Override
@@ -59,8 +63,10 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
             .maxSurfaceTotal(model.getMaxSurfaceTotal())
             .build());
 
+    final Sort sortBy = model.getSortBy().map(retrievePropertySort).orElse(Sort.unsorted());
+
     return propertyRepository.findAll(specification,
-            PageRequest.of(model.getPage().orElse(0), PAGE_SIZE))
+            PageRequest.of(model.getPage().orElse(0), PAGE_SIZE, sortBy))
         .map(PropertyMapper.INSTANCE::propertyToPropertyDto);
   }
 
@@ -103,6 +109,7 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
     model.getMaxPrice().ifPresent(ValidationUtils::validatePrice);
 
     model.getPage().ifPresent(ValidationUtils::validatePage);
+    model.getSortBy().ifPresent(ValidationUtils::validatePropertySortBy);
 
   }
 

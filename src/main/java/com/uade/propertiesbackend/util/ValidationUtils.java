@@ -6,6 +6,7 @@ import static com.uade.propertiesbackend.util.Validate.validateNotNull;
 import static com.uade.propertiesbackend.util.Validate.validateNotNullAndPositive;
 import static com.uade.propertiesbackend.util.Validate.validateNotNullAndZeroOrPositive;
 
+import com.uade.propertiesbackend.core.domain.PropertySortBy;
 import com.uade.propertiesbackend.core.domain.PropertyType;
 import java.util.List;
 import lombok.experimental.UtilityClass;
@@ -100,5 +101,9 @@ public class ValidationUtils {
 
   public static void validatePage(Integer page) {
     validateNotNullAndZeroOrPositive(page, "page");
+  }
+
+  public static void validatePropertySortBy(PropertySortBy sortBy) {
+    validateNotNull(sortBy, "PropertySortBy");
   }
 }

@@ -28,6 +28,7 @@ import com.uade.propertiesbackend.core.usecase.CreateProperty;
 import com.uade.propertiesbackend.core.usecase.PropertyMapper;
 import com.uade.propertiesbackend.core.usecase.UserExists;
 import com.uade.propertiesbackend.repository.PropertyRepository;
+import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 
 /**
@@ -75,6 +76,7 @@ public class DefaultCreateProperty implements CreateProperty {
             .price(model.getPrice())
             .type(model.getType())
             .garages(model.getGarages())
+            .createdAt(LocalDateTime.now())
             .build());
 
     return PropertyMapper.INSTANCE.propertyToPropertyDto(property);

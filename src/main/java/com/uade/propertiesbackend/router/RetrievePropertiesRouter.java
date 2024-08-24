@@ -1,5 +1,6 @@
 package com.uade.propertiesbackend.router;
 
+import com.uade.propertiesbackend.core.domain.PropertySortBy;
 import com.uade.propertiesbackend.core.domain.PropertyType;
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.usecase.RetrieveProperties;
@@ -57,6 +58,7 @@ public class RetrievePropertiesRouter {
       @RequestParam(required = false) Optional<Double> minSurfaceTotal,
       @RequestParam(required = false) Optional<Double> maxSurfaceTotal,
       @RequestParam(required = false) Optional<PropertyType> propertyType,
+      @RequestParam(required = false) Optional<PropertySortBy> sortBy,
       @RequestParam(required = false, defaultValue = "0") Optional<Integer> page) {
     return ResponseEntity.ok(retrieveProperties.apply(
         RetrieveProperties.Model.builder()
@@ -83,6 +85,7 @@ public class RetrievePropertiesRouter {
             .maxSurfaceTotal(maxSurfaceTotal)
             .propertyType(propertyType)
             .page(page)
+            .sortBy(sortBy)
             .build()));
   }
 }
