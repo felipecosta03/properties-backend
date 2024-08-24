@@ -1,6 +1,7 @@
 package com.uade.propertiesbackend.core.usecase;
 
 import com.uade.propertiesbackend.core.domain.Property;
+import com.uade.propertiesbackend.core.domain.PropertyType;
 import java.util.Optional;
 import java.util.function.Function;
 import lombok.Builder;
@@ -34,5 +35,6 @@ public interface RetrievePropertySpecs extends
     private Optional<Double> maxSurfaceCovered;
     private Optional<Double> minSurfaceTotal;
     private Optional<Double> maxSurfaceTotal;
+    private Optional<PropertyType> propertyType;
   }
 }

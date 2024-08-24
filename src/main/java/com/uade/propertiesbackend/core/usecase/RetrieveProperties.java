@@ -1,5 +1,6 @@
 package com.uade.propertiesbackend.core.usecase;
 
+import com.uade.propertiesbackend.core.domain.PropertyType;
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import java.util.Optional;
 import java.util.function.Function;
@@ -33,6 +34,7 @@ public interface RetrieveProperties extends Function<RetrieveProperties.Model, P
     private Optional<Double> maxSurfaceCovered;
     private Optional<Double> minSurfaceTotal;
     private Optional<Double> maxSurfaceTotal;
+    private Optional<PropertyType> propertyType;
     private Optional<Integer> page;
   }
 }

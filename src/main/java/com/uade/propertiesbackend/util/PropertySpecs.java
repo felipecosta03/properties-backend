@@ -1,6 +1,7 @@
 package com.uade.propertiesbackend.util;
 
 import com.uade.propertiesbackend.core.domain.Property;
+import com.uade.propertiesbackend.core.domain.PropertyType;
 import lombok.experimental.UtilityClass;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -108,4 +109,9 @@ public class PropertySpecs {
     return (root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(
         root.get("surfaceTotal"), maxSurfaceTotal);
   }
+
+  public static Specification<Property> withPropertyType(PropertyType propertyType) {
+    return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("type"), propertyType);
+  }
+
 }

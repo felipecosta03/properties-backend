@@ -52,6 +52,7 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
             .minStoreys(model.getMinStoreys())
             .maxStoreys(model.getMaxStoreys())
             .storeys(model.getStoreys())
+            .propertyType(model.getPropertyType())
             .minSurfaceCovered(model.getMinSurfaceCovered())
             .maxSurfaceCovered(model.getMaxSurfaceCovered())
             .minSurfaceTotal(model.getMinSurfaceTotal())
@@ -81,6 +82,7 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
     model.getBathrooms().ifPresent(ValidationUtils::validateBathrooms);
     model.getGarages().ifPresent(ValidationUtils::validateGarages);
     model.getStoreys().ifPresent(ValidationUtils::validateStoreys);
+    model.getPropertyType().ifPresent(ValidationUtils::validatePropertyType);
 
     model.getMinRooms().ifPresent(ValidationUtils::validateRooms);
     model.getMinBeds().ifPresent(ValidationUtils::validateBeds);
