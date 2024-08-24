@@ -53,10 +53,7 @@ public class PropertyRequest {
   @NotNull
   private Long userId;
   @NotBlank
-  private String street;
-  @Positive
-  @JsonProperty("street_number")
-  private Integer streetNumber;
+  private String address;
   @Positive
   private Integer storeys;
   @Positive

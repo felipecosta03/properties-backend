@@ -49,7 +49,6 @@ public class UpdatePropertyRouter {
         UpdateProperty.Model.builder().id(propertyId)
             .title(propertyRequest.getTitle())
             .description(propertyRequest.getDescription())
-            .streetNumber(propertyRequest.getStreetNumber())
             .bathrooms(propertyRequest.getBathrooms())
             .beds(propertyRequest.getBeds())
             .city(propertyRequest.getCity())
@@ -64,7 +63,7 @@ public class UpdatePropertyRouter {
             .surfaceCovered(propertyRequest.getSurfaceCovered())
             .surfaceTotal(propertyRequest.getSurfaceTotal())
             .userId(propertyRequest.getUserId())
-            .street(propertyRequest.getStreet())
+            .address(propertyRequest.getAddress())
             .garages(propertyRequest.getGarages())
             .type(propertyRequest.getType())
             .build();

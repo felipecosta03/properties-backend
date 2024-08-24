@@ -39,7 +39,6 @@ public class CreatePropertyRouter {
     return ResponseEntity.ok(createProperty.apply(
         CreateProperty.Model.builder().title(propertyRequest.getTitle())
             .description(propertyRequest.getDescription())
-            .streetNumber(propertyRequest.getStreetNumber())
             .bathrooms(propertyRequest.getBathrooms())
             .beds(propertyRequest.getBeds())
             .city(propertyRequest.getCity())
@@ -54,7 +53,7 @@ public class CreatePropertyRouter {
             .surfaceCovered(propertyRequest.getSurfaceCovered())
             .surfaceTotal(propertyRequest.getSurfaceTotal())
             .userId(propertyRequest.getUserId())
-            .street(propertyRequest.getStreet())
+            .address(propertyRequest.getAddress())
             .garages(propertyRequest.getGarages())
             .type(propertyRequest.getType())
             .build()));
