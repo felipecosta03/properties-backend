@@ -33,5 +33,6 @@ public interface UpdateProperty extends Function<UpdateProperty.Model, PropertyD
     private Double price;
     private Integer garages;
     private PropertyType type;
+    private Boolean active;
   }
 }

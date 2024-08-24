@@ -1,5 +1,7 @@
 package com.uade.propertiesbackend.core.usecase.impl;
 
+import static com.uade.propertiesbackend.util.PropertySpecs.withActive;
+
 import com.uade.propertiesbackend.core.domain.Property;
 import com.uade.propertiesbackend.core.usecase.RetrievePropertySpecs;
 import com.uade.propertiesbackend.util.PropertySpecs;
@@ -14,7 +16,8 @@ public class DefaultRetrievePropertySpecs implements RetrievePropertySpecs {
   public Specification<Property> apply(Model model) {
 
     return Specification
-        .where(model.getMinPrice().map(PropertySpecs::withMinPrice).orElse(null))
+        .where(withActive())
+        .and(model.getMinPrice().map(PropertySpecs::withMinPrice).orElse(null))
         .and(model.getMaxPrice().map(PropertySpecs::withMaxPrice).orElse(null))
         .and(model.getMaxSurfaceCovered().map(PropertySpecs::withMaxSurfaceCovered).orElse(null))
         .and(model.getMinSurfaceCovered().map(PropertySpecs::withMinSurfaceCovered).orElse(null))

@@ -40,4 +40,5 @@ public class PropertyDto {
   private PropertyType type;
   @JsonProperty("created_at")
   private LocalDateTime createdAt;
+  private boolean active;
 }
