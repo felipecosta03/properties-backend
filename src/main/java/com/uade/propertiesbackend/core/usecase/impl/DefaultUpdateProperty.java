@@ -15,14 +15,16 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validatePropertyTy
 import static com.uade.propertiesbackend.util.ValidationUtils.validateRooms;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateState;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateStoreys;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateStreet;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateStreetNumber;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateSurface;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateAddress;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateSurfaceCovered;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateSurfaceTotal;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateTitle;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateUserId;
+import static java.util.Objects.isNull;
 
 import com.uade.propertiesbackend.core.domain.Property;
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
+import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.exception.NotFoundException;
 import com.uade.propertiesbackend.core.exception.UnauthorizedException;
 import com.uade.propertiesbackend.core.usecase.PropertyMapper;
@@ -65,8 +67,7 @@ public class DefaultUpdateProperty implements UpdateProperty {
     property.setLatitude(model.getLatitude());
     property.setLongitude(model.getLongitude());
     property.setImages(model.getImages());
-    property.setStreet(model.getStreet());
-    property.setStreetNumber(model.getStreetNumber());
+    property.setAddress(model.getAddress());
     property.setStoreys(model.getStoreys());
     property.setPrice(model.getPrice());
     property.setType(model.getType());
@@ -79,6 +80,9 @@ public class DefaultUpdateProperty implements UpdateProperty {
   }
 
   private void validateModel(UpdateProperty.Model model) {
+    if (isNull(model)) {
+      throw new BadRequestException("Model is required");
+    }
     validatePropertyId(model.getId());
     validateBeds(model.getBeds());
     validateBathrooms(model.getBathrooms());
@@ -86,16 +90,15 @@ public class DefaultUpdateProperty implements UpdateProperty {
     validateCity(model.getCity());
     validateState(model.getState());
     validateRooms(model.getRooms());
-    validateSurface(model.getSurfaceCovered());
-    validateSurface(model.getSurfaceTotal());
+    validateSurfaceCovered(model.getSurfaceCovered());
+    validateSurfaceTotal(model.getSurfaceTotal());
     validateTitle(model.getTitle());
     validateDescription(model.getDescription());
     validateLatitude(model.getLatitude());
     validateLongitude(model.getLongitude());
     validateImages(model.getImages());
     validateUserId(model.getUserId());
-    validateStreet(model.getStreet());
-    validateStreetNumber(model.getStreetNumber());
+    validateAddress(model.getAddress());
     validateStoreys(model.getStoreys());
     validatePrice(model.getPrice());
     validateGarages(model.getGarages());

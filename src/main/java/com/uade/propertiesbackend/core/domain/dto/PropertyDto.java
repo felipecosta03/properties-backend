@@ -21,7 +21,9 @@ public class PropertyDto {
   private String city;
   private String state;
   private Integer rooms;
+  @JsonProperty("surface_covered")
   private Double surfaceCovered;
+  @JsonProperty("surface_total")
   private Double surfaceTotal;
   private String title;
   private String description;
@@ -30,9 +32,7 @@ public class PropertyDto {
   private List<String> images;
   @JsonProperty("user_id")
   private Long userId;
-  private String street;
-  @JsonProperty("street_number")
-  private Integer streetNumber;
+  private String address;
   private Integer storeys;
   private Double price;
   private Integer garages;

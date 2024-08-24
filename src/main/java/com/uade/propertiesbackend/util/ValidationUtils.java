@@ -42,8 +42,12 @@ public class ValidationUtils {
     validateNotNullAndPositive(rooms, "Rooms");
   }
 
-  public static void validateSurface(Double surface) {
-    validateNotNullAndPositive(surface, "Surface");
+  public static void validateSurfaceCovered(Double surface) {
+    validateNotNullAndPositive(surface, "Surface covered");
+  }
+
+  public static void validateSurfaceTotal(Double surface) {
+    validateNotNullAndPositive(surface, "Surface total");
   }
 
   public static void validateTitle(String title) {
@@ -70,12 +74,8 @@ public class ValidationUtils {
     validateNotNull(userId, "UserId");
   }
 
-  public static void validateStreet(String street) {
-    validateNotBlank(street, "Street");
-  }
-
-  public static void validateStreetNumber(Integer streetNumber) {
-    validateNotNullAndPositive(streetNumber, "StreetNumber");
+  public static void validateAddress(String address) {
+    validateNotBlank(address, "Address");
   }
 
   public static void validateStoreys(Integer storeys) {
@@ -86,6 +86,10 @@ public class ValidationUtils {
     validateNotNullAndPositive(price, "Price");
   }
 
+  public static void validateMinPrice(Double price) {
+    validateNotNullAndZeroOrPositive(price, "Price");
+  }
+
   public static void validatePropertyType(PropertyType propertyType) {
     validateNotNull(propertyType, "PropertyType");
   }
@@ -94,4 +98,7 @@ public class ValidationUtils {
     validateNotNullAndZeroOrPositive(garages, "garages");
   }
 
+  public static void validatePage(Integer page) {
+    validateNotNullAndZeroOrPositive(page, "page");
+  }
 }
