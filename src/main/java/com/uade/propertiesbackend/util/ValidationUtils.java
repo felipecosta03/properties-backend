@@ -74,12 +74,8 @@ public class ValidationUtils {
     validateNotNull(userId, "UserId");
   }
 
-  public static void validateStreet(String street) {
-    validateNotBlank(street, "Street");
-  }
-
-  public static void validateStreetNumber(Integer streetNumber) {
-    validateNotNullAndPositive(streetNumber, "StreetNumber");
+  public static void validateAddress(String address) {
+    validateNotBlank(address, "Address");
   }
 
   public static void validateStoreys(Integer storeys) {

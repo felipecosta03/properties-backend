@@ -32,9 +32,7 @@ public class PropertyDto {
   private List<String> images;
   @JsonProperty("user_id")
   private Long userId;
-  private String street;
-  @JsonProperty("street_number")
-  private Integer streetNumber;
+  private String address;
   private Integer storeys;
   private Double price;
   private Integer garages;

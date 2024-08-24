@@ -15,8 +15,7 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validatePropertyTy
 import static com.uade.propertiesbackend.util.ValidationUtils.validateRooms;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateState;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateStoreys;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateStreet;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateStreetNumber;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateAddress;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateSurfaceCovered;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateSurfaceTotal;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateTitle;
@@ -68,8 +67,7 @@ public class DefaultUpdateProperty implements UpdateProperty {
     property.setLatitude(model.getLatitude());
     property.setLongitude(model.getLongitude());
     property.setImages(model.getImages());
-    property.setStreet(model.getStreet());
-    property.setStreetNumber(model.getStreetNumber());
+    property.setAddress(model.getAddress());
     property.setStoreys(model.getStoreys());
     property.setPrice(model.getPrice());
     property.setType(model.getType());
@@ -100,8 +98,7 @@ public class DefaultUpdateProperty implements UpdateProperty {
     validateLongitude(model.getLongitude());
     validateImages(model.getImages());
     validateUserId(model.getUserId());
-    validateStreet(model.getStreet());
-    validateStreetNumber(model.getStreetNumber());
+    validateAddress(model.getAddress());
     validateStoreys(model.getStoreys());
     validatePrice(model.getPrice());
     validateGarages(model.getGarages());

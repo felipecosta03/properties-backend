@@ -14,8 +14,7 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validatePropertyTy
 import static com.uade.propertiesbackend.util.ValidationUtils.validateRooms;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateState;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateStoreys;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateStreet;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateStreetNumber;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateAddress;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateSurfaceCovered;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateTitle;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateUserId;
@@ -71,8 +70,7 @@ public class DefaultCreateProperty implements CreateProperty {
             .longitude(model.getLongitude())
             .images(model.getImages())
             .userId(model.getUserId())
-            .street(model.getStreet())
-            .streetNumber(model.getStreetNumber())
+            .address(model.getAddress())
             .storeys(model.getStoreys())
             .price(model.getPrice())
             .type(model.getType())
@@ -100,8 +98,7 @@ public class DefaultCreateProperty implements CreateProperty {
     validateLongitude(model.getLongitude());
     validateImages(model.getImages());
     validateUserId(model.getUserId());
-    validateStreet(model.getStreet());
-    validateStreetNumber(model.getStreetNumber());
+    validateAddress(model.getAddress());
     validateStoreys(model.getStoreys());
     validatePrice(model.getPrice());
     validatePropertyType(model.getType());

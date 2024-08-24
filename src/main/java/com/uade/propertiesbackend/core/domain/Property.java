@@ -35,8 +35,7 @@ public class Property {
   @ElementCollection
   private List<String> images;
   private Long userId;
-  private String street;
-  private Integer streetNumber;
+  private String address;
   private Integer storeys;
   private Double price;
   private Integer garages;
