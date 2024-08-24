@@ -1,5 +1,6 @@
 package com.uade.propertiesbackend.core.usecase.impl;
 
+import static com.uade.propertiesbackend.util.ValidationUtils.validateActive;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateBathrooms;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateBeds;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateCity;
@@ -72,6 +73,7 @@ public class DefaultUpdateProperty implements UpdateProperty {
     property.setPrice(model.getPrice());
     property.setType(model.getType());
     property.setGarages(model.getGarages());
+    property.setActive(model.getActive());
 
     propertyRepository.save(property);
 
@@ -103,5 +105,6 @@ public class DefaultUpdateProperty implements UpdateProperty {
     validatePrice(model.getPrice());
     validateGarages(model.getGarages());
     validatePropertyType(model.getType());
+    validateActive(model.getActive());
   }
 }

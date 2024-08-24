@@ -106,4 +106,8 @@ public class ValidationUtils {
   public static void validatePropertySortBy(PropertySortBy sortBy) {
     validateNotNull(sortBy, "PropertySortBy");
   }
+
+  public static void validateActive(Boolean active) {
+    validateNotNull(active, "active");
+  }
 }

@@ -56,6 +56,7 @@ public class CreatePropertyRouter {
             .address(propertyRequest.getAddress())
             .garages(propertyRequest.getGarages())
             .type(propertyRequest.getType())
+            .active(propertyRequest.getActive())
             .build()));
   }
 }

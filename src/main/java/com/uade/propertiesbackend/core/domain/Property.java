@@ -42,4 +42,5 @@ public class Property {
   private Integer garages;
   private PropertyType type;
   private LocalDateTime createdAt;
+  private boolean active;
 }

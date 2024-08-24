@@ -66,6 +66,7 @@ public class UpdatePropertyRouter {
             .address(propertyRequest.getAddress())
             .garages(propertyRequest.getGarages())
             .type(propertyRequest.getType())
+            .active(propertyRequest.getActive())
             .build();
 
     return ResponseEntity.ok(updateProperty.apply(model));
