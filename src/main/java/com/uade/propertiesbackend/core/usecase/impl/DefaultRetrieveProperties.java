@@ -65,6 +65,7 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
             .minLon(model.getMinLon())
             .maxLat(model.getMaxLat())
             .maxLon(model.getMaxLon())
+            .userId(model.getUserId())
             .build());
 
     final Sort sortBy = model.getSortBy().map(retrievePropertySort).orElse(Sort.unsorted());
@@ -96,6 +97,7 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
     model.getGarages().ifPresent(ValidationUtils::validateGarages);
     model.getStoreys().ifPresent(ValidationUtils::validateStoreys);
     model.getPropertyType().ifPresent(ValidationUtils::validatePropertyType);
+    model.getUserId().ifPresent(ValidationUtils::validateUserId);
 
     model.getMinRooms().ifPresent(ValidationUtils::validateRooms);
     model.getMinBeds().ifPresent(ValidationUtils::validateBeds);

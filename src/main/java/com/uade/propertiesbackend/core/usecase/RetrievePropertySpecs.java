@@ -40,5 +40,6 @@ public interface RetrievePropertySpecs extends
     private Optional<Double> maxLat;
     private Optional<Double> maxLon;
     private Optional<PropertyType> propertyType;
+    private Optional<Long> userId;
   }
 }
