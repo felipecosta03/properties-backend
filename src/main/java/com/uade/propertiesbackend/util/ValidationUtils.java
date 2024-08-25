@@ -72,7 +72,7 @@ public class ValidationUtils {
   }
 
   public static void validateUserId(Long userId) {
-    validateNotNull(userId, "UserId");
+    validateNotNullAndPositive(userId, "UserId");
   }
 
   public static void validateAddress(String address) {
