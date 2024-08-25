@@ -87,10 +87,6 @@ public class ValidationUtils {
     validateNotNullAndPositive(price, "Price");
   }
 
-  public static void validateMinPrice(Double price) {
-    validateNotNullAndZeroOrPositive(price, "Price");
-  }
-
   public static void validatePropertyType(PropertyType propertyType) {
     validateNotNull(propertyType, "PropertyType");
   }
