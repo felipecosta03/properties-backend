@@ -61,6 +61,10 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
             .maxSurfaceCovered(model.getMaxSurfaceCovered())
             .minSurfaceTotal(model.getMinSurfaceTotal())
             .maxSurfaceTotal(model.getMaxSurfaceTotal())
+            .minLat(model.getMinLat())
+            .minLon(model.getMinLon())
+            .maxLat(model.getMaxLat())
+            .maxLon(model.getMaxLon())
             .build());
 
     final Sort sortBy = model.getSortBy().map(retrievePropertySort).orElse(Sort.unsorted());
@@ -74,6 +78,7 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
     if (isNull(model)) {
       throw new BadRequestException("Model is required");
     }
+
     validateMinMax(model.getMinPrice(), model.getMaxPrice(), "price");
     validateMinMax(model.getMinGarages(), model.getMaxGarages(), "garages");
     validateMinMax(model.getMinBeds(), model.getMaxBeds(), "beds");
@@ -82,6 +87,8 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
     validateMinMax(model.getMinBathrooms(), model.getMaxBathrooms(), "bathrooms");
     validateMinMax(model.getMinSurfaceCovered(), model.getMaxSurfaceCovered(), "surface covered");
     validateMinMax(model.getMinSurfaceTotal(), model.getMaxSurfaceTotal(), "surface total");
+    validateMinMax(model.getMinLon(), model.getMaxLon(), "longitude");
+    validateMinMax(model.getMinLat(), model.getMaxLat(), "latitude");
 
     model.getRooms().ifPresent(ValidationUtils::validateRooms);
     model.getBeds().ifPresent(ValidationUtils::validateBeds);
@@ -98,6 +105,8 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
     model.getMinSurfaceCovered().ifPresent(ValidationUtils::validateSurfaceCovered);
     model.getMinSurfaceTotal().ifPresent(ValidationUtils::validateSurfaceTotal);
     model.getMinPrice().ifPresent(ValidationUtils::validatePrice);
+    model.getMinLon().ifPresent(ValidationUtils::validateLongitude);
+    model.getMinLat().ifPresent(ValidationUtils::validateLatitude);
 
     model.getMaxRooms().ifPresent(ValidationUtils::validateRooms);
     model.getMaxBeds().ifPresent(ValidationUtils::validateBeds);
@@ -107,6 +116,8 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
     model.getMaxSurfaceCovered().ifPresent(ValidationUtils::validateSurfaceCovered);
     model.getMaxSurfaceCovered().ifPresent(ValidationUtils::validateSurfaceTotal);
     model.getMaxPrice().ifPresent(ValidationUtils::validatePrice);
+    model.getMaxLon().ifPresent(ValidationUtils::validateLongitude);
+    model.getMaxLat().ifPresent(ValidationUtils::validateLatitude);
 
     model.getPage().ifPresent(ValidationUtils::validatePage);
     model.getSortBy().ifPresent(ValidationUtils::validatePropertySortBy);

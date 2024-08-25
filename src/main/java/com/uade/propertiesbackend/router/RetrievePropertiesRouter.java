@@ -57,6 +57,10 @@ public class RetrievePropertiesRouter {
       @RequestParam(required = false) Optional<Double> maxSurfaceCovered,
       @RequestParam(required = false) Optional<Double> minSurfaceTotal,
       @RequestParam(required = false) Optional<Double> maxSurfaceTotal,
+      @RequestParam(required = false) Optional<Double> minLat,
+      @RequestParam(required = false) Optional<Double> minLon,
+      @RequestParam(required = false) Optional<Double> maxLat,
+      @RequestParam(required = false) Optional<Double> maxLon,
       @RequestParam(required = false) Optional<PropertyType> propertyType,
       @RequestParam(required = false) Optional<PropertySortBy> sortBy,
       @RequestParam(required = false, defaultValue = "0") Optional<Integer> page) {
@@ -83,6 +87,10 @@ public class RetrievePropertiesRouter {
             .maxSurfaceCovered(maxSurfaceCovered)
             .minSurfaceTotal(minSurfaceTotal)
             .maxSurfaceTotal(maxSurfaceTotal)
+            .minLat(minLat)
+            .minLon(minLon)
+            .maxLat(maxLat)
+            .maxLon(maxLon)
             .propertyType(propertyType)
             .page(page)
             .sortBy(sortBy)
