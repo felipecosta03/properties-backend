@@ -35,6 +35,10 @@ public interface RetrieveProperties extends Function<RetrieveProperties.Model, P
     private Optional<Double> maxSurfaceCovered;
     private Optional<Double> minSurfaceTotal;
     private Optional<Double> maxSurfaceTotal;
+    private Optional<Double> minLat;
+    private Optional<Double> minLon;
+    private Optional<Double> maxLat;
+    private Optional<Double> maxLon;
     private Optional<PropertyType> propertyType;
     private Optional<Integer> page;
     private Optional<PropertySortBy> sortBy;
