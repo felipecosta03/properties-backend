@@ -63,6 +63,7 @@ public class RetrievePropertiesRouter {
       @RequestParam(required = false) Optional<Double> maxLon,
       @RequestParam(required = false) Optional<PropertyType> propertyType,
       @RequestParam(required = false) Optional<PropertySortBy> sortBy,
+      @RequestParam(required = false) Optional<Long> userId,
       @RequestParam(required = false, defaultValue = "0") Optional<Integer> page) {
     return ResponseEntity.ok(retrieveProperties.apply(
         RetrieveProperties.Model.builder()
@@ -92,6 +93,7 @@ public class RetrievePropertiesRouter {
             .maxLat(maxLat)
             .maxLon(maxLon)
             .propertyType(propertyType)
+            .userId(userId)
             .page(page)
             .sortBy(sortBy)
             .build()));
