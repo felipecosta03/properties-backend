@@ -1,4 +1,4 @@
-package com.uade.propertiesbackend.router;
+package com.uade.propertiesbackend.router.favorite;
 
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.usecase.RetrieveFavoriteProperties;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Tag(name = "Properties", description = "Operations related to properties")
+@Tag(name = "Favorites", description = "Operations related to favorite properties")
 public class RetrieveFavoritePropertiesRouter {
 
   private final RetrieveFavoriteProperties retrieveFavoriteProperties;
@@ -25,9 +25,9 @@ public class RetrieveFavoritePropertiesRouter {
     this.retrieveFavoriteProperties = retrieveFavoriteProperties;
   }
 
-  @Operation(summary = "Create a property")
+  @Operation(summary = "Retrieve favorite properties")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Property created", content = {
+      @ApiResponse(responseCode = "200", description = "Favorite properties retrieved", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = PropertyDto.class))}),
       @ApiResponse(responseCode = "400", description = "Bad request", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})

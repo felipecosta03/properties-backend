@@ -1,4 +1,4 @@
-package com.uade.propertiesbackend.router;
+package com.uade.propertiesbackend.router.favorite;
 
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.usecase.RemoveFavoriteProperty;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Tag(name = "Properties", description = "Operations related to properties")
+@Tag(name = "Favorites", description = "Operations related to favorite properties")
 public class RemoveFavoritePropertyRouter {
 
   private final RemoveFavoriteProperty removeFavoriteProperty;
@@ -40,6 +40,6 @@ public class RemoveFavoritePropertyRouter {
       @RequestParam Long userId) {
     removeFavoriteProperty.accept(
         RemoveFavoriteProperty.Model.builder().propertyId(propertyId).userId(userId).build());
-    return ResponseEntity.ok().build();
+    return ResponseEntity.noContent().build();
   }
 }

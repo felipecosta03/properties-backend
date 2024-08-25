@@ -1,4 +1,4 @@
-package com.uade.propertiesbackend.router;
+package com.uade.propertiesbackend.router.property;
 
 import com.uade.propertiesbackend.core.domain.PropertySortBy;
 import com.uade.propertiesbackend.core.domain.PropertyType;

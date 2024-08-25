@@ -1,9 +1,8 @@
-package com.uade.propertiesbackend.core.usecase.impl;
+package com.uade.propertiesbackend.core.usecase.impl.favorite;
 
 import static java.util.Objects.isNull;
 
 import com.uade.propertiesbackend.core.domain.FavoriteProperty;
-import com.uade.propertiesbackend.core.domain.Property;
 import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.usecase.RemoveFavoriteProperty;
 import com.uade.propertiesbackend.core.usecase.UserExists;

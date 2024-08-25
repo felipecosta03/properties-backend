@@ -1,4 +1,4 @@
-package com.uade.propertiesbackend.core.usecase.impl;
+package com.uade.propertiesbackend.core.usecase.impl.favorite;
 
 import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.toList;

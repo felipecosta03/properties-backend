@@ -1,4 +1,4 @@
-package com.uade.propertiesbackend.router;
+package com.uade.propertiesbackend.router.property;
 
 import com.uade.propertiesbackend.core.usecase.DeleteProperty;
 import com.uade.propertiesbackend.router.exception.ApiError;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-@Tag(name = "Properties")
+@Tag(name = "Properties", description = "Operations related to properties")
 public class DeletePropertyRouter {
 
   private final DeleteProperty deleteProperty;
