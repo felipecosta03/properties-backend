@@ -1,7 +1,7 @@
-package com.uade.propertiesbackend.router;
+package com.uade.propertiesbackend.router.favorite;
 
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
-import com.uade.propertiesbackend.core.usecase.RemoveFavoriteProperty;
+import com.uade.propertiesbackend.core.usecase.AddFavoriteProperty;
 import com.uade.propertiesbackend.router.exception.ApiError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -10,24 +10,24 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Tag(name = "Properties", description = "Operations related to properties")
-public class RemoveFavoritePropertyRouter {
+@Tag(name = "Favorites", description = "Operations related to favorite properties")
+public class AddFavoritePropertyRouter {
 
-  private final RemoveFavoriteProperty removeFavoriteProperty;
+  private final AddFavoriteProperty addFavoriteProperty;
 
-  public RemoveFavoritePropertyRouter(RemoveFavoriteProperty removeFavoriteProperty) {
-    this.removeFavoriteProperty = removeFavoriteProperty;
+  public AddFavoritePropertyRouter(AddFavoriteProperty addFavoriteProperty) {
+    this.addFavoriteProperty = addFavoriteProperty;
   }
 
-  @Operation(summary = "Remove favorite property")
+  @Operation(summary = "Add favorite property")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Property removed", content = {
+      @ApiResponse(responseCode = "200", description = "Added favorite property", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = PropertyDto.class))}),
       @ApiResponse(responseCode = "400", description = "Bad request", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
@@ -35,11 +35,11 @@ public class RemoveFavoritePropertyRouter {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
       @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
-  @DeleteMapping("/properties/{propertyId}/favorites")
-  public ResponseEntity<Void> removeFavoriteProperty(@PathVariable Long propertyId,
+  @PostMapping("/properties/{propertyId}/favorites")
+  public ResponseEntity<Void> addFavoriteProperty(@PathVariable Long propertyId,
       @RequestParam Long userId) {
-    removeFavoriteProperty.accept(
-        RemoveFavoriteProperty.Model.builder().propertyId(propertyId).userId(userId).build());
-    return ResponseEntity.ok().build();
+    addFavoriteProperty.accept(
+        AddFavoriteProperty.Model.builder().propertyId(propertyId).userId(userId).build());
+    return ResponseEntity.noContent().build();
   }
 }

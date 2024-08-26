@@ -1,6 +1,7 @@
 package com.uade.propertiesbackend.repository;
 
 import com.uade.propertiesbackend.core.domain.Property;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -17,4 +18,5 @@ public interface PropertyRepository extends JpaRepository<Property, Long>,
 
   Page<Property> findAll(Specification<Property> specification, Pageable pageable);
 
+  Page<Property> findPropertiesByIdIn(List<Long> propertiesId, Pageable pageable);
 }

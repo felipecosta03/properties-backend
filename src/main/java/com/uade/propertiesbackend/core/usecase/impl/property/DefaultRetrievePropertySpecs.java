@@ -1,4 +1,4 @@
-package com.uade.propertiesbackend.core.usecase.impl;
+package com.uade.propertiesbackend.core.usecase.impl.property;
 
 import static com.uade.propertiesbackend.util.PropertySpecs.withActive;
 
