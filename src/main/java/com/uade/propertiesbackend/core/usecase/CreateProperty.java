@@ -33,5 +33,6 @@ public interface CreateProperty extends Function<CreateProperty.Model, PropertyD
     private Double price;
     private Integer garages;
     private PropertyType type;
+    private Boolean active;
   }
 }

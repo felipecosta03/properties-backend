@@ -35,6 +35,11 @@ public interface RetrievePropertySpecs extends
     private Optional<Double> maxSurfaceCovered;
     private Optional<Double> minSurfaceTotal;
     private Optional<Double> maxSurfaceTotal;
+    private Optional<Double> minLat;
+    private Optional<Double> minLon;
+    private Optional<Double> maxLat;
+    private Optional<Double> maxLon;
     private Optional<PropertyType> propertyType;
+    private Optional<Long> userId;
   }
 }

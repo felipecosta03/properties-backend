@@ -11,6 +11,8 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Data
 @AllArgsConstructor
@@ -64,4 +66,5 @@ public class PropertyRequest {
   private Integer garages;
   @NotNull
   private PropertyType type;
+  private Boolean active = true;
 }

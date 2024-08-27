@@ -1,5 +1,7 @@
-package com.uade.propertiesbackend.core.usecase.impl;
+package com.uade.propertiesbackend.core.usecase.impl.property;
 
+import static com.uade.propertiesbackend.util.ValidationUtils.validateActive;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateAddress;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateBathrooms;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateBeds;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateCity;
@@ -14,7 +16,6 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validatePropertyTy
 import static com.uade.propertiesbackend.util.ValidationUtils.validateRooms;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateState;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateStoreys;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateAddress;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateSurfaceCovered;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateTitle;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateUserId;
@@ -28,6 +29,7 @@ import com.uade.propertiesbackend.core.usecase.CreateProperty;
 import com.uade.propertiesbackend.core.usecase.PropertyMapper;
 import com.uade.propertiesbackend.core.usecase.UserExists;
 import com.uade.propertiesbackend.repository.PropertyRepository;
+import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 
 /**
@@ -75,6 +77,8 @@ public class DefaultCreateProperty implements CreateProperty {
             .price(model.getPrice())
             .type(model.getType())
             .garages(model.getGarages())
+            .createdAt(LocalDateTime.now())
+            .active(model.getActive())
             .build());
 
     return PropertyMapper.INSTANCE.propertyToPropertyDto(property);
@@ -103,5 +107,6 @@ public class DefaultCreateProperty implements CreateProperty {
     validatePrice(model.getPrice());
     validatePropertyType(model.getType());
     validateGarages(model.getGarages());
+    validateActive(model.getActive());
   }
 }

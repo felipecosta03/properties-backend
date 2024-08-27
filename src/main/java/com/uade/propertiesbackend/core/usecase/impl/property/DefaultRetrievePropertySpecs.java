@@ -1,4 +1,6 @@
-package com.uade.propertiesbackend.core.usecase.impl;
+package com.uade.propertiesbackend.core.usecase.impl.property;
+
+import static com.uade.propertiesbackend.util.PropertySpecs.withActive;
 
 import com.uade.propertiesbackend.core.domain.Property;
 import com.uade.propertiesbackend.core.usecase.RetrievePropertySpecs;
@@ -14,18 +16,21 @@ public class DefaultRetrievePropertySpecs implements RetrievePropertySpecs {
   public Specification<Property> apply(Model model) {
 
     return Specification
-        .where(model.getMinPrice().map(PropertySpecs::withMinPrice).orElse(null))
+        .where(withActive())
+        .and(model.getMinPrice().map(PropertySpecs::withMinPrice).orElse(null))
         .and(model.getMaxPrice().map(PropertySpecs::withMaxPrice).orElse(null))
         .and(model.getMaxSurfaceCovered().map(PropertySpecs::withMaxSurfaceCovered).orElse(null))
         .and(model.getMinSurfaceCovered().map(PropertySpecs::withMinSurfaceCovered).orElse(null))
         .and(model.getMinSurfaceTotal().map(PropertySpecs::withMinSurfaceTotal).orElse(null))
         .and(model.getMaxSurfaceTotal().map(PropertySpecs::withMaxSurfaceTotal).orElse(null))
         .and(model.getPropertyType().map(PropertySpecs::withPropertyType).orElse(null))
+        .and(model.getUserId().map(PropertySpecs::withUserId).orElse(null))
         .and(withRooms(model.getRooms(), model.getMinRooms(), model.getMaxRooms()))
         .and(withBeds(model.getBeds(), model.getMinBeds(), model.getMaxBeds()))
         .and(withBathrooms(model.getBathrooms(), model.getMinBathrooms(), model.getMaxBathrooms()))
         .and(withGarages(model.getGarages(), model.getMinGarages(), model.getMaxGarages()))
-        .and(withStoreys(model.getStoreys(), model.getMinStoreys(), model.getMaxStoreys()));
+        .and(withStoreys(model.getStoreys(), model.getMinStoreys(), model.getMaxStoreys()))
+        .and(withCoordinates(model.getMinLat(), model.getMinLon(), model.getMaxLat(), model.getMaxLon()));
   }
 
   private Specification<Property> withRooms(Optional<Integer> rooms, Optional<Integer> minRooms,
@@ -64,6 +69,18 @@ public class DefaultRetrievePropertySpecs implements RetrievePropertySpecs {
     return storeys.map(PropertySpecs::withStoreys).orElseGet(
         () -> Specification.where(minStoreys.map(PropertySpecs::withMinStoreys).orElse(null))
             .and(maxStoreys.map(PropertySpecs::withMaxStoreys).orElse(null)));
+  }
+
+  private Specification<Property> withCoordinates(Optional<Double> minLat,
+      Optional<Double> minLon, Optional<Double> maxLat, Optional<Double> maxLon) {
+    if (minLat.isEmpty() || minLon.isEmpty() || maxLat.isEmpty() || maxLon.isEmpty()) {
+      return null;
+    }
+    return Specification.<Property>allOf(
+        (root, query, criteriaBuilder) -> criteriaBuilder.between(root.get("latitude"), minLat.get(),
+            maxLat.get())).and(
+        (root, query, criteriaBuilder) -> criteriaBuilder.between(root.get("longitude"), minLon.get(),
+            maxLon.get()));
   }
 
 

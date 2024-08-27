@@ -1,5 +1,6 @@
-package com.uade.propertiesbackend.router;
+package com.uade.propertiesbackend.router.property;
 
+import com.uade.propertiesbackend.core.domain.PropertySortBy;
 import com.uade.propertiesbackend.core.domain.PropertyType;
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.usecase.RetrieveProperties;
@@ -56,7 +57,13 @@ public class RetrievePropertiesRouter {
       @RequestParam(required = false) Optional<Double> maxSurfaceCovered,
       @RequestParam(required = false) Optional<Double> minSurfaceTotal,
       @RequestParam(required = false) Optional<Double> maxSurfaceTotal,
+      @RequestParam(required = false) Optional<Double> minLat,
+      @RequestParam(required = false) Optional<Double> minLon,
+      @RequestParam(required = false) Optional<Double> maxLat,
+      @RequestParam(required = false) Optional<Double> maxLon,
       @RequestParam(required = false) Optional<PropertyType> propertyType,
+      @RequestParam(required = false) Optional<PropertySortBy> sortBy,
+      @RequestParam(required = false) Optional<Long> userId,
       @RequestParam(required = false, defaultValue = "0") Optional<Integer> page) {
     return ResponseEntity.ok(retrieveProperties.apply(
         RetrieveProperties.Model.builder()
@@ -81,8 +88,14 @@ public class RetrievePropertiesRouter {
             .maxSurfaceCovered(maxSurfaceCovered)
             .minSurfaceTotal(minSurfaceTotal)
             .maxSurfaceTotal(maxSurfaceTotal)
+            .minLat(minLat)
+            .minLon(minLon)
+            .maxLat(maxLat)
+            .maxLon(maxLon)
             .propertyType(propertyType)
+            .userId(userId)
             .page(page)
+            .sortBy(sortBy)
             .build()));
   }
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,4 +41,6 @@ public class Property {
   private Double price;
   private Integer garages;
   private PropertyType type;
+  private LocalDateTime createdAt;
+  private boolean active;
 }

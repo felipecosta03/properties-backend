@@ -2,6 +2,7 @@ package com.uade.propertiesbackend.core.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.uade.propertiesbackend.core.domain.PropertyType;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,4 +38,7 @@ public class PropertyDto {
   private Double price;
   private Integer garages;
   private PropertyType type;
+  @JsonProperty("created_at")
+  private LocalDateTime createdAt;
+  private boolean active;
 }
