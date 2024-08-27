@@ -6,6 +6,7 @@ import static com.uade.propertiesbackend.util.Validate.validateNotNull;
 import static com.uade.propertiesbackend.util.Validate.validateNotNullAndPositive;
 import static com.uade.propertiesbackend.util.Validate.validateNotNullAndZeroOrPositive;
 
+import com.uade.propertiesbackend.core.domain.PropertySortBy;
 import com.uade.propertiesbackend.core.domain.PropertyType;
 import java.util.List;
 import lombok.experimental.UtilityClass;
@@ -71,7 +72,7 @@ public class ValidationUtils {
   }
 
   public static void validateUserId(Long userId) {
-    validateNotNull(userId, "UserId");
+    validateNotNullAndPositive(userId, "UserId");
   }
 
   public static void validateAddress(String address) {
@@ -86,10 +87,6 @@ public class ValidationUtils {
     validateNotNullAndPositive(price, "Price");
   }
 
-  public static void validateMinPrice(Double price) {
-    validateNotNullAndZeroOrPositive(price, "Price");
-  }
-
   public static void validatePropertyType(PropertyType propertyType) {
     validateNotNull(propertyType, "PropertyType");
   }
@@ -100,5 +97,13 @@ public class ValidationUtils {
 
   public static void validatePage(Integer page) {
     validateNotNullAndZeroOrPositive(page, "page");
+  }
+
+  public static void validatePropertySortBy(PropertySortBy sortBy) {
+    validateNotNull(sortBy, "PropertySortBy");
+  }
+
+  public static void validateActive(Boolean active) {
+    validateNotNull(active, "active");
   }
 }

@@ -1,7 +1,7 @@
-package com.uade.propertiesbackend.router;
+package com.uade.propertiesbackend.router.property;
 
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
-import com.uade.propertiesbackend.core.usecase.CreateProperty;
+import com.uade.propertiesbackend.core.usecase.UpdateProperty;
 import com.uade.propertiesbackend.router.exception.ApiError;
 import com.uade.propertiesbackend.router.request.PropertyRequest;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,34 +10,44 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Tag(name = "Properties", description = "Operations related to properties")
-public class CreatePropertyRouter {
+@Slf4j
+public class UpdatePropertyRouter {
 
-  private final CreateProperty createProperty;
+  private final UpdateProperty updateProperty;
 
-  public CreatePropertyRouter(CreateProperty createProperty) {
-    this.createProperty = createProperty;
+  public UpdatePropertyRouter(UpdateProperty updateProperty) {
+    this.updateProperty = updateProperty;
   }
 
-  @Operation(summary = "Create a property")
+  @Operation(summary = "Update property")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Property created", content = {
+      @ApiResponse(responseCode = "200", description = "Property updated", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = PropertyDto.class))}),
       @ApiResponse(responseCode = "400", description = "Bad request", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
+      @ApiResponse(responseCode = "404", description = "Not found", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
+      @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
       @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
-  @PostMapping("/properties")
-  public ResponseEntity<PropertyDto> createProperty(
+  @PutMapping("/properties/{propertyId}")
+  public ResponseEntity<PropertyDto> update(@PathVariable Long propertyId,
       @RequestBody PropertyRequest propertyRequest) {
-    return ResponseEntity.ok(createProperty.apply(
-        CreateProperty.Model.builder().title(propertyRequest.getTitle())
+    log.info("Updating property with id: {}", propertyId);
+
+    UpdateProperty.Model model =
+        UpdateProperty.Model.builder().id(propertyId)
+            .title(propertyRequest.getTitle())
             .description(propertyRequest.getDescription())
             .bathrooms(propertyRequest.getBathrooms())
             .beds(propertyRequest.getBeds())
@@ -56,6 +66,9 @@ public class CreatePropertyRouter {
             .address(propertyRequest.getAddress())
             .garages(propertyRequest.getGarages())
             .type(propertyRequest.getType())
-            .build()));
+            .active(propertyRequest.getActive())
+            .build();
+
+    return ResponseEntity.ok(updateProperty.apply(model));
   }
 }

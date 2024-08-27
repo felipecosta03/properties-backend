@@ -1,4 +1,4 @@
-package com.uade.propertiesbackend.router;
+package com.uade.propertiesbackend.router.property;
 
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.usecase.RetrieveProperty;
@@ -30,7 +30,7 @@ public class RetrievePropertyRouter {
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Property retrieved", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = PropertyDto.class))}),
-      @ApiResponse(responseCode = "404", description = "Property not found", content = {
+      @ApiResponse(responseCode = "404", description = "Not found", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
       @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})

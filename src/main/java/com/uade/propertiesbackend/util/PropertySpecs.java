@@ -114,4 +114,12 @@ public class PropertySpecs {
     return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("type"), propertyType);
   }
 
+  public static Specification<Property> withActive() {
+    return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("active"), true);
+  }
+
+  public static Specification<Property> withUserId(Long userId) {
+    return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("userId"), userId);
+  }
+
 }
