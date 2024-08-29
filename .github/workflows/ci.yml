@@ -21,12 +21,15 @@ jobs:
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: DATABASE_URL="$DATABASE_URL" mvn clean package
-      
+
     - name: Show Maven test results
       run: |
         ls -la target/surefire-reports/
         cat target/surefire-reports/*.txt || true
 
+    - name: List files in target directory
+      run: ls -la target/
+      
     - name: Upload JAR artifact
       uses: actions/upload-artifact@v2
       with:
