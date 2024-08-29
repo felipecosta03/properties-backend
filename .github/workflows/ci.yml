@@ -20,7 +20,7 @@ jobs:
     - name: Build with Maven
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      run: DATABASE_URL=$DATABASE_URL mvn clean package
+      run: DATABASE_URL="$DATABASE_URL" mvn clean package
 
     - name: Login Dockerhub
       env:
