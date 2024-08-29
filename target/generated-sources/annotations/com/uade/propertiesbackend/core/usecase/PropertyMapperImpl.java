@@ -8,7 +8,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-28T23:41:52-0300",
+    date = "2024-08-29T12:37:33-0300",
     comments = "version: 1.5.0.RC1, compiler: Eclipse JDT (IDE) 3.39.0.v20240725-1906, environment: Java 17.0.11 (Eclipse Adoptium)"
 )
 public class PropertyMapperImpl implements PropertyMapper {
