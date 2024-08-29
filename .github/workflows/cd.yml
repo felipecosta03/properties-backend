@@ -22,5 +22,5 @@ jobs:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: |
         sudo docker run -d -p 8080:8080 --name smartmovecontainer \
-        -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+        -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
         joubina/smartmoveback
