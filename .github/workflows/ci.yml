@@ -34,7 +34,19 @@ jobs:
     - name: Execute JAR File
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      run: java -Dspring.datasource.url=$DATABASE_URL -jar target/properties-backend-0.0.1-SNAPSHOT.jar
+      run: |
+        echo "Starting JAR file with DATABASE_URL=$DATABASE_URL"
+        java -Dspring.datasource.url=$DATABASE_URL -jar target/properties-backend-0.0.1-SNAPSHOT.jar &
+        JAR_PID=$!
+        sleep 60
+        if ps -p $JAR_PID > /dev/null
+        then
+           echo "JAR file is still running after 60 seconds, killing process"
+           kill $JAR_PID
+           exit 0
+        else
+           echo "JAR file finished within 60 seconds"
+        fi
 
     - name: Login Dockerhub
       env:
