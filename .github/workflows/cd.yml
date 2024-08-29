@@ -20,11 +20,7 @@ jobs:
     - name: Run Docker Container
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
-        DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
       run: |
         sudo docker run -d -p 8080:8080 --name smartmovecontainer \
         -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-        -e DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }} \
-        -e DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
         joubina/smartmoveback
