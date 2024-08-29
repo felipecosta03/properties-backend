@@ -7,7 +7,7 @@ on:
       - completed
 
 jobs:
-  deploy:
+  build:
     runs-on: self-hosted
 
     steps:
@@ -23,4 +23,4 @@ jobs:
       run: |
         sudo docker run -d -p 8080:8080 --name smartmovecontainer \
         -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
-        joubina/smartmoveback:latest
+        joubina/smartmoveback

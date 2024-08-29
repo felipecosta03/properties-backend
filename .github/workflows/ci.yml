@@ -21,7 +21,15 @@ jobs:
       run: java -version
 
     - name: Build with Maven
-      run: ./mvnw clean package
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      run: mvn clean package
+
+    - name: Upload JAR artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: smartmoveback-jar
+        path: target/properties-backend-0.0.1-SNAPSHOT.jar
 
     - name: Login to Docker Hub
       uses: docker/login-action@v2
