@@ -16,6 +16,9 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'
+        
+    - name: Check Java version
+      run: java -version
 
     - name: Build with Maven
       env:
