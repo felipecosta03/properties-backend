@@ -22,7 +22,13 @@ jobs:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: DATABASE_URL="$DATABASE_URL" mvn clean package
     
-    - name: Execute Jar File
+    - name: Upload JAR artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: smartmoveback-jar
+        path: target/smartmoveback-0.0.1-SNAPSHOT.jar
+
+    - name: Execute JAR File
       run: sudo kill -9 `sudo lsof -t -i:8080` & sudo java -jar target/smartmoveback-0.0.1-SNAPSHOT.jar
 
     - name: Login Dockerhub
