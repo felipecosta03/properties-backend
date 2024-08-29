@@ -14,8 +14,8 @@ jobs:
     - name: Pull Docker image
       run: sudo docker pull joubina/smartmoveback:latest
 
-    - name: Delete Old docker container
+    - name: Delete Old Docker Container
       run: sudo docker rm -f smartmoveback || true
 
     - name: Run Docker Container
-      run: sudo docker run -d -p 8080:8080 --name smartmoveback-container joubina/smartmoveback
+      run: sudo docker run -d -p 8080:8080 --name smartmoveback joubina/smartmoveback
