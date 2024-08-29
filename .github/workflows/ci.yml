@@ -16,7 +16,7 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'
-        
+
     - name: Check Java version
       run: java -version
 
@@ -32,7 +32,9 @@ jobs:
         path: target/properties-backend-0.0.1-SNAPSHOT.jar
 
     - name: Execute JAR File
-      run: java -jar target/properties-backend-0.0.1-SNAPSHOT.jar
+      env:
+        DATABASE_URL: "${{ secrets.DATABASE_URL }}"
+      run: java -Dspring.datasource.url="$DATABASE_URL" -jar target/properties-backend-0.0.1-SNAPSHOT.jar
 
     - name: Login Dockerhub
       env:
