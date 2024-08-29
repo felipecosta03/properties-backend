@@ -18,7 +18,9 @@ jobs:
         distribution: 'adopt'
 
     - name: Build with Maven
-      run: mvn clean package
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      run: DATABASE_URL="$DATABASE_URL" mvn clean package
 
     - name: Login Dockerhub
       env:
