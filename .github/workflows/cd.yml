@@ -11,6 +11,11 @@ jobs:
     runs-on: self-hosted
 
     steps:
+    - name: Verify DATABASE_URL Secret
+      run: echo "DATABASE_URL is set"
+      env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          
     - name: Pull Docker image
       run: sudo docker pull joubina/smartmoveback:latest
 
