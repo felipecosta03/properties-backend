@@ -34,7 +34,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: smartmoveback-jar
-        path: target/smartmoveback-0.0.1-SNAPSHOT.jar
+        path: target/properties-backend-0.0.1-SNAPSHOT.jar
     
     - name: Check JAR existence
       run: test -f target/smartmoveback-0.0.1-SNAPSHOT.jar || { echo "JAR file not found!"; exit 1; }
@@ -42,8 +42,8 @@ jobs:
     - name: Execute JAR File
       run: |
         sudo kill -9 `sudo lsof -t -i:8080` || true
-        sudo java -jar target/smartmoveback-0.0.1-SNAPSHOT.jar
-
+        sudo java -jar target/properties-backend-0.0.1-SNAPSHOT.jar
+    
     - name: Login Dockerhub
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
