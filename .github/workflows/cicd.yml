@@ -29,8 +29,15 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Pull Image from docker hub
-        run: docker pull joubina/smartmoveback:latest
+        run: sudo docker pull joubina/smartmoveback:latest
+        
       - name: Delete old container
-        run: docker rm -f smartmovecontainer
-      - name: Run docker container
-        run: docker run -d -p 8080:8080 --name smartmovecontainer joubina/smartmoveback
+        run: sudo docker rm -f smartmovecontainer
+
+      - name: Run Docker Container
+        env:
+            DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+            sudo docker run -d -p 8080:8080 --name smartmovecontainer \
+            -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+            joubina/smartmoveback
