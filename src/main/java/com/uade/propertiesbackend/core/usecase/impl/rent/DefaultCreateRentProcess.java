@@ -1,32 +1,32 @@
-package com.uade.propertiesbackend.core.usecase.impl.favorite;
+package com.uade.propertiesbackend.core.usecase.impl.rent;
 
 import static com.uade.propertiesbackend.util.ValidationUtils.validatePropertyId;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateUserId;
 import static java.util.Objects.isNull;
 
-import com.uade.propertiesbackend.core.domain.FavoriteProperty;
+import com.uade.propertiesbackend.core.domain.Property;
+import com.uade.propertiesbackend.core.domain.RentProcess;
+import com.uade.propertiesbackend.core.domain.RentProcessStatus;
 import com.uade.propertiesbackend.core.exception.BadRequestException;
-import com.uade.propertiesbackend.core.usecase.RemoveFavoriteProperty;
+import com.uade.propertiesbackend.core.usecase.CreateRentProcess;
 import com.uade.propertiesbackend.core.usecase.UserExists;
-import com.uade.propertiesbackend.repository.FavoritePropertyRepository;
 import com.uade.propertiesbackend.repository.PropertyRepository;
-import java.util.Optional;
+import com.uade.propertiesbackend.repository.RentProcessRepository;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DefaultRemoveFavoriteProperty implements RemoveFavoriteProperty {
+public class DefaultCreateRentProcess implements CreateRentProcess {
 
-  private final FavoritePropertyRepository favoritePropertyRepository;
+  private final RentProcessRepository rentProcessRepository;
   private final UserExists userExists;
   private final PropertyRepository propertyRepository;
 
-  public DefaultRemoveFavoriteProperty(FavoritePropertyRepository favoritePropertyRepository,
+  public DefaultCreateRentProcess(RentProcessRepository rentProcessRepository,
       UserExists userExists, PropertyRepository propertyRepository) {
-    this.favoritePropertyRepository = favoritePropertyRepository;
+    this.rentProcessRepository = rentProcessRepository;
     this.userExists = userExists;
     this.propertyRepository = propertyRepository;
   }
-
 
   @Override
   public void accept(Model model) {
@@ -36,20 +36,19 @@ public class DefaultRemoveFavoriteProperty implements RemoveFavoriteProperty {
       throw new BadRequestException("User does not exist");
     }
 
-    propertyRepository.findById(model.getPropertyId())
+    Property property = propertyRepository.findById(model.getPropertyId())
         .orElseThrow(() -> new BadRequestException("Property does not exist"));
 
-    Optional<FavoriteProperty> favoriteProperty = favoritePropertyRepository
-        .findByUserIdAndPropertyId(model.getUserId(), model.getPropertyId());
+    rentProcessRepository.findByPropertyIdAndUserId(model.getPropertyId(), model.getUserId())
+        .ifPresent(rentProcess -> {
+          throw new BadRequestException("Rent process already exists");
+        });
 
-    if (favoriteProperty.isEmpty()) {
-      throw new BadRequestException("Property is not a favorite");
-    }
-
-    favoritePropertyRepository.delete(favoriteProperty.get());
+    rentProcessRepository.save(RentProcess.builder().property(property).userId(model.getUserId())
+        .status(RentProcessStatus.PENDING_APPROVAL).build());
   }
 
-  private void validateModel(RemoveFavoriteProperty.Model model) {
+  private void validateModel(Model model) {
     if (isNull(model)) {
       throw new BadRequestException("Model is required");
     }
