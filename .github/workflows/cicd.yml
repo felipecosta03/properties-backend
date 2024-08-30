@@ -3,10 +3,12 @@ name: CICD
 on:
   push:
     branches: [master]
+  pull_request:
+    branches: [master]
 
 jobs:
   build:
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
@@ -28,12 +30,15 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
-      - name: Pull Image from docker hub
-        run: sudo docker pull joubina/smartmoveback:latest
-        
       - name: Delete old container
         run: sudo docker rm -f smartmovecontainer
 
+      - name: Remove old image
+        run: sudo docker image prune -f
+
+      - name: Pull Image from docker hub
+        run: sudo docker pull joubina/smartmoveback:latest
+        
       - name: Run Docker Container
         env:
             DATABASE_URL: ${{ secrets.DATABASE_URL }}
