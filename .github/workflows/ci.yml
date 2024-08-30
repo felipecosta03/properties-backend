@@ -42,8 +42,3 @@ jobs:
       run: |
         docker build -t joubina/smartmoveback:latest .
         docker push joubina/smartmoveback:latest
-    
-    - name: Run JAR
-      env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      run: java -jar target/properties-backend-0.0.1-SNAPSHOT.jar --server.port=8080
