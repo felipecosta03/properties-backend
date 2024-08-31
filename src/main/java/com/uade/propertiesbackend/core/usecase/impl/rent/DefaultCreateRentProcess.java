@@ -48,7 +48,7 @@ public class DefaultCreateRentProcess implements CreateRentProcess {
     }
 
     rentProcessRepository.findByPropertyIdAndTenantIdAndStatusNotRejected(model.getPropertyId(),
-            model.getTenantId())
+            model.getTenantId()).stream().findAny()
         .ifPresent(rentProcess -> {
           throw new BadRequestException("Rent process already exists");
         });
