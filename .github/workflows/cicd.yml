@@ -1,0 +1,48 @@
+name: CICD
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Build Project
+        run: mvn clean install -DskipTests
+      - name: Login to docker hub
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+      - name: Build docker image
+        run: docker build -t joubina/smartmoveback .
+      - name: Publish image to docker hub
+        run: docker push joubina/smartmoveback:latest
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Delete old container
+        run: sudo docker rm -f smartmovecontainer
+
+      - name: Remove old image
+        run: sudo docker image prune -f
+
+      - name: Pull Image from docker hub
+        run: sudo docker pull joubina/smartmoveback:latest
+        
+      - name: Run Docker Container
+        env:
+            DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+            sudo docker run -d -p 8080:8080 --name smartmovecontainer \
+            -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+            joubina/smartmoveback
