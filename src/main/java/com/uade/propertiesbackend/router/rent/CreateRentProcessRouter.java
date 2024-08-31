@@ -16,11 +16,11 @@ public class CreateRentProcessRouter {
     this.createRentProcess = createRentProcess;
   }
 
-  @PostMapping("/rents/{propertyId}")
+  @PostMapping("/rent-process/{propertyId}")
   public ResponseEntity<Void> createRentProcess(@PathVariable Long propertyId,
       @RequestParam Long userId) {
     createRentProcess.accept(
-        CreateRentProcess.Model.builder().userId(userId).propertyId(propertyId).build());
+        CreateRentProcess.Model.builder().tenantId(userId).propertyId(propertyId).build());
     return ResponseEntity.noContent().build();
   }
 }

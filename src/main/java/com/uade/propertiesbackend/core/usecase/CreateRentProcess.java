@@ -10,7 +10,7 @@ public interface CreateRentProcess extends Consumer<CreateRentProcess.Model> {
   @Getter
   class Model {
 
-    private Long userId;
+    private Long tenantId;
     private Long propertyId;
   }
 }

@@ -1,13 +1,12 @@
 package com.uade.propertiesbackend.core.domain;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,14 +17,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class RentProcess {
+public class Rent {
 
   @Id
-  @GeneratedValue(strategy = IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @ManyToOne
-  private Property property;
+
+  @OneToOne
+  private RentProcess rentProcess;
+
   @Enumerated(EnumType.STRING)
-  private RentProcessStatus status;
-  private Long tenantId;
+  private RentStatus status;
+
 }
