@@ -2,6 +2,8 @@ package com.uade.propertiesbackend.core.usecase.impl.property;
 
 import static com.uade.propertiesbackend.util.PropertySpecs.withActive;
 
+import static com.uade.propertiesbackend.util.PropertySpecs.withActive;
+
 import com.uade.propertiesbackend.core.domain.Property;
 import com.uade.propertiesbackend.core.usecase.RetrievePropertySpecs;
 import com.uade.propertiesbackend.util.PropertySpecs;
