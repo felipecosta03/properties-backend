@@ -1,5 +1,7 @@
 package com.uade.propertiesbackend.core.usecase.impl.favorite;
 
+import static com.uade.propertiesbackend.util.ValidationUtils.validatePropertyId;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateUserId;
 import static java.util.Objects.isNull;
 
 import com.uade.propertiesbackend.core.domain.FavoriteProperty;
@@ -51,11 +53,7 @@ public class DefaultRemoveFavoriteProperty implements RemoveFavoriteProperty {
     if (isNull(model)) {
       throw new BadRequestException("Model is required");
     }
-    if (isNull(model.getUserId())) {
-      throw new BadRequestException("userId is required");
-    }
-    if (isNull(model.getPropertyId())) {
-      throw new BadRequestException("propertyId is required");
-    }
+    validateUserId(model.getUserId());
+    validatePropertyId(model.getPropertyId());
   }
 }

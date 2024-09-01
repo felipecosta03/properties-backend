@@ -1,5 +1,7 @@
 package com.uade.propertiesbackend.core.usecase.impl.favorite;
 
+import static com.uade.propertiesbackend.util.ValidationUtils.validatePage;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateUserId;
 import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.toList;
 
@@ -45,11 +47,7 @@ public class DefaultRetrieveFavoriteProperties implements RetrieveFavoriteProper
     if (isNull(model)) {
       throw new BadRequestException("Model is required");
     }
-    if (isNull(model.getUserId())) {
-      throw new BadRequestException("User id is required");
-    }
-    if (isNull(model.getPage())) {
-      throw new BadRequestException("Page is required");
-    }
+    validateUserId(model.getUserId());
+    validatePage(model.getPage());
   }
 }
