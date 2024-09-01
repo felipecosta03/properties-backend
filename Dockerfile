@@ -1,5 +1,4 @@
-FROM amazoncorretto:17-alpine-jdk
-
-COPY out/artifacts/properties_backend_jar/properties-backend.jar /app.jar
-
-ENTRYPOINT ["java","-Dspring.profiles.active=prod", "-jar", "/app.jar"]
+FROM openjdk
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
