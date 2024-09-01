@@ -1,5 +1,6 @@
 name: Auto-merge PRs from master to develop
 
+
 on:
   pull_request:
     types: [opened, synchronize, reopened]
