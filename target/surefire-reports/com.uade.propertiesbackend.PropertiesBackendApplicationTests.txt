@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.uade.propertiesbackend.PropertiesBackendApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.884 s -- in com.uade.propertiesbackend.PropertiesBackendApplicationTests
