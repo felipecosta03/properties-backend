@@ -30,8 +30,7 @@ public class UpdatePropertyRouter {
 
   @Operation(summary = "Update property")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Property updated", content = {
-          @Content(mediaType = "application/json", schema = @Schema(implementation = PropertyDto.class))}),
+      @ApiResponse(responseCode = "200", description = "Property updated"),
       @ApiResponse(responseCode = "400", description = "Bad request", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
       @ApiResponse(responseCode = "404", description = "Not found", content = {
