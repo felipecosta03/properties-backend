@@ -27,8 +27,7 @@ public class RemoveFavoritePropertyRouter {
 
   @Operation(summary = "Remove favorite property")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Property removed", content = {
-          @Content(mediaType = "application/json", schema = @Schema(implementation = PropertyDto.class))}),
+      @ApiResponse(responseCode = "200", description = "Property removed"),
       @ApiResponse(responseCode = "400", description = "Bad request", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
       @ApiResponse(responseCode = "404", description = "Not found", content = {

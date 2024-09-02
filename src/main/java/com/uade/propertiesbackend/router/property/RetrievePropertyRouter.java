@@ -28,8 +28,7 @@ public class RetrievePropertyRouter {
 
   @Operation(summary = "Retrieve a property by id")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Property retrieved", content = {
-          @Content(mediaType = "application/json", schema = @Schema(implementation = PropertyDto.class))}),
+      @ApiResponse(responseCode = "200", description = "Property retrieved"),
       @ApiResponse(responseCode = "404", description = "Not found", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
       @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
