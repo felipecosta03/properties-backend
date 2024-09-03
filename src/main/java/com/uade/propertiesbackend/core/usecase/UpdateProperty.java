@@ -16,9 +16,8 @@ public interface UpdateProperty extends Function<UpdateProperty.Model, PropertyD
     private Long id;
     private Integer beds;
     private Integer bathrooms;
-    private String country;
     private String city;
-    private String state;
+    private String district;
     private Integer rooms;
     private Double surfaceCovered;
     private Double surfaceTotal;
@@ -29,9 +28,7 @@ public interface UpdateProperty extends Function<UpdateProperty.Model, PropertyD
     private List<String> images;
     private Long userId;
     private String address;
-    private Integer storeys;
     private Double price;
-    private Integer garages;
     private PropertyType type;
     private Boolean active;
   }
