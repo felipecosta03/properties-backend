@@ -16,9 +16,8 @@ public interface CreateProperty extends Function<CreateProperty.Model, PropertyD
 
     private Integer beds;
     private Integer bathrooms;
-    private String country;
+    private String district;
     private String city;
-    private String state;
     private Integer rooms;
     private Double surfaceCovered;
     private Double surfaceTotal;
@@ -29,9 +28,7 @@ public interface CreateProperty extends Function<CreateProperty.Model, PropertyD
     private List<String> images;
     private Long userId;
     private String address;
-    private Integer storeys;
     private Double price;
-    private Integer garages;
     private PropertyType type;
     private Boolean active;
   }

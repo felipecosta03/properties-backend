@@ -62,34 +62,6 @@ public class PropertySpecs {
         bathrooms);
   }
 
-  public static Specification<Property> withMinGarages(Integer minGarages) {
-    return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(
-        root.get("garages"), minGarages);
-  }
-
-  public static Specification<Property> withMaxGarages(Integer maxGarages) {
-    return (root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("garages"),
-        maxGarages);
-  }
-
-  public static Specification<Property> withGarages(Integer garages) {
-    return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("garages"), garages);
-  }
-
-  public static Specification<Property> withMinStoreys(Integer minStoreys) {
-    return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(
-        root.get("storeys"), minStoreys);
-  }
-
-  public static Specification<Property> withMaxStoreys(Integer maxStoreys) {
-    return (root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("storeys"),
-        maxStoreys);
-  }
-
-  public static Specification<Property> withStoreys(Integer storeys) {
-    return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("storeys"), storeys);
-  }
-
   public static Specification<Property> withMinSurfaceCovered(Double minSurfaceCovered) {
     return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(
         root.get("surfaceCovered"), minSurfaceCovered);

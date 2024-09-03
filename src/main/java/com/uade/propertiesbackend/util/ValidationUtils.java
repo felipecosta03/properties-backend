@@ -27,16 +27,12 @@ public class ValidationUtils {
     validateNotNullAndPositive(bathrooms, "Bathrooms");
   }
 
-  public static void validateCountry(String country) {
-    validateNotBlank(country, "Country");
+  public static void validateDistrict(String district) {
+    validateNotBlank(district, "District");
   }
 
   public static void validateCity(String city) {
     validateNotBlank(city, "City");
-  }
-
-  public static void validateState(String state) {
-    validateNotBlank(state, "State");
   }
 
   public static void validateRooms(Integer rooms) {
@@ -79,20 +75,12 @@ public class ValidationUtils {
     validateNotBlank(address, "Address");
   }
 
-  public static void validateStoreys(Integer storeys) {
-    validateNotNullAndPositive(storeys, "Storeys");
-  }
-
   public static void validatePrice(Double price) {
     validateNotNullAndPositive(price, "Price");
   }
 
   public static void validatePropertyType(PropertyType propertyType) {
     validateNotNull(propertyType, "PropertyType");
-  }
-
-  public static void validateGarages(Integer garages) {
-    validateNotNullAndZeroOrPositive(garages, "garages");
   }
 
   public static void validatePage(Integer page) {

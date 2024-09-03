@@ -2,6 +2,8 @@ package com.uade.propertiesbackend.core.domain;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,9 +25,8 @@ public class Property {
   private Long id;
   private Integer beds;
   private Integer bathrooms;
-  private String country;
+  private String district;
   private String city;
-  private String state;
   private Integer rooms;
   private Double surfaceCovered;
   private Double surfaceTotal;
@@ -37,10 +38,10 @@ public class Property {
   private List<String> images;
   private Long userId;
   private String address;
-  private Integer storeys;
   private Double price;
-  private Integer garages;
+  @Enumerated(EnumType.STRING)
   private PropertyType type;
   private LocalDateTime createdAt;
   private boolean active;
+  private String currency;
 }

@@ -46,12 +46,6 @@ public class RetrievePropertiesRouter {
       @RequestParam(required = false) Optional<Integer> minBathrooms,
       @RequestParam(required = false) Optional<Integer> maxBathrooms,
       @RequestParam(required = false) Optional<Integer> bathrooms,
-      @RequestParam(required = false) Optional<Integer> minGarages,
-      @RequestParam(required = false) Optional<Integer> maxGarages,
-      @RequestParam(required = false) Optional<Integer> garages,
-      @RequestParam(required = false) Optional<Integer> minStoreys,
-      @RequestParam(required = false) Optional<Integer> maxStoreys,
-      @RequestParam(required = false) Optional<Integer> storeys,
       @RequestParam(required = false) Optional<Double> minSurfaceCovered,
       @RequestParam(required = false) Optional<Double> maxSurfaceCovered,
       @RequestParam(required = false) Optional<Double> minSurfaceTotal,
@@ -77,12 +71,6 @@ public class RetrievePropertiesRouter {
             .minBathrooms(minBathrooms)
             .maxBathrooms(maxBathrooms)
             .bathrooms(bathrooms)
-            .minGarages(minGarages)
-            .maxGarages(maxGarages)
-            .garages(garages)
-            .minStoreys(minStoreys)
-            .maxStoreys(maxStoreys)
-            .storeys(storeys)
             .minSurfaceCovered(minSurfaceCovered)
             .maxSurfaceCovered(maxSurfaceCovered)
             .minSurfaceTotal(minSurfaceTotal)

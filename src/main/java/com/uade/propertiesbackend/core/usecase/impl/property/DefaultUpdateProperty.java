@@ -4,9 +4,8 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validateActive;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateBathrooms;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateBeds;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateCity;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateCountry;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateDistrict;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateDescription;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateGarages;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateImages;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateLatitude;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateLongitude;
@@ -14,8 +13,6 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validatePrice;
 import static com.uade.propertiesbackend.util.ValidationUtils.validatePropertyId;
 import static com.uade.propertiesbackend.util.ValidationUtils.validatePropertyType;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateRooms;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateState;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateStoreys;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateAddress;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateSurfaceCovered;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateSurfaceTotal;
@@ -57,9 +54,8 @@ public class DefaultUpdateProperty implements UpdateProperty {
 
     property.setBeds(model.getBeds());
     property.setBathrooms(model.getBathrooms());
-    property.setCountry(model.getCountry());
+    property.setDistrict(model.getDistrict());
     property.setCity(model.getCity());
-    property.setState(model.getState());
     property.setRooms(model.getRooms());
     property.setSurfaceCovered(model.getSurfaceCovered());
     property.setSurfaceTotal(model.getSurfaceTotal());
@@ -69,10 +65,8 @@ public class DefaultUpdateProperty implements UpdateProperty {
     property.setLongitude(model.getLongitude());
     property.setImages(model.getImages());
     property.setAddress(model.getAddress());
-    property.setStoreys(model.getStoreys());
     property.setPrice(model.getPrice());
     property.setType(model.getType());
-    property.setGarages(model.getGarages());
     property.setActive(model.getActive());
 
     propertyRepository.save(property);
@@ -88,9 +82,8 @@ public class DefaultUpdateProperty implements UpdateProperty {
     validatePropertyId(model.getId());
     validateBeds(model.getBeds());
     validateBathrooms(model.getBathrooms());
-    validateCountry(model.getCountry());
+    validateDistrict(model.getDistrict());
     validateCity(model.getCity());
-    validateState(model.getState());
     validateRooms(model.getRooms());
     validateSurfaceCovered(model.getSurfaceCovered());
     validateSurfaceTotal(model.getSurfaceTotal());
@@ -101,9 +94,7 @@ public class DefaultUpdateProperty implements UpdateProperty {
     validateImages(model.getImages());
     validateUserId(model.getUserId());
     validateAddress(model.getAddress());
-    validateStoreys(model.getStoreys());
     validatePrice(model.getPrice());
-    validateGarages(model.getGarages());
     validatePropertyType(model.getType());
     validateActive(model.getActive());
   }
