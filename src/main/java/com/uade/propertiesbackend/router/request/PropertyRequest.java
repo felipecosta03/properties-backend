@@ -11,8 +11,6 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Data
 @AllArgsConstructor
@@ -26,11 +24,9 @@ public class PropertyRequest {
   @Min(value = 1, message = "Bathrooms must be greater than 0")
   private Integer bathrooms;
   @NotBlank
-  private String country;
+  private String district;
   @NotBlank
   private String city;
-  @NotBlank
-  private String state;
   @NotNull
   @Min(value = 1, message = "Rooms must be greater than 0")
   private Integer rooms;
@@ -58,13 +54,10 @@ public class PropertyRequest {
   @NotBlank
   private String address;
   @Positive
-  private Integer storeys;
-  @Positive
   private Double price;
-  @PositiveOrZero
-  @NotNull
-  private Integer garages;
   @NotNull
   private PropertyType type;
   private Boolean active = true;
+  @NotNull
+  private String currency;
 }

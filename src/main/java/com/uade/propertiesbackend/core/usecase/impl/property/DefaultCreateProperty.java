@@ -5,17 +5,14 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validateAddress;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateBathrooms;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateBeds;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateCity;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateCountry;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateDistrict;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateDescription;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateGarages;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateImages;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateLatitude;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateLongitude;
 import static com.uade.propertiesbackend.util.ValidationUtils.validatePrice;
 import static com.uade.propertiesbackend.util.ValidationUtils.validatePropertyType;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateRooms;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateState;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateStoreys;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateSurfaceCovered;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateTitle;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateUserId;
@@ -60,9 +57,8 @@ public class DefaultCreateProperty implements CreateProperty {
         Property.builder()
             .beds(model.getBeds())
             .bathrooms(model.getBathrooms())
-            .country(model.getCountry())
+            .district(model.getDistrict())
             .city(model.getCity())
-            .state(model.getState())
             .rooms(model.getRooms())
             .surfaceCovered(model.getSurfaceCovered())
             .surfaceTotal(model.getSurfaceTotal())
@@ -73,10 +69,8 @@ public class DefaultCreateProperty implements CreateProperty {
             .images(model.getImages())
             .userId(model.getUserId())
             .address(model.getAddress())
-            .storeys(model.getStoreys())
             .price(model.getPrice())
             .type(model.getType())
-            .garages(model.getGarages())
             .createdAt(LocalDateTime.now())
             .active(model.getActive())
             .build());
@@ -90,9 +84,8 @@ public class DefaultCreateProperty implements CreateProperty {
     }
     validateBeds(model.getBeds());
     validateBathrooms(model.getBathrooms());
-    validateCountry(model.getCountry());
+    validateDistrict(model.getDistrict());
     validateCity(model.getCity());
-    validateState(model.getState());
     validateRooms(model.getRooms());
     validateSurfaceCovered(model.getSurfaceCovered());
     validateSurfaceCovered(model.getSurfaceTotal());
@@ -103,10 +96,8 @@ public class DefaultCreateProperty implements CreateProperty {
     validateImages(model.getImages());
     validateUserId(model.getUserId());
     validateAddress(model.getAddress());
-    validateStoreys(model.getStoreys());
     validatePrice(model.getPrice());
     validatePropertyType(model.getType());
-    validateGarages(model.getGarages());
     validateActive(model.getActive());
   }
 }

@@ -30,8 +30,6 @@ public class DefaultRetrievePropertySpecs implements RetrievePropertySpecs {
         .and(withRooms(model.getRooms(), model.getMinRooms(), model.getMaxRooms()))
         .and(withBeds(model.getBeds(), model.getMinBeds(), model.getMaxBeds()))
         .and(withBathrooms(model.getBathrooms(), model.getMinBathrooms(), model.getMaxBathrooms()))
-        .and(withGarages(model.getGarages(), model.getMinGarages(), model.getMaxGarages()))
-        .and(withStoreys(model.getStoreys(), model.getMinStoreys(), model.getMaxStoreys()))
         .and(withCoordinates(model.getMinLat(), model.getMinLon(), model.getMaxLat(), model.getMaxLon()));
   }
 
@@ -57,21 +55,6 @@ public class DefaultRetrievePropertySpecs implements RetrievePropertySpecs {
             .and(maxBathrooms.map(PropertySpecs::withMaxBathrooms).orElse(null)));
   }
 
-  private Specification<Property> withGarages(Optional<Integer> garages,
-      Optional<Integer> minGarages,
-      Optional<Integer> maxGarages) {
-    return garages.map(PropertySpecs::withGarages).orElseGet(
-        () -> Specification.where(minGarages.map(PropertySpecs::withMinGarages).orElse(null))
-            .and(maxGarages.map(PropertySpecs::withMaxGarages).orElse(null)));
-  }
-
-  private Specification<Property> withStoreys(Optional<Integer> storeys,
-      Optional<Integer> minStoreys,
-      Optional<Integer> maxStoreys) {
-    return storeys.map(PropertySpecs::withStoreys).orElseGet(
-        () -> Specification.where(minStoreys.map(PropertySpecs::withMinStoreys).orElse(null))
-            .and(maxStoreys.map(PropertySpecs::withMaxStoreys).orElse(null)));
-  }
 
   private Specification<Property> withCoordinates(Optional<Double> minLat,
       Optional<Double> minLon, Optional<Double> maxLat, Optional<Double> maxLon) {

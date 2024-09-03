@@ -18,9 +18,8 @@ public class PropertyDto {
   private Long id;
   private Integer beds;
   private Integer bathrooms;
-  private String country;
+  private String district;
   private String city;
-  private String state;
   private Integer rooms;
   @JsonProperty("surface_covered")
   private Double surfaceCovered;
@@ -34,11 +33,10 @@ public class PropertyDto {
   @JsonProperty("user_id")
   private Long userId;
   private String address;
-  private Integer storeys;
   private Double price;
-  private Integer garages;
   private PropertyType type;
   @JsonProperty("created_at")
   private LocalDateTime createdAt;
   private boolean active;
+  private String currency;
 }
