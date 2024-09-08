@@ -8,6 +8,7 @@ import static com.uade.propertiesbackend.util.Validate.validateNotNullAndZeroOrP
 
 import com.uade.propertiesbackend.core.domain.PropertySortBy;
 import com.uade.propertiesbackend.core.domain.PropertyType;
+import com.uade.propertiesbackend.core.domain.Role;
 import java.util.List;
 import lombok.experimental.UtilityClass;
 
@@ -65,6 +66,10 @@ public class ValidationUtils {
 
   public static void validateUserId(Long userId) {
     validateNotNullAndPositive(userId, "UserId");
+  }
+
+  public static void validateRole(Role role) {
+    validateNotNull(role, "role");
   }
 
   public static void validateAddress(String address) {
