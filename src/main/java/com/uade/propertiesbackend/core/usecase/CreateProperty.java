@@ -17,7 +17,6 @@ public interface CreateProperty extends Function<CreateProperty.Model, PropertyD
     private Integer beds;
     private Integer bathrooms;
     private String district;
-    private String city;
     private Integer rooms;
     private Double surfaceCovered;
     private Double surfaceTotal;

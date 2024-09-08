@@ -1,5 +1,6 @@
 package com.uade.propertiesbackend.core.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.uade.propertiesbackend.core.domain.PropertyType;
 import java.time.LocalDateTime;
@@ -19,7 +20,6 @@ public class PropertyDto {
   private Integer beds;
   private Integer bathrooms;
   private String district;
-  private String city;
   private Integer rooms;
   @JsonProperty("surface_covered")
   private Double surfaceCovered;
@@ -36,7 +36,7 @@ public class PropertyDto {
   private Double price;
   private PropertyType type;
   @JsonProperty("created_at")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime createdAt;
   private boolean active;
-  private String currency;
 }

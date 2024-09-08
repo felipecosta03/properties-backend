@@ -1,11 +1,11 @@
 package com.uade.propertiesbackend.core.usecase.impl.property;
 
 import static com.uade.propertiesbackend.util.ValidationUtils.validateActive;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateAddress;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateBathrooms;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateBeds;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateCity;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateDistrict;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateDescription;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateDistrict;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateImages;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateLatitude;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateLongitude;
@@ -13,7 +13,6 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validatePrice;
 import static com.uade.propertiesbackend.util.ValidationUtils.validatePropertyId;
 import static com.uade.propertiesbackend.util.ValidationUtils.validatePropertyType;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateRooms;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateAddress;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateSurfaceCovered;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateSurfaceTotal;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateTitle;
@@ -25,6 +24,7 @@ import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.exception.NotFoundException;
 import com.uade.propertiesbackend.core.exception.UnauthorizedException;
+import com.uade.propertiesbackend.core.usecase.HasPropertyCurrentRent;
 import com.uade.propertiesbackend.core.usecase.PropertyMapper;
 import com.uade.propertiesbackend.core.usecase.UpdateProperty;
 import com.uade.propertiesbackend.repository.PropertyRepository;
@@ -36,9 +36,12 @@ import org.springframework.stereotype.Component;
 public class DefaultUpdateProperty implements UpdateProperty {
 
   private final PropertyRepository propertyRepository;
+  private final HasPropertyCurrentRent hasPropertyCurrentRent;
 
-  public DefaultUpdateProperty(PropertyRepository propertyRepository) {
+  public DefaultUpdateProperty(PropertyRepository propertyRepository,
+      HasPropertyCurrentRent hasPropertyCurrentRent) {
     this.propertyRepository = propertyRepository;
+    this.hasPropertyCurrentRent = hasPropertyCurrentRent;
   }
 
   @Override
@@ -52,10 +55,13 @@ public class DefaultUpdateProperty implements UpdateProperty {
       throw new UnauthorizedException("User does not own the property");
     }
 
+    if (hasPropertyCurrentRent.test(model.getId()) && model.getActive()) {
+      throw new BadRequestException("Property already has a current rent");
+    }
+
     property.setBeds(model.getBeds());
     property.setBathrooms(model.getBathrooms());
     property.setDistrict(model.getDistrict());
-    property.setCity(model.getCity());
     property.setRooms(model.getRooms());
     property.setSurfaceCovered(model.getSurfaceCovered());
     property.setSurfaceTotal(model.getSurfaceTotal());
@@ -83,7 +89,6 @@ public class DefaultUpdateProperty implements UpdateProperty {
     validateBeds(model.getBeds());
     validateBathrooms(model.getBathrooms());
     validateDistrict(model.getDistrict());
-    validateCity(model.getCity());
     validateRooms(model.getRooms());
     validateSurfaceCovered(model.getSurfaceCovered());
     validateSurfaceTotal(model.getSurfaceTotal());

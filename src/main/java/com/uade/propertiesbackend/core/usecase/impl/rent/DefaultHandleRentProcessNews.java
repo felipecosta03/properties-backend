@@ -7,6 +7,7 @@ import com.uade.propertiesbackend.core.domain.RentProcessStatus;
 import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.usecase.CreateRent;
 import com.uade.propertiesbackend.core.usecase.HandleRentProcessNews;
+import com.uade.propertiesbackend.core.usecase.HasPropertyCurrentRent;
 import com.uade.propertiesbackend.repository.PropertyRepository;
 import com.uade.propertiesbackend.repository.RentProcessRepository;
 import org.springframework.stereotype.Component;
@@ -18,12 +19,15 @@ public class DefaultHandleRentProcessNews implements HandleRentProcessNews {
   private final RentProcessRepository rentProcessRepository;
   private final PropertyRepository propertyRepository;
   private final CreateRent createRent;
+  private final HasPropertyCurrentRent hasPropertyCurrentRent;
 
   public DefaultHandleRentProcessNews(RentProcessRepository rentProcessRepository,
-      PropertyRepository propertyRepository, CreateRent createRent) {
+      PropertyRepository propertyRepository, CreateRent createRent,
+      HasPropertyCurrentRent hasPropertyCurrentRent) {
     this.rentProcessRepository = rentProcessRepository;
     this.propertyRepository = propertyRepository;
     this.createRent = createRent;
+    this.hasPropertyCurrentRent = hasPropertyCurrentRent;
   }
 
   @Override
@@ -35,6 +39,10 @@ public class DefaultHandleRentProcessNews implements HandleRentProcessNews {
 
     if (RentProcessStatus.SUCCESS.equals(rentProcess.getStatus())) {
       throw new BadRequestException("Rent process already finished");
+    }
+
+    if (hasPropertyCurrentRent.test(rentProcess.getProperty().getId())) {
+      throw new BadRequestException("Property already has a current rent");
     }
 
     if (!RentProcessStatus.REJECTED.equals(model.getStatus())) {

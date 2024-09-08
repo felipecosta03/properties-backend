@@ -38,29 +38,18 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
     validateModel(model);
 
     Specification<Property> specification = retrievePropertySpecs.apply(
-        RetrievePropertySpecs.Model.builder()
-            .minPrice(model.getMinPrice())
-            .maxPrice(model.getMaxPrice())
-            .minRooms(model.getMinRooms())
-            .maxRooms(model.getMaxRooms())
-            .rooms(model.getRooms())
-            .minBeds(model.getMinBeds())
-            .maxBeds(model.getMaxBeds())
-            .beds(model.getBeds())
-            .minBathrooms(model.getMinBathrooms())
-            .maxBathrooms(model.getMaxBathrooms())
-            .bathrooms(model.getBathrooms())
-            .propertyType(model.getPropertyType())
-            .minSurfaceCovered(model.getMinSurfaceCovered())
+        RetrievePropertySpecs.Model.builder().minPrice(model.getMinPrice())
+            .active(model.getActive())
+            .districts(model.getDistricts())
+            .maxPrice(model.getMaxPrice()).minRooms(model.getMinRooms())
+            .maxRooms(model.getMaxRooms()).rooms(model.getRooms()).minBeds(model.getMinBeds())
+            .maxBeds(model.getMaxBeds()).beds(model.getBeds()).minBathrooms(model.getMinBathrooms())
+            .maxBathrooms(model.getMaxBathrooms()).bathrooms(model.getBathrooms())
+            .propertyType(model.getPropertyType()).minSurfaceCovered(model.getMinSurfaceCovered())
             .maxSurfaceCovered(model.getMaxSurfaceCovered())
-            .minSurfaceTotal(model.getMinSurfaceTotal())
-            .maxSurfaceTotal(model.getMaxSurfaceTotal())
-            .minLat(model.getMinLat())
-            .minLon(model.getMinLon())
-            .maxLat(model.getMaxLat())
-            .maxLon(model.getMaxLon())
-            .userId(model.getUserId())
-            .build());
+            .minSurfaceTotal(model.getMinSurfaceTotal()).maxSurfaceTotal(model.getMaxSurfaceTotal())
+            .minLat(model.getMinLat()).minLon(model.getMinLon()).maxLat(model.getMaxLat())
+            .maxLon(model.getMaxLon()).userId(model.getUserId()).build());
 
     final Sort sortBy = model.getSortBy().map(retrievePropertySort).orElse(Sort.unsorted());
 
@@ -88,6 +77,9 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
     model.getBathrooms().ifPresent(ValidationUtils::validateBathrooms);
     model.getPropertyType().ifPresent(ValidationUtils::validatePropertyType);
     model.getUserId().ifPresent(ValidationUtils::validateUserId);
+    model.getDistricts()
+        .ifPresent(districts -> districts.forEach(ValidationUtils::validateDistrict));
+    model.getActive().ifPresent(ValidationUtils::validateActive);
 
     model.getMinRooms().ifPresent(ValidationUtils::validateRooms);
     model.getMinBeds().ifPresent(ValidationUtils::validateBeds);

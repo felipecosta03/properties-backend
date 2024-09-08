@@ -4,7 +4,6 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validateActive;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateAddress;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateBathrooms;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateBeds;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateCity;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateDistrict;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateDescription;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateImages;
@@ -58,7 +57,6 @@ public class DefaultCreateProperty implements CreateProperty {
             .beds(model.getBeds())
             .bathrooms(model.getBathrooms())
             .district(model.getDistrict())
-            .city(model.getCity())
             .rooms(model.getRooms())
             .surfaceCovered(model.getSurfaceCovered())
             .surfaceTotal(model.getSurfaceTotal())
@@ -85,7 +83,6 @@ public class DefaultCreateProperty implements CreateProperty {
     validateBeds(model.getBeds());
     validateBathrooms(model.getBathrooms());
     validateDistrict(model.getDistrict());
-    validateCity(model.getCity());
     validateRooms(model.getRooms());
     validateSurfaceCovered(model.getSurfaceCovered());
     validateSurfaceCovered(model.getSurfaceTotal());

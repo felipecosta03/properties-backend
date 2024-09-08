@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +57,8 @@ public class RetrievePropertiesRouter {
       @RequestParam(required = false) Optional<Double> maxLon,
       @RequestParam(required = false) Optional<PropertyType> propertyType,
       @RequestParam(required = false) Optional<PropertySortBy> sortBy,
+      @RequestParam(required = false) Optional<List<String>> districts,
+      @RequestParam(required = false) Optional<Boolean> active,
       @RequestParam(required = false) Optional<Long> userId,
       @RequestParam(required = false, defaultValue = "0") Optional<Integer> page) {
     return ResponseEntity.ok(retrieveProperties.apply(
@@ -81,6 +84,8 @@ public class RetrievePropertiesRouter {
             .maxLon(maxLon)
             .propertyType(propertyType)
             .userId(userId)
+            .active(active)
+            .districts(districts)
             .page(page)
             .sortBy(sortBy)
             .build()));

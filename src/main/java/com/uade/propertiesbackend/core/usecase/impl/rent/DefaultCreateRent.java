@@ -7,6 +7,7 @@ import com.uade.propertiesbackend.core.domain.RentProcessStatus;
 import com.uade.propertiesbackend.core.domain.RentStatus;
 import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.usecase.CreateRent;
+import com.uade.propertiesbackend.core.usecase.HasPropertyCurrentRent;
 import com.uade.propertiesbackend.repository.RentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,15 +17,23 @@ import org.springframework.stereotype.Component;
 public class DefaultCreateRent implements CreateRent {
 
   private final RentRepository rentRepository;
+  private final HasPropertyCurrentRent hasPropertyCurrentRent;
 
-  public DefaultCreateRent(RentRepository rentRepository) {
+  public DefaultCreateRent(RentRepository rentRepository,
+      HasPropertyCurrentRent hasPropertyCurrentRent) {
     this.rentRepository = rentRepository;
+    this.hasPropertyCurrentRent = hasPropertyCurrentRent;
   }
 
   @Override
   public void accept(Model model) {
     validateModel(model);
     log.info("Creating rent: {}", model);
+
+    if (hasPropertyCurrentRent.test(model.getRentProcess().getProperty().getId())) {
+      throw new BadRequestException("Property already has a current rent");
+    }
+
     rentRepository.save(
         Rent.builder().rentProcess(model.getRentProcess()).status(RentStatus.PENDING_PAYMENT)
             .build());

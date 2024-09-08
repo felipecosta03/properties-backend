@@ -2,6 +2,7 @@ package com.uade.propertiesbackend.core.usecase;
 
 import com.uade.propertiesbackend.core.domain.Property;
 import com.uade.propertiesbackend.core.domain.PropertyType;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import lombok.Builder;
@@ -14,6 +15,7 @@ public interface RetrievePropertySpecs extends
   @Getter
   @Builder
   class Model {
+
     private Optional<Double> minPrice;
     private Optional<Double> maxPrice;
     private Optional<Integer> minRooms;
@@ -33,6 +35,8 @@ public interface RetrievePropertySpecs extends
     private Optional<Double> minLon;
     private Optional<Double> maxLat;
     private Optional<Double> maxLon;
+    private Optional<List<String>> districts;
+    private Optional<Boolean> active;
     private Optional<PropertyType> propertyType;
     private Optional<Long> userId;
   }
