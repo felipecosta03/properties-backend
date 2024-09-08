@@ -16,7 +16,6 @@ public interface UpdateProperty extends Function<UpdateProperty.Model, PropertyD
     private Long id;
     private Integer beds;
     private Integer bathrooms;
-    private String city;
     private String district;
     private Integer rooms;
     private Double surfaceCovered;
