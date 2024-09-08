@@ -43,15 +43,18 @@ public class DefaultCreateRentProcess implements CreateRentProcess {
     Property property = propertyRepository.findById(model.getPropertyId())
         .orElseThrow(() -> new BadRequestException("Property does not exist"));
 
+    if (!property.isActive()) {
+      throw new BadRequestException("Property is not active");
+    }
+
     if (model.getTenantId().equals(property.getUserId())) {
       throw new BadRequestException("Owner cannot rent his own property");
     }
 
     rentProcessRepository.findByPropertyIdAndTenantIdAndStatusNotRejected(model.getPropertyId(),
-            model.getTenantId()).stream().findAny()
-        .ifPresent(rentProcess -> {
-          throw new BadRequestException("Rent process already exists");
-        });
+        model.getTenantId()).stream().findAny().ifPresent(rentProcess -> {
+      throw new BadRequestException("Rent process already exists");
+    });
 
     RentProcess rentProcess = rentProcessRepository.save(
         RentProcess.builder().property(property).tenantId(model.getTenantId())

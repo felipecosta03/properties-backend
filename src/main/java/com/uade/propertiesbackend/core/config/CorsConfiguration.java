@@ -1,4 +1,4 @@
-package com.uade.propertiesbackend.core;
+package com.uade.propertiesbackend.core.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
