@@ -2,6 +2,7 @@ package com.uade.propertiesbackend.util;
 
 import com.uade.propertiesbackend.core.domain.Property;
 import com.uade.propertiesbackend.core.domain.PropertyType;
+import java.util.List;
 import lombok.experimental.UtilityClass;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -86,12 +87,15 @@ public class PropertySpecs {
     return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("type"), propertyType);
   }
 
-  public static Specification<Property> withActive() {
-    return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("active"), true);
+  public static Specification<Property> withActive(Boolean active) {
+    return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("active"), active);
   }
 
   public static Specification<Property> withUserId(Long userId) {
     return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("userId"), userId);
   }
 
+  public static Specification<Property> withDistricts(List<String> districts) {
+    return (root, query, criteriaBuilder) -> root.get("district").in(districts);
+  }
 }
