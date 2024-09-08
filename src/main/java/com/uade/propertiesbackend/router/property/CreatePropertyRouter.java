@@ -40,7 +40,6 @@ public class CreatePropertyRouter {
             .description(propertyRequest.getDescription())
             .bathrooms(propertyRequest.getBathrooms())
             .beds(propertyRequest.getBeds())
-            .city(propertyRequest.getCity())
             .rooms(propertyRequest.getRooms())
             .district(propertyRequest.getDistrict())
             .images(propertyRequest.getImages())

@@ -26,7 +26,6 @@ public class Property {
   private Integer beds;
   private Integer bathrooms;
   private String district;
-  private String city;
   private Integer rooms;
   private Double surfaceCovered;
   private Double surfaceTotal;
@@ -43,5 +42,4 @@ public class Property {
   private PropertyType type;
   private LocalDateTime createdAt;
   private boolean active;
-  private String currency;
 }

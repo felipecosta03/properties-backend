@@ -20,7 +20,6 @@ public class PropertyDto {
   private Integer beds;
   private Integer bathrooms;
   private String district;
-  private String city;
   private Integer rooms;
   @JsonProperty("surface_covered")
   private Double surfaceCovered;
@@ -40,5 +39,4 @@ public class PropertyDto {
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime createdAt;
   private boolean active;
-  private String currency;
 }

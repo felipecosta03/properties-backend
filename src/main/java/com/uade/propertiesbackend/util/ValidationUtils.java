@@ -31,10 +31,6 @@ public class ValidationUtils {
     validateNotBlank(district, "District");
   }
 
-  public static void validateCity(String city) {
-    validateNotBlank(city, "City");
-  }
-
   public static void validateRooms(Integer rooms) {
     validateNotNullAndPositive(rooms, "Rooms");
   }

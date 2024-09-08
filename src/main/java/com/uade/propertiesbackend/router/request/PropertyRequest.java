@@ -25,8 +25,6 @@ public class PropertyRequest {
   private Integer bathrooms;
   @NotBlank
   private String district;
-  @NotBlank
-  private String city;
   @NotNull
   @Min(value = 1, message = "Rooms must be greater than 0")
   private Integer rooms;
@@ -58,6 +56,4 @@ public class PropertyRequest {
   @NotNull
   private PropertyType type;
   private Boolean active = true;
-  @NotNull
-  private String currency;
 }

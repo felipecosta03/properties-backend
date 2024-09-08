@@ -3,7 +3,6 @@ package com.uade.propertiesbackend.core.usecase.impl.property;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateActive;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateBathrooms;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateBeds;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateCity;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateDistrict;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateDescription;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateImages;
@@ -55,7 +54,6 @@ public class DefaultUpdateProperty implements UpdateProperty {
     property.setBeds(model.getBeds());
     property.setBathrooms(model.getBathrooms());
     property.setDistrict(model.getDistrict());
-    property.setCity(model.getCity());
     property.setRooms(model.getRooms());
     property.setSurfaceCovered(model.getSurfaceCovered());
     property.setSurfaceTotal(model.getSurfaceTotal());
@@ -83,7 +81,6 @@ public class DefaultUpdateProperty implements UpdateProperty {
     validateBeds(model.getBeds());
     validateBathrooms(model.getBathrooms());
     validateDistrict(model.getDistrict());
-    validateCity(model.getCity());
     validateRooms(model.getRooms());
     validateSurfaceCovered(model.getSurfaceCovered());
     validateSurfaceTotal(model.getSurfaceTotal());
