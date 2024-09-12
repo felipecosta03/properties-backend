@@ -19,7 +19,7 @@ public class DefaultRetrieveProperty implements RetrieveProperty {
 
   public DefaultRetrieveProperty(PropertyRepository propertyRepository, PropertyIsFavorite propertyIsFavorite) {
     this.propertyRepository = propertyRepository;
-      this.propertyIsFavorite = propertyIsFavorite;
+    this.propertyIsFavorite = propertyIsFavorite;
   }
 
   @Override
@@ -35,8 +35,12 @@ public class DefaultRetrieveProperty implements RetrieveProperty {
   public PropertyDto apply(PropertyParametersDTO propertyParametersDTO) {
     validatePropertyId(propertyParametersDTO.getPropertyId());
     return propertyRepository.findById(propertyParametersDTO.getPropertyId())
-            .map((property -> PropertyMapper.INSTANCE.propertyToPropertyDto(property, propertyIsFavorite.test(PropertyIsFavorite.Model.builder().propertyId(propertyParametersDTO.getPropertyId()).userId(propertyParametersDTO.getUserId()).build())))).orElseThrow(
-                    () -> new NotFoundException(
-                            String.format("Property with id=%s not found.", propertyParametersDTO.getPropertyId())));
+        .map((property -> PropertyMapper.INSTANCE.propertyToPropertyDto(property,
+            propertyIsFavorite.test(
+                PropertyIsFavorite.Model.builder().propertyId(propertyParametersDTO.getPropertyId())
+                    .userId(propertyParametersDTO.getUserId()).build())))).orElseThrow(
+            () -> new NotFoundException(
+                String.format("Property with id=%s not found.",
+                    propertyParametersDTO.getPropertyId())));
   }
 }
