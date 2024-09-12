@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import java.util.function.Predicate;
 
+@FunctionalInterface
 public interface PropertyIsFavorite extends Predicate<PropertyIsFavorite.Model> {
     @Getter
     @Builder
