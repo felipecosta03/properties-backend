@@ -39,4 +39,6 @@ public class PropertyDto {
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime createdAt;
   private boolean active;
+  @Builder.Default
+  private boolean favorite = false;
 }
