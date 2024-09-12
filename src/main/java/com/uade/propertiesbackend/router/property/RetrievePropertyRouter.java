@@ -36,8 +36,8 @@ public class RetrievePropertyRouter {
       @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @GetMapping("/properties/{propertyId}")
-  public ResponseEntity<PropertyDto> get(@PathVariable Long propertyId, @RequestHeader(name = "user_id") Long userId) {
+  public ResponseEntity<PropertyDto> get(@PathVariable Long propertyId, @RequestHeader(name = "userId") Long costumerUserId) {
     log.info("Retrieving property with id: {}", propertyId);
-    return ResponseEntity.ok(retrieveProperty.apply(PropertyParametersDTO.builder().propertyId(propertyId).userId(userId).build()));
+    return ResponseEntity.ok(retrieveProperty.apply(PropertyParametersDTO.builder().propertyId(propertyId).userId(costumerUserId).build()));
   }
 }
