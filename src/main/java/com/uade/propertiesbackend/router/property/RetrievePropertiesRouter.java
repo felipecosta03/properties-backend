@@ -16,6 +16,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -60,7 +61,8 @@ public class RetrievePropertiesRouter {
       @RequestParam(required = false) Optional<List<String>> districts,
       @RequestParam(required = false) Optional<Boolean> active,
       @RequestParam(required = false) Optional<Long> userId,
-      @RequestParam(required = false, defaultValue = "0") Optional<Integer> page) {
+      @RequestParam(required = false, defaultValue = "0") Optional<Integer> page,
+      @RequestHeader("userId") Long customerUserId) {
     return ResponseEntity.ok(retrieveProperties.apply(
         RetrieveProperties.Model.builder()
             .minPrice(minPrice)
@@ -88,6 +90,7 @@ public class RetrievePropertiesRouter {
             .districts(districts)
             .page(page)
             .sortBy(sortBy)
+            .customerUserId(customerUserId)
             .build()));
   }
 }

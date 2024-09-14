@@ -4,11 +4,9 @@ import static java.util.Objects.isNull;
 
 import com.uade.propertiesbackend.core.domain.Property;
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
+import com.uade.propertiesbackend.core.domain.dto.PropertyParametersDTO;
 import com.uade.propertiesbackend.core.exception.BadRequestException;
-import com.uade.propertiesbackend.core.usecase.PropertyMapper;
-import com.uade.propertiesbackend.core.usecase.RetrieveProperties;
-import com.uade.propertiesbackend.core.usecase.RetrievePropertySort;
-import com.uade.propertiesbackend.core.usecase.RetrievePropertySpecs;
+import com.uade.propertiesbackend.core.usecase.*;
 import com.uade.propertiesbackend.repository.PropertyRepository;
 import com.uade.propertiesbackend.util.ValidationUtils;
 import java.util.Optional;
@@ -25,12 +23,14 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
   private final PropertyRepository propertyRepository;
   private final RetrievePropertySpecs retrievePropertySpecs;
   private final RetrievePropertySort retrievePropertySort;
+  private final PropertyIsFavorite propertyIsFavorite;
 
   public DefaultRetrieveProperties(PropertyRepository propertyRepository,
-      RetrievePropertySpecs retrievePropertySpecs, RetrievePropertySort retrievePropertySort) {
+                                   RetrievePropertySpecs retrievePropertySpecs, RetrievePropertySort retrievePropertySort, PropertyIsFavorite propertyIsFavorite) {
     this.propertyRepository = propertyRepository;
     this.retrievePropertySpecs = retrievePropertySpecs;
     this.retrievePropertySort = retrievePropertySort;
+    this.propertyIsFavorite = propertyIsFavorite;
   }
 
   @Override
@@ -55,7 +55,10 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
 
     return propertyRepository.findAll(specification,
             PageRequest.of(model.getPage().orElse(0), PAGE_SIZE, sortBy))
-        .map(PropertyMapper.INSTANCE::propertyToPropertyDto);
+        .map(property -> PropertyMapper.INSTANCE.propertyToPropertyDto(property,
+            propertyIsFavorite.test(
+                PropertyIsFavorite.Model.builder().userId(model.getCustomerUserId())
+                    .propertyId(property.getId()).build())));
   }
 
   private void validateModel(Model model) {

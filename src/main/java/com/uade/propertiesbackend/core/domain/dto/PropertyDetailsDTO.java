@@ -14,8 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PropertyDto {
-
+public class PropertyDetailsDTO {
   private Long id;
   private Integer beds;
   private Integer bathrooms;
@@ -41,4 +40,5 @@ public class PropertyDto {
   private boolean active;
   @Builder.Default
   private boolean favorite = false;
+  private boolean disable;
 }
