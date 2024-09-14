@@ -41,5 +41,6 @@ public interface RetrieveProperties extends Function<RetrieveProperties.Model, P
     private Optional<Integer> page;
     private Optional<PropertySortBy> sortBy;
     private Optional<Long> userId;
+    private Long customerUserId;
   }
 }
