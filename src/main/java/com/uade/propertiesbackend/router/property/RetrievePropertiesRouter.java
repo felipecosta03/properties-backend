@@ -62,7 +62,7 @@ public class RetrievePropertiesRouter {
       @RequestParam(required = false) Optional<Boolean> active,
       @RequestParam(required = false) Optional<Long> userId,
       @RequestParam(required = false, defaultValue = "0") Optional<Integer> page,
-      @RequestHeader("userId") Long customerUserId) {
+      @RequestHeader(value = "userId", required = false) Long customerUserId) {
     return ResponseEntity.ok(retrieveProperties.apply(
         RetrieveProperties.Model.builder()
             .minPrice(minPrice)
