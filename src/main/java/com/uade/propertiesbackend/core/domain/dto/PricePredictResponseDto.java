@@ -10,9 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PricePredictDto {
+public class PricePredictResponseDto {
 
   @JsonProperty("estimated_price")
   private Double estimatedPrice;
-  private String classification;
 }

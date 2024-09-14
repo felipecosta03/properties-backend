@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,14 +27,14 @@ public class CreateRentProcessRouter {
 
   @Operation(summary = "Create a rent process")
   @ApiResponses(value = {
-          @ApiResponse(responseCode = "200", description = "Rent process created"),
-          @ApiResponse(responseCode = "400", description = "Bad request", content = {
-                  @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
-          @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
-                  @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
+      @ApiResponse(responseCode = "200", description = "Rent process created"),
+      @ApiResponse(responseCode = "400", description = "Bad request", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
+      @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @PostMapping("/rent-process/{propertyId}")
   public ResponseEntity<Void> createRentProcess(@PathVariable Long propertyId,
-      @RequestParam Long userId) {
+      @RequestHeader(name = "userId") Long userId) {
     createRentProcess.accept(
         CreateRentProcess.Model.builder().tenantId(userId).propertyId(propertyId).build());
     return ResponseEntity.noContent().build();
