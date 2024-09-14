@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DefaultPropertyIsDisable implements PropertyIsDisable {
+
   final RentProcessRepository rentProcessRepository;
 
   public DefaultPropertyIsDisable(RentProcessRepository rentProcessRepository) {
@@ -14,7 +15,8 @@ public class DefaultPropertyIsDisable implements PropertyIsDisable {
 
   @Override
   public boolean test(Model model) {
-    return this.isOwner(model.getPropertyUserId(), model.getUserId()) || this.userHasRentProcess(model.getUserId(), model.getPropertyId());
+    return this.isOwner(model.getPropertyUserId(), model.getUserId()) || this.userHasRentProcess(
+        model.getUserId(), model.getPropertyId());
   }
 
   private boolean isOwner(Long propertyUserId, Long userId) {
@@ -22,6 +24,7 @@ public class DefaultPropertyIsDisable implements PropertyIsDisable {
   }
 
   private boolean userHasRentProcess(Long userId, Long propertyId) {
-    return this.rentProcessRepository.findByPropertyIdAndTenantIdAndStatusNotRejected(propertyId, userId).stream().findAny().isPresent();
+    return this.rentProcessRepository.findByPropertyIdAndTenantIdAndStatusNotRejected(propertyId,
+        userId).stream().findAny().isPresent();
   }
 }

@@ -55,7 +55,10 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
 
     return propertyRepository.findAll(specification,
             PageRequest.of(model.getPage().orElse(0), PAGE_SIZE, sortBy))
-        .map(property -> PropertyMapper.INSTANCE.propertyToPropertyDto(property, propertyIsFavorite.test(PropertyIsFavorite.Model.builder().userId(model.getCustomerUserId()).propertyId(property.getId()).build())));
+        .map(property -> PropertyMapper.INSTANCE.propertyToPropertyDto(property,
+            propertyIsFavorite.test(
+                PropertyIsFavorite.Model.builder().userId(model.getCustomerUserId())
+                    .propertyId(property.getId()).build())));
   }
 
   private void validateModel(Model model) {

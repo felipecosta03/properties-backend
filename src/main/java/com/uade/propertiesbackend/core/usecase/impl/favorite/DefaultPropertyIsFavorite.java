@@ -14,6 +14,7 @@ public class DefaultPropertyIsFavorite implements PropertyIsFavorite {
 
     @Override
     public boolean test(Model model) {
-        return favoritePropertyRepository.findByUserIdAndPropertyId(model.getUserId(), model.getPropertyId()).isPresent();
+        return favoritePropertyRepository.findByUserIdAndPropertyId(model.getUserId(),
+            model.getPropertyId()).isPresent();
     }
 }

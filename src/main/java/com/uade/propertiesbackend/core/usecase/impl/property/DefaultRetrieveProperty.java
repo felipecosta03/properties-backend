@@ -20,8 +20,8 @@ public class DefaultRetrieveProperty implements RetrieveProperty {
   private final PropertyIsFavorite propertyIsFavorite;
   private final PropertyIsDisable propertyIsDisable;
 
-  public DefaultRetrieveProperty(PropertyRepository propertyRepository, PropertyIsFavorite propertyIsFavorite,
-      PropertyIsDisable propertyIsDisable) {
+  public DefaultRetrieveProperty(PropertyRepository propertyRepository,
+      PropertyIsFavorite propertyIsFavorite, PropertyIsDisable propertyIsDisable) {
     this.propertyRepository = propertyRepository;
     this.propertyIsFavorite = propertyIsFavorite;
     this.propertyIsDisable = propertyIsDisable;
@@ -39,15 +39,12 @@ public class DefaultRetrieveProperty implements RetrieveProperty {
   @Override
   public PropertyDetailsDTO apply(PropertyParametersDTO propertyParametersDTO) {
     validatePropertyId(propertyParametersDTO.getPropertyId());
-    return propertyRepository.findById(propertyParametersDTO.getPropertyId())
-        .map((property -> PropertyMapper.INSTANCE.propertyToPropertyDetailsDTO(property,
-            this.checkIsFavorite(property.getId(), propertyParametersDTO.getUserId()),
-            this.checkIsDisable(property.getId(), propertyParametersDTO.getUserId(),
-                property.getUserId())
-            ))).orElseThrow(
-            () -> new NotFoundException(
-                String.format("Property with id=%s not found.",
-                    propertyParametersDTO.getPropertyId())));
+    return propertyRepository.findById(propertyParametersDTO.getPropertyId()).map(
+        (property -> PropertyMapper.INSTANCE.propertyToPropertyDetailsDTO(property,
+            checkIsFavorite(property.getId(), propertyParametersDTO.getUserId()),
+            checkIsDisable(property.getId(), propertyParametersDTO.getUserId(),
+                property.getUserId())))).orElseThrow(() -> new NotFoundException(
+        String.format("Property with id=%s not found.", propertyParametersDTO.getPropertyId())));
   }
 
   private boolean checkIsFavorite(Long id, Long userId) {
@@ -57,8 +54,8 @@ public class DefaultRetrieveProperty implements RetrieveProperty {
 
   private boolean checkIsDisable(Long id, Long userId, Long propertyUserId) {
     return propertyIsDisable.test(
-        PropertyIsDisable.Model.builder().propertyId(id).propertyUserId(propertyUserId).userId(userId).build());
+        PropertyIsDisable.Model.builder().propertyId(id).propertyUserId(propertyUserId)
+            .userId(userId).build());
   }
 
 }
-
