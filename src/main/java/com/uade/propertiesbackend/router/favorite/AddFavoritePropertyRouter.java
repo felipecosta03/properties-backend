@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +37,7 @@ public class AddFavoritePropertyRouter {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @PostMapping("/properties/{propertyId}/favorites")
   public ResponseEntity<Void> addFavoriteProperty(@PathVariable Long propertyId,
-      @RequestParam Long userId) {
+      @RequestHeader(name = "userId") Long userId) {
     addFavoriteProperty.accept(
         AddFavoriteProperty.Model.builder().propertyId(propertyId).userId(userId).build());
     return ResponseEntity.noContent().build();

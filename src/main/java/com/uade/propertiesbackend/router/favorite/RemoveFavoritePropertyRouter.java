@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +37,7 @@ public class RemoveFavoritePropertyRouter {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @DeleteMapping("/properties/{propertyId}/favorites")
   public ResponseEntity<Void> removeFavoriteProperty(@PathVariable Long propertyId,
-      @RequestParam Long userId) {
+      @RequestHeader(name = "userId") Long userId) {
     removeFavoriteProperty.accept(
         RemoveFavoriteProperty.Model.builder().propertyId(propertyId).userId(userId).build());
     return ResponseEntity.noContent().build();

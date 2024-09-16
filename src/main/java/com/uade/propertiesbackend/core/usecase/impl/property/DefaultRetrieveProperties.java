@@ -4,9 +4,12 @@ import static java.util.Objects.isNull;
 
 import com.uade.propertiesbackend.core.domain.Property;
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
-import com.uade.propertiesbackend.core.domain.dto.PropertyParametersDTO;
 import com.uade.propertiesbackend.core.exception.BadRequestException;
-import com.uade.propertiesbackend.core.usecase.*;
+import com.uade.propertiesbackend.core.usecase.PropertyIsFavorite;
+import com.uade.propertiesbackend.core.usecase.PropertyMapper;
+import com.uade.propertiesbackend.core.usecase.RetrieveProperties;
+import com.uade.propertiesbackend.core.usecase.RetrievePropertySort;
+import com.uade.propertiesbackend.core.usecase.RetrievePropertySpecs;
 import com.uade.propertiesbackend.repository.PropertyRepository;
 import com.uade.propertiesbackend.util.ValidationUtils;
 import java.util.Optional;
@@ -26,7 +29,8 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
   private final PropertyIsFavorite propertyIsFavorite;
 
   public DefaultRetrieveProperties(PropertyRepository propertyRepository,
-                                   RetrievePropertySpecs retrievePropertySpecs, RetrievePropertySort retrievePropertySort, PropertyIsFavorite propertyIsFavorite) {
+      RetrievePropertySpecs retrievePropertySpecs, RetrievePropertySort retrievePropertySort,
+      PropertyIsFavorite propertyIsFavorite) {
     this.propertyRepository = propertyRepository;
     this.retrievePropertySpecs = retrievePropertySpecs;
     this.retrievePropertySort = retrievePropertySort;
@@ -39,26 +43,28 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
 
     Specification<Property> specification = retrievePropertySpecs.apply(
         RetrievePropertySpecs.Model.builder().minPrice(model.getMinPrice())
-            .active(model.getActive())
-            .districts(model.getDistricts())
-            .maxPrice(model.getMaxPrice()).minRooms(model.getMinRooms())
-            .maxRooms(model.getMaxRooms()).rooms(model.getRooms()).minBeds(model.getMinBeds())
-            .maxBeds(model.getMaxBeds()).beds(model.getBeds()).minBathrooms(model.getMinBathrooms())
-            .maxBathrooms(model.getMaxBathrooms()).bathrooms(model.getBathrooms())
-            .propertyType(model.getPropertyType()).minSurfaceCovered(model.getMinSurfaceCovered())
+            .active(model.getActive()).districts(model.getDistricts()).maxPrice(model.getMaxPrice())
+            .minRooms(model.getMinRooms()).maxRooms(model.getMaxRooms()).rooms(model.getRooms())
+            .minBeds(model.getMinBeds()).maxBeds(model.getMaxBeds()).beds(model.getBeds())
+            .minBathrooms(model.getMinBathrooms()).maxBathrooms(model.getMaxBathrooms())
+            .bathrooms(model.getBathrooms()).propertyType(model.getPropertyType())
+            .minSurfaceCovered(model.getMinSurfaceCovered())
             .maxSurfaceCovered(model.getMaxSurfaceCovered())
             .minSurfaceTotal(model.getMinSurfaceTotal()).maxSurfaceTotal(model.getMaxSurfaceTotal())
             .minLat(model.getMinLat()).minLon(model.getMinLon()).maxLat(model.getMaxLat())
             .maxLon(model.getMaxLon()).userId(model.getUserId()).build());
 
-    final Sort sortBy = model.getSortBy().map(retrievePropertySort).orElse(Sort.unsorted());
+    final Sort sortBy = model.getSortBy().map(retrievePropertySort).orElse(Sort.by(Sort.Order.asc("id")));
 
-    return propertyRepository.findAll(specification,
-            PageRequest.of(model.getPage().orElse(0), PAGE_SIZE, sortBy))
-        .map(property -> PropertyMapper.INSTANCE.propertyToPropertyDto(property,
-            propertyIsFavorite.test(
-                PropertyIsFavorite.Model.builder().userId(model.getCustomerUserId())
-                    .propertyId(property.getId()).build())));
+    Page<Property> properties = propertyRepository.findAll(specification,
+        PageRequest.of(model.getPage().orElse(0), PAGE_SIZE, sortBy));
+
+    if (isNull(model.getCustomerUserId())) {
+      return properties.map(PropertyMapper.INSTANCE::propertyToPropertyDto);
+    }
+    return properties.map(property -> PropertyMapper.INSTANCE.propertyToPropertyDto(property,
+        propertyIsFavorite.test(PropertyIsFavorite.Model.builder().userId(model.getCustomerUserId())
+            .propertyId(property.getId()).build())));
   }
 
   private void validateModel(Model model) {

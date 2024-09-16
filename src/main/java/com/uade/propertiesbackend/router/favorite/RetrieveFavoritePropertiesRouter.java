@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +32,7 @@ public class RetrieveFavoritePropertiesRouter {
       @ApiResponse(responseCode = "400", description = "Bad request", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @GetMapping("/properties/favorites")
-  public ResponseEntity<Page<PropertyDto>> retrieveFavoriteProperties(@RequestParam Long userId,
+  public ResponseEntity<Page<PropertyDto>> retrieveFavoriteProperties(@RequestHeader(name = "userId") Long userId,
       @RequestParam Integer page) {
     return ResponseEntity.ok(retrieveFavoriteProperties.apply(
         RetrieveFavoriteProperties.Model.builder().userId(userId).page(page).build()));
