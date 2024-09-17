@@ -73,6 +73,7 @@ public class DefaultUpdateProperty implements UpdateProperty {
     property.setAddress(model.getAddress());
     property.setPrice(model.getPrice());
     property.setType(model.getType());
+    property.setZipcode(model.getZipcode());
     property.setActive(model.getActive());
 
     propertyRepository.save(property);

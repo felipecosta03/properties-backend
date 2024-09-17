@@ -66,6 +66,7 @@ public class DefaultCreateProperty implements CreateProperty {
             .longitude(model.getLongitude())
             .images(model.getImages())
             .userId(model.getUserId())
+            .zipcode(model.getZipcode())
             .address(model.getAddress())
             .price(model.getPrice())
             .type(model.getType())
