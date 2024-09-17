@@ -39,6 +39,7 @@ public class Property {
   private List<String> images;
   private Long userId;
   private String address;
+  private String zipcode;
   private Double price;
   @Enumerated(EnumType.STRING)
   private PropertyType type;
