@@ -57,6 +57,7 @@ public class DefaultPartialUpdateProperty implements PartialUpdateProperty {
     property.setLongitude(model.getLongitude().orElse(property.getLongitude()));
     property.setImages(model.getImages().orElse(property.getImages()));
     property.setAddress(model.getAddress().orElse(property.getAddress()));
+    property.setZipcode(model.getZipcode().orElse(property.getZipcode()));
     property.setPrice(model.getPrice().orElse(property.getPrice()));
     property.setType(model.getType().orElse(property.getType()));
     property.setActive(model.getActive());
