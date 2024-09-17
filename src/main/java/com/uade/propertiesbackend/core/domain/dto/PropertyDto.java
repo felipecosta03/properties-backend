@@ -33,6 +33,7 @@ public class PropertyDto {
   @JsonProperty("user_id")
   private Long userId;
   private String address;
+  private String zipcode;
   private Double price;
   private PropertyType type;
   @JsonProperty("created_at")

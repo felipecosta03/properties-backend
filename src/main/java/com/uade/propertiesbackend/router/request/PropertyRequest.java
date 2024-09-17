@@ -51,6 +51,8 @@ public class PropertyRequest {
   private Long userId;
   @NotBlank
   private String address;
+  @NotBlank
+  private String zipcode;
   @Positive
   private Double price;
   @NotNull

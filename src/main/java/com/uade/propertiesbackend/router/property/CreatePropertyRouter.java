@@ -50,6 +50,7 @@ public class CreatePropertyRouter {
             .surfaceTotal(propertyRequest.getSurfaceTotal())
             .userId(propertyRequest.getUserId())
             .address(propertyRequest.getAddress())
+            .zipcode(propertyRequest.getZipcode())
             .type(propertyRequest.getType())
             .active(propertyRequest.getActive())
             .build()));

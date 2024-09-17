@@ -59,6 +59,7 @@ public class UpdatePropertyRouter {
             .surfaceCovered(propertyRequest.getSurfaceCovered())
             .surfaceTotal(propertyRequest.getSurfaceTotal())
             .userId(propertyRequest.getUserId())
+            .zipcode(propertyRequest.getZipcode())
             .address(propertyRequest.getAddress())
             .type(propertyRequest.getType())
             .active(propertyRequest.getActive())

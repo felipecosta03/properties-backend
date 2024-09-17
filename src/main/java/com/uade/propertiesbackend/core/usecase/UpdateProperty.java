@@ -26,6 +26,7 @@ public interface UpdateProperty extends Function<UpdateProperty.Model, PropertyD
     private Double longitude;
     private List<String> images;
     private Long userId;
+    private String zipcode;
     private String address;
     private Double price;
     private PropertyType type;
