@@ -15,6 +15,7 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validateRooms;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateSurfaceCovered;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateTitle;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateUserId;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateZipcode;
 import static java.util.Objects.isNull;
 
 import com.uade.propertiesbackend.core.domain.Property;
@@ -94,6 +95,7 @@ public class DefaultCreateProperty implements CreateProperty {
     validateImages(model.getImages());
     validateUserId(model.getUserId());
     validateAddress(model.getAddress());
+    validateZipcode(model.getZipcode());
     validatePrice(model.getPrice());
     validatePropertyType(model.getType());
     validateActive(model.getActive());
