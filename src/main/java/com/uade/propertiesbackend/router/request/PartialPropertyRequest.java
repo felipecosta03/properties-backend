@@ -30,6 +30,6 @@ public class PartialPropertyRequest {
   private String zipcode;
   private Double price;
   private PropertyType type;
-  private Boolean active = true;
+  private Boolean active;
 
 }

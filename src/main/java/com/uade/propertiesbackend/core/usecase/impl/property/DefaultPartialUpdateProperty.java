@@ -40,7 +40,7 @@ public class DefaultPartialUpdateProperty implements PartialUpdateProperty {
       throw new UnauthorizedException("User does not own the property");
     }
 
-    if (hasPropertyCurrentRent.test(model.getId()) && model.getActive()) {
+    if (hasPropertyCurrentRent.test(model.getId()) && model.getActive().orElse(property.isActive())) {
       throw new BadRequestException("Property already has a current rent");
     }
     this.validateModel(model);
@@ -60,7 +60,7 @@ public class DefaultPartialUpdateProperty implements PartialUpdateProperty {
     property.setZipcode(model.getZipcode().orElse(property.getZipcode()));
     property.setPrice(model.getPrice().orElse(property.getPrice()));
     property.setType(model.getType().orElse(property.getType()));
-    property.setActive(model.getActive());
+    property.setActive(model.getActive().orElse(property.isActive()));
 
     propertyRepository.save(property);
 
@@ -89,6 +89,6 @@ public class DefaultPartialUpdateProperty implements PartialUpdateProperty {
     model.getAddress().ifPresent(ValidationUtils::validateAddress);
     model.getPrice().ifPresent(ValidationUtils::validatePrice);
     model.getType().ifPresent(ValidationUtils::validatePropertyType);
-    validateActive(model.getActive());
+    model.getActive().ifPresent(ValidationUtils::validateActive);
   }
 }

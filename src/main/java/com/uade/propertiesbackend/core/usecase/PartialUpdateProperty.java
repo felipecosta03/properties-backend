@@ -30,6 +30,6 @@ public interface PartialUpdateProperty extends Function<PartialUpdateProperty.Mo
     private Optional<String> zipcode;
     private Optional<Double> price;
     private Optional<PropertyType> type;
-    private Boolean active;
+    private Optional<Boolean> active;
   }
 }
