@@ -40,7 +40,7 @@ public interface RetrieveProperties extends Function<RetrieveProperties.Model, P
     private Optional<PropertyType> propertyType;
     private Optional<Integer> page;
     private Optional<PropertySortBy> sortBy;
-    private Optional<Long> userId;
-    private Long customerUserId;
+    private Optional<Long> propertyOwnerId;
+    private Long userId;
   }
 }

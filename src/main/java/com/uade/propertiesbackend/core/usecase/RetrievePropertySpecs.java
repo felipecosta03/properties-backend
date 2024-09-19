@@ -38,6 +38,6 @@ public interface RetrievePropertySpecs extends
     private Optional<List<String>> districts;
     private Optional<Boolean> active;
     private Optional<PropertyType> propertyType;
-    private Optional<Long> userId;
+    private Optional<Long> propertyOwnerId;
   }
 }

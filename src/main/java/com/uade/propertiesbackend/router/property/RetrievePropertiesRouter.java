@@ -31,8 +31,7 @@ public class RetrievePropertiesRouter {
   }
 
   @Operation(summary = "Retrieve properties")
-  @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Properties retrieved"),
+  @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Properties retrieved"),
       @ApiResponse(responseCode = "400", description = "Bad request", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @GetMapping("/properties")
@@ -60,37 +59,17 @@ public class RetrievePropertiesRouter {
       @RequestParam(required = false) Optional<PropertySortBy> sortBy,
       @RequestParam(required = false) Optional<List<String>> districts,
       @RequestParam(required = false) Optional<Boolean> active,
-      @RequestParam(required = false) Optional<Long> userId,
+      @RequestParam(required = false) Optional<Long> propertyOwnerId,
       @RequestParam(required = false, defaultValue = "0") Optional<Integer> page,
-      @RequestHeader(value = "userId", required = false) Long customerUserId) {
+      @RequestHeader(value = "userId", required = false) Long userId) {
     return ResponseEntity.ok(retrieveProperties.apply(
-        RetrieveProperties.Model.builder()
-            .minPrice(minPrice)
-            .maxPrice(maxPrice)
-            .minRooms(minRooms)
-            .maxRooms(maxRooms)
-            .rooms(rooms)
-            .minBeds(minBeds)
-            .maxBeds(maxBeds)
-            .beds(beds)
-            .minBathrooms(minBathrooms)
-            .maxBathrooms(maxBathrooms)
-            .bathrooms(bathrooms)
-            .minSurfaceCovered(minSurfaceCovered)
-            .maxSurfaceCovered(maxSurfaceCovered)
-            .minSurfaceTotal(minSurfaceTotal)
-            .maxSurfaceTotal(maxSurfaceTotal)
-            .minLat(minLat)
-            .minLon(minLon)
-            .maxLat(maxLat)
-            .maxLon(maxLon)
-            .propertyType(propertyType)
-            .userId(userId)
-            .active(active)
-            .districts(districts)
-            .page(page)
-            .sortBy(sortBy)
-            .customerUserId(customerUserId)
-            .build()));
+        RetrieveProperties.Model.builder().minPrice(minPrice).maxPrice(maxPrice).minRooms(minRooms)
+            .maxRooms(maxRooms).rooms(rooms).minBeds(minBeds).maxBeds(maxBeds).beds(beds)
+            .minBathrooms(minBathrooms).maxBathrooms(maxBathrooms).bathrooms(bathrooms)
+            .minSurfaceCovered(minSurfaceCovered).maxSurfaceCovered(maxSurfaceCovered)
+            .minSurfaceTotal(minSurfaceTotal).maxSurfaceTotal(maxSurfaceTotal).minLat(minLat)
+            .minLon(minLon).maxLat(maxLat).maxLon(maxLon).propertyType(propertyType)
+            .propertyOwnerId(propertyOwnerId).active(active).districts(districts).page(page)
+            .sortBy(sortBy).userId(userId).build()));
   }
 }

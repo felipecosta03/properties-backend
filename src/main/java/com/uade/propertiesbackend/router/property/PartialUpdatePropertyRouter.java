@@ -10,14 +10,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -44,7 +43,8 @@ public class PartialUpdatePropertyRouter {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @PatchMapping("/properties/{propertyId}")
   public ResponseEntity<PropertyDto> update(@PathVariable Long propertyId,
-      @RequestBody PartialPropertyRequest partialPropertyRequest) {
+      @RequestBody PartialPropertyRequest partialPropertyRequest,
+      @RequestHeader(value = "userId") Long userId) {
     log.info("Updating property with id: {}", propertyId);
 
     PartialUpdateProperty.Model model =
@@ -61,7 +61,7 @@ public class PartialUpdatePropertyRouter {
             .longitude(Optional.ofNullable(partialPropertyRequest.getLongitude()))
             .surfaceCovered(Optional.ofNullable(partialPropertyRequest.getSurfaceCovered()))
             .surfaceTotal(Optional.ofNullable(partialPropertyRequest.getSurfaceTotal()))
-            .userId(partialPropertyRequest.getUserId())
+            .userId(userId)
             .zipcode(Optional.ofNullable(partialPropertyRequest.getZipcode()))
             .address(Optional.ofNullable(partialPropertyRequest.getAddress()))
             .type(Optional.ofNullable(partialPropertyRequest.getType()))

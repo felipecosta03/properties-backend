@@ -29,7 +29,7 @@ public class PropertyDetailsDTO {
   private Double latitude;
   private Double longitude;
   private List<String> images;
-  @JsonProperty("user_id")
+  @JsonProperty("owner_id")
   private Long userId;
   private String address;
   private String zipcode;
