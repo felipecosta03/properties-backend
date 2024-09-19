@@ -65,7 +65,7 @@ public class PartialUpdatePropertyRouter {
             .zipcode(Optional.ofNullable(partialPropertyRequest.getZipcode()))
             .address(Optional.ofNullable(partialPropertyRequest.getAddress()))
             .type(Optional.ofNullable(partialPropertyRequest.getType()))
-            .active(partialPropertyRequest.getActive())
+            .active(Optional.ofNullable(partialPropertyRequest.getActive()))
             .build();
 
     PropertyDto propertyDto = partialUpdateProperty.apply(model);
