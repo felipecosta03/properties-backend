@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -41,7 +42,7 @@ public class UpdatePropertyRouter {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @PutMapping("/properties/{propertyId}")
   public ResponseEntity<PropertyDto> update(@PathVariable Long propertyId,
-      @RequestBody PropertyRequest propertyRequest) {
+      @RequestBody PropertyRequest propertyRequest, @RequestHeader(value = "userId") Long userId) {
     log.info("Updating property with id: {}", propertyId);
 
     UpdateProperty.Model model =
@@ -58,7 +59,7 @@ public class UpdatePropertyRouter {
             .longitude(propertyRequest.getLongitude())
             .surfaceCovered(propertyRequest.getSurfaceCovered())
             .surfaceTotal(propertyRequest.getSurfaceTotal())
-            .userId(propertyRequest.getUserId())
+            .userId(userId)
             .zipcode(propertyRequest.getZipcode())
             .address(propertyRequest.getAddress())
             .type(propertyRequest.getType())

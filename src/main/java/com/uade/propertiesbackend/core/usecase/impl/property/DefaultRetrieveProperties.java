@@ -52,18 +52,18 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
             .maxSurfaceCovered(model.getMaxSurfaceCovered())
             .minSurfaceTotal(model.getMinSurfaceTotal()).maxSurfaceTotal(model.getMaxSurfaceTotal())
             .minLat(model.getMinLat()).minLon(model.getMinLon()).maxLat(model.getMaxLat())
-            .maxLon(model.getMaxLon()).userId(model.getUserId()).build());
+            .maxLon(model.getMaxLon()).propertyOwnerId(model.getPropertyOwnerId()).build());
 
     final Sort sortBy = model.getSortBy().map(retrievePropertySort).orElse(Sort.by(Sort.Order.asc("id")));
 
     Page<Property> properties = propertyRepository.findAll(specification,
         PageRequest.of(model.getPage().orElse(0), PAGE_SIZE, sortBy));
 
-    if (isNull(model.getCustomerUserId())) {
+    if (isNull(model.getUserId())) {
       return properties.map(PropertyMapper.INSTANCE::propertyToPropertyDto);
     }
     return properties.map(property -> PropertyMapper.INSTANCE.propertyToPropertyDto(property,
-        propertyIsFavorite.test(PropertyIsFavorite.Model.builder().userId(model.getCustomerUserId())
+        propertyIsFavorite.test(PropertyIsFavorite.Model.builder().userId(model.getUserId())
             .propertyId(property.getId()).build())));
   }
 
@@ -85,7 +85,7 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
     model.getBeds().ifPresent(ValidationUtils::validateBeds);
     model.getBathrooms().ifPresent(ValidationUtils::validateBathrooms);
     model.getPropertyType().ifPresent(ValidationUtils::validatePropertyType);
-    model.getUserId().ifPresent(ValidationUtils::validateUserId);
+    model.getPropertyOwnerId().ifPresent(ValidationUtils::validateUserId);
     model.getDistricts()
         .ifPresent(districts -> districts.forEach(ValidationUtils::validateDistrict));
     model.getActive().ifPresent(ValidationUtils::validateActive);

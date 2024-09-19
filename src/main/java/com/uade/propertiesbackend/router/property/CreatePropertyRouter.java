@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -34,7 +35,7 @@ public class CreatePropertyRouter {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @PostMapping("/properties")
   public ResponseEntity<PropertyDto> createProperty(
-      @RequestBody PropertyRequest propertyRequest) {
+      @RequestBody PropertyRequest propertyRequest, @RequestHeader(value = "userId") Long userId) {
     return ResponseEntity.ok(createProperty.apply(
         CreateProperty.Model.builder().title(propertyRequest.getTitle())
             .description(propertyRequest.getDescription())
@@ -48,7 +49,7 @@ public class CreatePropertyRouter {
             .longitude(propertyRequest.getLongitude())
             .surfaceCovered(propertyRequest.getSurfaceCovered())
             .surfaceTotal(propertyRequest.getSurfaceTotal())
-            .userId(propertyRequest.getUserId())
+            .userId(userId)
             .address(propertyRequest.getAddress())
             .zipcode(propertyRequest.getZipcode())
             .type(propertyRequest.getType())
