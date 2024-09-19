@@ -17,6 +17,7 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validateSurfaceCov
 import static com.uade.propertiesbackend.util.ValidationUtils.validateSurfaceTotal;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateTitle;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateUserId;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateZipcode;
 import static java.util.Objects.isNull;
 
 import com.uade.propertiesbackend.core.domain.Property;
@@ -100,6 +101,7 @@ public class DefaultUpdateProperty implements UpdateProperty {
     validateImages(model.getImages());
     validateUserId(model.getUserId());
     validateAddress(model.getAddress());
+    validateZipcode(model.getZipcode());
     validatePrice(model.getPrice());
     validatePropertyType(model.getType());
     validateActive(model.getActive());

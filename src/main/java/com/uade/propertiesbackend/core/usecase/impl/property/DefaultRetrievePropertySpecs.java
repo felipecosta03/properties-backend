@@ -23,7 +23,7 @@ public class DefaultRetrievePropertySpecs implements RetrievePropertySpecs {
         .and(model.getMinSurfaceTotal().map(PropertySpecs::withMinSurfaceTotal).orElse(null))
         .and(model.getMaxSurfaceTotal().map(PropertySpecs::withMaxSurfaceTotal).orElse(null))
         .and(model.getPropertyType().map(PropertySpecs::withPropertyType).orElse(null))
-        .and(model.getUserId().map(PropertySpecs::withUserId).orElse(null))
+        .and(model.getPropertyOwnerId().map(PropertySpecs::withUserId).orElse(null))
         .and(withRooms(model.getRooms(), model.getMinRooms(), model.getMaxRooms()))
         .and(withBeds(model.getBeds(), model.getMinBeds(), model.getMaxBeds()))
         .and(withBathrooms(model.getBathrooms(), model.getMinBathrooms(), model.getMaxBathrooms()))

@@ -48,6 +48,10 @@ public class ValidationUtils {
     validateNotBlank(title, "Title");
   }
 
+  public static void validateZipcode(String zipcode) {
+    validateNotBlank(zipcode, "Zipcode");
+  }
+
   public static void validateDescription(String description) {
     validateNotBlank(description, "Description");
   }
