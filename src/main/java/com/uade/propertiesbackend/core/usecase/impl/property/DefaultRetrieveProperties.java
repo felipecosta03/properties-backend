@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DefaultRetrieveProperties implements RetrieveProperties {
 
-  private static final Integer PAGE_SIZE = 20;
+  private static final Integer PAGE_SIZE = 40;
   private final PropertyRepository propertyRepository;
   private final RetrievePropertySpecs retrievePropertySpecs;
   private final RetrievePropertySort retrievePropertySort;
@@ -57,7 +57,7 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
     final Sort sortBy = model.getSortBy().map(retrievePropertySort).orElse(Sort.by(Sort.Order.asc("id")));
 
     Page<Property> properties = propertyRepository.findAll(specification,
-        PageRequest.of(model.getPage().orElse(0), PAGE_SIZE, sortBy));
+        PageRequest.of(model.getPage().orElse(0), model.getSize().orElse(PAGE_SIZE), sortBy));
 
     if (isNull(model.getUserId())) {
       return properties.map(PropertyMapper.INSTANCE::propertyToPropertyDto);

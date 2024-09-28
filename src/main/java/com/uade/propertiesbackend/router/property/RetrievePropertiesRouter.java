@@ -61,6 +61,7 @@ public class RetrievePropertiesRouter {
       @RequestParam(required = false) Optional<Boolean> active,
       @RequestParam(required = false) Optional<Long> propertyOwnerId,
       @RequestParam(required = false, defaultValue = "0") Optional<Integer> page,
+      @RequestParam(required = false) Optional<Integer> size,
       @RequestHeader(value = "userId", required = false) Long userId) {
     return ResponseEntity.ok(retrieveProperties.apply(
         RetrieveProperties.Model.builder().minPrice(minPrice).maxPrice(maxPrice).minRooms(minRooms)
@@ -70,6 +71,7 @@ public class RetrievePropertiesRouter {
             .minSurfaceTotal(minSurfaceTotal).maxSurfaceTotal(maxSurfaceTotal).minLat(minLat)
             .minLon(minLon).maxLat(maxLat).maxLon(maxLon).propertyType(propertyType)
             .propertyOwnerId(propertyOwnerId).active(active).districts(districts).page(page)
+            .size(size)
             .sortBy(sortBy).userId(userId).build()));
   }
 }
