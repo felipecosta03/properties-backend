@@ -39,6 +39,7 @@ public interface RetrieveProperties extends Function<RetrieveProperties.Model, P
     private Optional<Boolean> active;
     private Optional<PropertyType> propertyType;
     private Optional<Integer> page;
+    private Optional<Integer> size;
     private Optional<PropertySortBy> sortBy;
     private Optional<Long> propertyOwnerId;
     private Long userId;
