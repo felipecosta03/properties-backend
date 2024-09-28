@@ -14,7 +14,7 @@ public class DefaultRetrievePropertySpecs implements RetrievePropertySpecs {
   public Specification<Property> apply(Model model) {
 
     return Specification.where(
-            model.getActive().map(PropertySpecs::withActive).orElse(PropertySpecs.withActive(true)))
+            model.getActive().map(PropertySpecs::withActive).orElse(null))
         .and(model.getDistricts().map(PropertySpecs::withDistricts).orElse(null))
         .and(model.getMinPrice().map(PropertySpecs::withMinPrice).orElse(null))
         .and(model.getMaxPrice().map(PropertySpecs::withMaxPrice).orElse(null))
