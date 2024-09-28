@@ -32,7 +32,7 @@ public class HandleRentNewsRouter {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
       @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
-  @PostMapping("/rent-process/news")
+  @PostMapping("/rentals/news")
   public ResponseEntity<Void> handleRentNews(@RequestBody final RentNews rentNews) {
     handleRentNews.accept(
         HandleRentNews.Model.builder().rentId(rentNews.getRentId()).status(rentNews.getStatus())
