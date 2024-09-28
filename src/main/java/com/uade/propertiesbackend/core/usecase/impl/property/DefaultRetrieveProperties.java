@@ -57,7 +57,7 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
     final Sort sortBy = model.getSortBy().map(retrievePropertySort).orElse(Sort.by(Sort.Order.asc("id")));
 
     Page<Property> properties = propertyRepository.findAll(specification,
-        PageRequest.of(model.getPage().orElse(0), model.getPage().orElse(PAGE_SIZE), sortBy));
+        PageRequest.of(model.getPage().orElse(0), model.getSize().orElse(PAGE_SIZE), sortBy));
 
     if (isNull(model.getUserId())) {
       return properties.map(PropertyMapper.INSTANCE::propertyToPropertyDto);
