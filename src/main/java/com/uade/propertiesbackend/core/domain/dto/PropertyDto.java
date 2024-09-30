@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
@@ -34,6 +35,7 @@ public class PropertyDto {
   private Long userId;
   private String address;
   private String zipcode;
+  @Setter
   private Double price;
   private PropertyType type;
   @JsonProperty("created_at")
