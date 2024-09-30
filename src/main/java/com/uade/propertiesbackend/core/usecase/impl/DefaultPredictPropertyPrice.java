@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DefaultPredictPropertyPrice implements PredictPropertyPrice {
 
+  private final Double DOLAR_RATE = 1100D;
   private final RetrieveProperty retrieveProperty;
   private final PricePredictRepository pricePredictRepository;
 
@@ -25,6 +26,7 @@ public class DefaultPredictPropertyPrice implements PredictPropertyPrice {
   public PricePredictDto apply(Long propertyId) {
 
     PropertyDto propertyDto = retrieveProperty.apply(propertyId);
+    propertyDto.setPrice(propertyDto.getPrice()/DOLAR_RATE);
     PricePredictResponseDto responseDto = pricePredictRepository.predictPrice(propertyDto);
     String classification = classificateRealPrice(propertyDto.getPrice(),
         responseDto.getEstimatedPrice());
