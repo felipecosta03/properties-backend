@@ -36,6 +36,7 @@ public class Property {
   private Double latitude;
   private Double longitude;
   @ElementCollection
+  @Column(length = 100000)
   private List<String> images;
   private Long userId;
   private String address;

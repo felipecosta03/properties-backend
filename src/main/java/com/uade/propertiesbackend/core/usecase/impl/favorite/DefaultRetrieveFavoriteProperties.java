@@ -38,7 +38,7 @@ public class DefaultRetrieveFavoriteProperties implements RetrieveFavoriteProper
     List<Long> propertiesId = favoritePropertyRepository.findAllByUserId(model.getUserId()).stream()
         .map(FavoriteProperty::getPropertyId).collect(toList());
 
-    return propertyRepository.findPropertiesByIdIn(propertiesId,
+    return propertyRepository.findPropertiesByIdInAndActiveTrue(propertiesId,
             PageRequest.of(model.getPage(), PAGE_SIZE))
         .map(PropertyMapper.INSTANCE::propertyToPropertyDto);
   }
