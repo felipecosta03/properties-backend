@@ -19,7 +19,7 @@ public interface PropertyRepository extends JpaRepository<Property, Long>,
 
   Page<Property> findAll(Specification<Property> specification, Pageable pageable);
 
-  Page<Property> findPropertiesByIdIn(List<Long> propertiesId, Pageable pageable);
+  Page<Property> findPropertiesByIdInAndActiveTrue(List<Long> propertiesId, Pageable pageable);
 
   @Query("SELECT DISTINCT p.district FROM Property p")
   List<String> retrieveDistricts();
