@@ -1,6 +1,7 @@
 package com.uade.propertiesbackend.router;
 
 import com.uade.propertiesbackend.core.exception.BadRequestException;
+import com.uade.propertiesbackend.core.exception.FailedDependencyException;
 import com.uade.propertiesbackend.core.exception.NotFoundException;
 import com.uade.propertiesbackend.core.exception.UnauthorizedException;
 import com.uade.propertiesbackend.router.exception.ApiError;
@@ -40,7 +41,7 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(apiError.getStatus()).body(apiError);
   }
 
-  @ExceptionHandler(Exception.class)
+  @ExceptionHandler(value = {Exception.class, FailedDependencyException.class})
   public ResponseEntity<ApiError> handleUnknownException(Exception e) {
 
     ApiError apiError = ApiError.builder().message(e.getMessage())

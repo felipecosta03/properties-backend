@@ -39,11 +39,12 @@ jobs:
 
       - name: Pull Image from docker hub
         run: sudo docker pull joubina/smartmoveback:latest
-        
+
       - name: Run Docker Container
         env:
             DATABASE_URL: ${{ secrets.DATABASE_URL }}
+            CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
         run: |
             sudo docker run -d -p 8080:8080 --name smartmovecontainer \
-            -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+            -e DATABASE_URL="${{ secrets.DATABASE_URL }}" -e CLOUDINARY_URL="${{ secrets.CLOUDINARY_URL }}" \
             joubina/smartmoveback
