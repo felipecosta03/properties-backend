@@ -4,8 +4,8 @@ import static com.uade.propertiesbackend.util.ValidationUtils.validateActive;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateAddress;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateBathrooms;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateBeds;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateDistrict;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateDescription;
+import static com.uade.propertiesbackend.util.ValidationUtils.validateDistrict;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateImages;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateLatitude;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateLongitude;
@@ -22,6 +22,7 @@ import com.uade.propertiesbackend.core.domain.Property;
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.exception.NotFoundException;
+import com.uade.propertiesbackend.core.usecase.CreateImages;
 import com.uade.propertiesbackend.core.usecase.CreateProperty;
 import com.uade.propertiesbackend.core.usecase.PropertyMapper;
 import com.uade.propertiesbackend.core.usecase.UserExists;
@@ -37,11 +38,13 @@ public class DefaultCreateProperty implements CreateProperty {
 
   private final PropertyRepository propertyRepository;
   private final UserExists userExists;
+  private final CreateImages createImages;
 
-
-  public DefaultCreateProperty(PropertyRepository propertyRepository, UserExists userExists) {
+  public DefaultCreateProperty(PropertyRepository propertyRepository, UserExists userExists,
+      CreateImages createImages) {
     this.propertyRepository = propertyRepository;
     this.userExists = userExists;
+    this.createImages = createImages;
   }
 
   @Override
@@ -54,26 +57,15 @@ public class DefaultCreateProperty implements CreateProperty {
     }
 
     Property property = propertyRepository.save(
-        Property.builder()
-            .beds(model.getBeds())
-            .bathrooms(model.getBathrooms())
-            .district(model.getDistrict())
-            .rooms(model.getRooms())
-            .surfaceCovered(model.getSurfaceCovered())
-            .surfaceTotal(model.getSurfaceTotal())
-            .title(model.getTitle())
-            .description(model.getDescription())
-            .latitude(model.getLatitude())
-            .longitude(model.getLongitude())
-            .images(model.getImages())
-            .userId(model.getUserId())
-            .zipcode(model.getZipcode())
-            .address(model.getAddress())
-            .price(model.getPrice())
-            .type(model.getType())
-            .createdAt(LocalDateTime.now())
-            .active(model.getActive())
-            .build());
+        Property.builder().beds(model.getBeds()).bathrooms(model.getBathrooms())
+            .district(model.getDistrict()).rooms(model.getRooms())
+            .surfaceCovered(model.getSurfaceCovered()).surfaceTotal(model.getSurfaceTotal())
+            .title(model.getTitle()).description(model.getDescription())
+            .latitude(model.getLatitude()).longitude(model.getLongitude())
+            .images(createImages.apply(model.getImages()))
+            .userId(model.getUserId()).zipcode(model.getZipcode()).address(model.getAddress())
+            .price(model.getPrice()).type(model.getType()).createdAt(LocalDateTime.now())
+            .active(model.getActive()).build());
 
     return PropertyMapper.INSTANCE.propertyToPropertyDto(property);
   }

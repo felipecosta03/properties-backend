@@ -25,6 +25,7 @@ import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.exception.NotFoundException;
 import com.uade.propertiesbackend.core.exception.UnauthorizedException;
+import com.uade.propertiesbackend.core.usecase.CreateImages;
 import com.uade.propertiesbackend.core.usecase.HasPropertyCurrentRent;
 import com.uade.propertiesbackend.core.usecase.PropertyMapper;
 import com.uade.propertiesbackend.core.usecase.UpdateProperty;
@@ -38,11 +39,13 @@ public class DefaultUpdateProperty implements UpdateProperty {
 
   private final PropertyRepository propertyRepository;
   private final HasPropertyCurrentRent hasPropertyCurrentRent;
+  private final CreateImages createImages;
 
   public DefaultUpdateProperty(PropertyRepository propertyRepository,
-      HasPropertyCurrentRent hasPropertyCurrentRent) {
+      HasPropertyCurrentRent hasPropertyCurrentRent, CreateImages createImages) {
     this.propertyRepository = propertyRepository;
     this.hasPropertyCurrentRent = hasPropertyCurrentRent;
+    this.createImages = createImages;
   }
 
   @Override
@@ -70,7 +73,7 @@ public class DefaultUpdateProperty implements UpdateProperty {
     property.setDescription(model.getDescription());
     property.setLatitude(model.getLatitude());
     property.setLongitude(model.getLongitude());
-    property.setImages(model.getImages());
+    property.setImages(createImages.apply(model.getImages()));
     property.setAddress(model.getAddress());
     property.setPrice(model.getPrice());
     property.setType(model.getType());
