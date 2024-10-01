@@ -1,7 +1,5 @@
 package com.uade.propertiesbackend.core.usecase.impl.property;
 
-import static com.uade.propertiesbackend.util.ValidationUtils.validateActive;
-import static com.uade.propertiesbackend.util.ValidationUtils.validateBeds;
 import static com.uade.propertiesbackend.util.ValidationUtils.validatePropertyId;
 import static com.uade.propertiesbackend.util.ValidationUtils.validateUserId;
 import static java.util.Objects.isNull;
@@ -11,6 +9,7 @@ import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.exception.NotFoundException;
 import com.uade.propertiesbackend.core.exception.UnauthorizedException;
+import com.uade.propertiesbackend.core.usecase.CreateImages;
 import com.uade.propertiesbackend.core.usecase.HasPropertyCurrentRent;
 import com.uade.propertiesbackend.core.usecase.PartialUpdateProperty;
 import com.uade.propertiesbackend.core.usecase.PropertyMapper;
@@ -22,14 +21,18 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class DefaultPartialUpdateProperty implements PartialUpdateProperty {
+
   private final PropertyRepository propertyRepository;
   private final HasPropertyCurrentRent hasPropertyCurrentRent;
+  private final CreateImages createImages;
 
   public DefaultPartialUpdateProperty(PropertyRepository propertyRepository,
-      HasPropertyCurrentRent hasPropertyCurrentRent) {
+      HasPropertyCurrentRent hasPropertyCurrentRent, CreateImages createImages) {
     this.propertyRepository = propertyRepository;
     this.hasPropertyCurrentRent = hasPropertyCurrentRent;
+    this.createImages = createImages;
   }
+
   @Override
   public PropertyDto apply(Model model) {
     Property property = propertyRepository.findById(model.getId()).orElseThrow(
@@ -40,7 +43,8 @@ public class DefaultPartialUpdateProperty implements PartialUpdateProperty {
       throw new UnauthorizedException("User does not own the property");
     }
 
-    if (hasPropertyCurrentRent.test(model.getId()) && model.getActive().orElse(property.isActive())) {
+    if (hasPropertyCurrentRent.test(model.getId()) && model.getActive()
+        .orElse(property.isActive())) {
       throw new BadRequestException("Property already has a current rent");
     }
     this.validateModel(model);
@@ -55,7 +59,7 @@ public class DefaultPartialUpdateProperty implements PartialUpdateProperty {
     property.setDescription(model.getDescription().orElse(property.getDescription()));
     property.setLatitude(model.getLatitude().orElse(property.getLatitude()));
     property.setLongitude(model.getLongitude().orElse(property.getLongitude()));
-    property.setImages(model.getImages().orElse(property.getImages()));
+    property.setImages(model.getImages().map(createImages).orElse(property.getImages()));
     property.setAddress(model.getAddress().orElse(property.getAddress()));
     property.setZipcode(model.getZipcode().orElse(property.getZipcode()));
     property.setPrice(model.getPrice().orElse(property.getPrice()));

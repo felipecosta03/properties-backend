@@ -79,6 +79,16 @@
       <artifactId>mapstruct</artifactId>
       <version>${org.mapstruct.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.cloudinary</groupId>
+      <artifactId>cloudinary-http44</artifactId>
+      <version>1.36.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.cloudinary</groupId>
+      <artifactId>cloudinary-taglib</artifactId>
+      <version>1.36.0</version>
+    </dependency>
     <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
     <dependency>
       <groupId>org.springdoc</groupId>
