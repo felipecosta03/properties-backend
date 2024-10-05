@@ -44,4 +44,6 @@ public class PropertyDto {
   private boolean active;
   @Builder.Default
   private boolean favorite = false;
+  @JsonProperty("rented")
+  private boolean rented;
 }

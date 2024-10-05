@@ -33,8 +33,8 @@ public class RetrieveFavoritePropertiesRouter {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @GetMapping("/properties/favorites")
   public ResponseEntity<Page<PropertyDto>> retrieveFavoriteProperties(@RequestHeader(name = "userId") Long userId,
-      @RequestParam Integer page) {
+      @RequestParam Integer page, @RequestParam Integer size) {
     return ResponseEntity.ok(retrieveFavoriteProperties.apply(
-        RetrieveFavoriteProperties.Model.builder().userId(userId).page(page).build()));
+        RetrieveFavoriteProperties.Model.builder().userId(userId).page(page).size(size).build()));
   }
 }
