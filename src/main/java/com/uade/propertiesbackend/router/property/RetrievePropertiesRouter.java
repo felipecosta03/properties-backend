@@ -1,5 +1,7 @@
 package com.uade.propertiesbackend.router.property;
 
+import static com.uade.propertiesbackend.util.SecurityUtils.getUserId;
+
 import com.uade.propertiesbackend.core.domain.PropertySortBy;
 import com.uade.propertiesbackend.core.domain.PropertyType;
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
@@ -61,8 +63,7 @@ public class RetrievePropertiesRouter {
       @RequestParam(required = false) Optional<Boolean> active,
       @RequestParam(required = false) Optional<Long> propertyOwnerId,
       @RequestParam(required = false, defaultValue = "0") Optional<Integer> page,
-      @RequestParam(required = false) Optional<Integer> size,
-      @RequestHeader(value = "userId", required = false) Long userId) {
+      @RequestParam(required = false) Optional<Integer> size) {
     return ResponseEntity.ok(retrieveProperties.apply(
         RetrieveProperties.Model.builder().minPrice(minPrice).maxPrice(maxPrice).minRooms(minRooms)
             .maxRooms(maxRooms).rooms(rooms).minBeds(minBeds).maxBeds(maxBeds).beds(beds)
@@ -72,6 +73,6 @@ public class RetrievePropertiesRouter {
             .minLon(minLon).maxLat(maxLat).maxLon(maxLon).propertyType(propertyType)
             .propertyOwnerId(propertyOwnerId).active(active).districts(districts).page(page)
             .size(size)
-            .sortBy(sortBy).userId(userId).build()));
+            .sortBy(sortBy).userId(getUserId()).build()));
   }
 }

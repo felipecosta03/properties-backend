@@ -1,5 +1,7 @@
 package com.uade.propertiesbackend.router.property;
 
+import static com.uade.propertiesbackend.util.SecurityUtils.getUserId;
+
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.usecase.PartialUpdateProperty;
 import com.uade.propertiesbackend.router.exception.ApiError;
@@ -43,8 +45,7 @@ public class PartialUpdatePropertyRouter {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @PatchMapping("/properties/{propertyId}")
   public ResponseEntity<PropertyDto> update(@PathVariable Long propertyId,
-      @RequestBody PartialPropertyRequest partialPropertyRequest,
-      @RequestHeader(value = "userId") Long userId) {
+      @RequestBody PartialPropertyRequest partialPropertyRequest) {
     log.info("Updating property with id: {}", propertyId);
 
     PartialUpdateProperty.Model model =
@@ -61,7 +62,7 @@ public class PartialUpdatePropertyRouter {
             .longitude(Optional.ofNullable(partialPropertyRequest.getLongitude()))
             .surfaceCovered(Optional.ofNullable(partialPropertyRequest.getSurfaceCovered()))
             .surfaceTotal(Optional.ofNullable(partialPropertyRequest.getSurfaceTotal()))
-            .userId(userId)
+            .userId(getUserId())
             .zipcode(Optional.ofNullable(partialPropertyRequest.getZipcode()))
             .address(Optional.ofNullable(partialPropertyRequest.getAddress()))
             .type(Optional.ofNullable(partialPropertyRequest.getType()))

@@ -1,5 +1,7 @@
 package com.uade.propertiesbackend.router.favorite;
 
+import static com.uade.propertiesbackend.util.SecurityUtils.getUserId;
+
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.usecase.RemoveFavoriteProperty;
 import com.uade.propertiesbackend.router.exception.ApiError;
@@ -36,10 +38,9 @@ public class RemoveFavoritePropertyRouter {
       @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @DeleteMapping("/properties/{propertyId}/favorites")
-  public ResponseEntity<Void> removeFavoriteProperty(@PathVariable Long propertyId,
-      @RequestHeader(name = "userId") Long userId) {
+  public ResponseEntity<Void> removeFavoriteProperty(@PathVariable Long propertyId) {
     removeFavoriteProperty.accept(
-        RemoveFavoriteProperty.Model.builder().propertyId(propertyId).userId(userId).build());
+        RemoveFavoriteProperty.Model.builder().propertyId(propertyId).userId(getUserId()).build());
     return ResponseEntity.noContent().build();
   }
 }
