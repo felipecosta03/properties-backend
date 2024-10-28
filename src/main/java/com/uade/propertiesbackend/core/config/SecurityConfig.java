@@ -25,7 +25,7 @@ public class SecurityConfig {
     return http.csrf(AbstractHttpConfigurer::disable)
         .cors(AbstractHttpConfigurer::disable).authorizeHttpRequests(
             auth -> auth.requestMatchers(HttpMethod.GET, "/properties").permitAll()
-                .requestMatchers(HttpMethod.GET, "/swagger-ui/index.html").permitAll().anyRequest()
+                .requestMatchers("/swagger-ui/**").permitAll().anyRequest()
                 .authenticated())
         .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class).build();
   }
