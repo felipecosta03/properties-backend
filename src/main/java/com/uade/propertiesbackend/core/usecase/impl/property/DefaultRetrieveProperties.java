@@ -1,11 +1,14 @@
 package com.uade.propertiesbackend.core.usecase.impl.property;
 
+import static com.uade.propertiesbackend.util.SecurityUtils.getPrincipal;
 import static java.util.Objects.isNull;
 
 import com.uade.propertiesbackend.core.domain.Property;
+import com.uade.propertiesbackend.core.domain.UserRole;
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.usecase.PropertyIsFavorite;
+import com.uade.propertiesbackend.core.usecase.PropertyIsRented;
 import com.uade.propertiesbackend.core.usecase.PropertyMapper;
 import com.uade.propertiesbackend.core.usecase.RetrieveProperties;
 import com.uade.propertiesbackend.core.usecase.RetrievePropertySort;
@@ -27,14 +30,16 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
   private final RetrievePropertySpecs retrievePropertySpecs;
   private final RetrievePropertySort retrievePropertySort;
   private final PropertyIsFavorite propertyIsFavorite;
+  private final PropertyIsRented propertyIsRented;
 
   public DefaultRetrieveProperties(PropertyRepository propertyRepository,
       RetrievePropertySpecs retrievePropertySpecs, RetrievePropertySort retrievePropertySort,
-      PropertyIsFavorite propertyIsFavorite) {
+      PropertyIsFavorite propertyIsFavorite, PropertyIsRented propertyIsRented) {
     this.propertyRepository = propertyRepository;
     this.retrievePropertySpecs = retrievePropertySpecs;
     this.retrievePropertySort = retrievePropertySort;
     this.propertyIsFavorite = propertyIsFavorite;
+    this.propertyIsRented = propertyIsRented;
   }
 
   @Override
@@ -54,17 +59,19 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
             .minLat(model.getMinLat()).minLon(model.getMinLon()).maxLat(model.getMaxLat())
             .maxLon(model.getMaxLon()).propertyOwnerId(model.getPropertyOwnerId()).build());
 
-    final Sort sortBy = model.getSortBy().map(retrievePropertySort).orElse(Sort.by(Sort.Order.asc("id")));
+    final Sort sortBy = model.getSortBy().map(retrievePropertySort)
+        .orElse(Sort.by(Sort.Order.asc("id")));
 
     Page<Property> properties = propertyRepository.findAll(specification,
         PageRequest.of(model.getPage().orElse(0), model.getSize().orElse(PAGE_SIZE), sortBy));
 
-    if (isNull(model.getUserId())) {
-      return properties.map(PropertyMapper.INSTANCE::propertyToPropertyDto);
-    }
+    final boolean delete = getPrincipal()
+        .map(p -> UserRole.ADMIN.equals(p.getRole())).orElse(false);
+
     return properties.map(property -> PropertyMapper.INSTANCE.propertyToPropertyDto(property,
         propertyIsFavorite.test(PropertyIsFavorite.Model.builder().userId(model.getUserId())
-            .propertyId(property.getId()).build())));
+            .propertyId(property.getId()).build()), propertyIsRented.test(property.getId()),
+        delete));
   }
 
   private void validateModel(Model model) {

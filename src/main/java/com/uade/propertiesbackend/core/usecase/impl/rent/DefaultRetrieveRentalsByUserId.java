@@ -10,6 +10,7 @@ import com.uade.propertiesbackend.core.domain.RentProcess;
 import com.uade.propertiesbackend.core.domain.dto.RentDto;
 import com.uade.propertiesbackend.core.domain.dto.RentalsDto;
 import com.uade.propertiesbackend.core.exception.BadRequestException;
+import com.uade.propertiesbackend.core.usecase.PropertyIsRented;
 import com.uade.propertiesbackend.core.usecase.PropertyMapper;
 import com.uade.propertiesbackend.core.usecase.RetrieveRentalsByUserId;
 import com.uade.propertiesbackend.repository.RentProcessRepository;
@@ -23,11 +24,14 @@ public class DefaultRetrieveRentalsByUserId implements RetrieveRentalsByUserId {
 
   private final RentRepository rentRepository;
   private final RentProcessRepository rentProcessRepository;
+  private final PropertyIsRented propertyIsRented;
+
 
   public DefaultRetrieveRentalsByUserId(RentRepository rentRepository,
-      RentProcessRepository rentProcessRepository) {
+      RentProcessRepository rentProcessRepository, PropertyIsRented propertyIsRented) {
     this.rentRepository = rentRepository;
     this.rentProcessRepository = rentProcessRepository;
+    this.propertyIsRented = propertyIsRented;
   }
 
   @Override
@@ -37,7 +41,6 @@ public class DefaultRetrieveRentalsByUserId implements RetrieveRentalsByUserId {
     List<Rent> rentals;
     List<RentProcess> rentProcesses;
     if (model.getRole().equals(OWNER)) {
-
       rentals = rentRepository.getRentalsByOwnerId(model.getUserId());
       rentProcesses = rentProcessRepository.getRentProcessesByOwnerId(model.getUserId());
 
@@ -47,6 +50,7 @@ public class DefaultRetrieveRentalsByUserId implements RetrieveRentalsByUserId {
       rentProcesses = rentProcessRepository.getRentProcessesByTenantId(model.getUserId());
 
     }
+
     return RentalsDto.builder().rentals(rentals.stream().map(this::toRentDto).toList())
         .rentProcesses(rentProcesses.stream().map(this::toRentProcessDto).toList()).build();
   }
@@ -61,15 +65,15 @@ public class DefaultRetrieveRentalsByUserId implements RetrieveRentalsByUserId {
 
   private RentDto toRentDto(Rent rent) {
     return RentDto.builder().property(
-            PropertyMapper.INSTANCE.propertyToPropertyDto(rent.getRentProcess().getProperty()))
-        .id(rent.getId())
-        .status(rent.getStatus().name()).build();
+            PropertyMapper.INSTANCE.propertyToPropertyDto(rent.getRentProcess().getProperty(),
+                propertyIsRented.test(rent.getRentProcess().getProperty().getId())))
+        .id(rent.getId()).status(rent.getStatus().name()).build();
   }
 
   private RentDto toRentProcessDto(RentProcess rentProcess) {
-    return RentDto.builder()
-        .id(rentProcess.getId())
-        .property(PropertyMapper.INSTANCE.propertyToPropertyDto(rentProcess.getProperty()))
+    return RentDto.builder().id(rentProcess.getId()).property(
+            PropertyMapper.INSTANCE.propertyToPropertyDto(rentProcess.getProperty(),
+                propertyIsRented.test(rentProcess.getProperty().getId())))
         .status(rentProcess.getStatus().name()).build();
   }
 }

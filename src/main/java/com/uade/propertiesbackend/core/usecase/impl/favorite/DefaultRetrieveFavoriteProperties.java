@@ -13,6 +13,7 @@ import com.uade.propertiesbackend.core.usecase.RetrieveFavoriteProperties;
 import com.uade.propertiesbackend.repository.FavoritePropertyRepository;
 import com.uade.propertiesbackend.repository.PropertyRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
@@ -39,7 +40,7 @@ public class DefaultRetrieveFavoriteProperties implements RetrieveFavoriteProper
         .map(FavoriteProperty::getPropertyId).collect(toList());
 
     return propertyRepository.findPropertiesByIdInAndActiveTrue(propertiesId,
-            PageRequest.of(model.getPage(), PAGE_SIZE))
+            PageRequest.of(model.getPage(), Optional.ofNullable(model.getSize()).orElse(PAGE_SIZE)))
         .map(PropertyMapper.INSTANCE::propertyToPropertyDto);
   }
 
