@@ -58,7 +58,7 @@ public class DefaultCreateRentProcess implements CreateRentProcess {
 
     RentProcess rentProcess = rentProcessRepository.save(
         RentProcess.builder().property(property).tenantId(model.getTenantId())
-            .status(RentProcessStatus.PENDING_APPROVAL).build());
+            .status(RentProcessStatus.PENDING_CONTRACT).build());
 
     sendRentProcessNews.accept(rentProcess);
   }

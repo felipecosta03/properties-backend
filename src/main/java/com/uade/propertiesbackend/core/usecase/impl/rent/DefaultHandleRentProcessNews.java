@@ -47,16 +47,6 @@ public class DefaultHandleRentProcessNews implements HandleRentProcessNews {
 
     if (!RentProcessStatus.REJECTED.equals(model.getStatus())) {
       switch (rentProcess.getStatus()) {
-        case PENDING_APPROVAL:
-          if (!RentProcessStatus.ACCEPTED.equals(model.getStatus())) {
-            throw new BadRequestException("Rent process status must be accepted");
-          }
-          break;
-        case ACCEPTED:
-          if (!RentProcessStatus.PENDING_CONTRACT.equals(model.getStatus())) {
-            throw new BadRequestException("Rent process status must be pending contract");
-          }
-          break;
         case PENDING_CONTRACT:
           if (!RentProcessStatus.CONTRACT_CREATED.equals(model.getStatus())) {
             throw new BadRequestException("Rent process status must be contract created");

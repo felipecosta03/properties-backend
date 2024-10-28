@@ -1,5 +1,7 @@
 package com.uade.propertiesbackend.router.rent;
 
+import static com.uade.propertiesbackend.util.SecurityUtils.getUserId;
+
 import com.uade.propertiesbackend.core.usecase.CreateRentProcess;
 import com.uade.propertiesbackend.router.exception.ApiError;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,10 +35,9 @@ public class CreateRentProcessRouter {
       @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @PostMapping("/rent-process/{propertyId}")
-  public ResponseEntity<Void> createRentProcess(@PathVariable Long propertyId,
-      @RequestHeader(name = "userId") Long userId) {
+  public ResponseEntity<Void> createRentProcess(@PathVariable Long propertyId) {
     createRentProcess.accept(
-        CreateRentProcess.Model.builder().tenantId(userId).propertyId(propertyId).build());
+        CreateRentProcess.Model.builder().tenantId(getUserId()).propertyId(propertyId).build());
     return ResponseEntity.noContent().build();
   }
 }
