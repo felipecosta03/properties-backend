@@ -24,7 +24,7 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http.csrf(AbstractHttpConfigurer::disable)
         .cors(AbstractHttpConfigurer::disable).authorizeHttpRequests(
-            auth -> auth.requestMatchers(HttpMethod.GET, "/properties").permitAll().anyRequest()
+            auth -> auth.requestMatchers(HttpMethod.GET, "/properties").requestMatchers(HttpMethod.GET, "/swagger-ui/index.html").permitAll().anyRequest()
                 .authenticated())
         .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class).build();
   }
