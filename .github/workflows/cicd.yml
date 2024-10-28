@@ -44,7 +44,8 @@ jobs:
         env:
             DATABASE_URL: ${{ secrets.DATABASE_URL }}
             CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+            SECURITY_KEY: ${{ secrets.SECURITY_KEY }}
         run: |
             sudo docker run -d -p 8080:8080 --name smartmovecontainer \
-            -e DATABASE_URL="${{ secrets.DATABASE_URL }}" -e CLOUDINARY_URL="${{ secrets.CLOUDINARY_URL }}" \
+            -e DATABASE_URL="${{ secrets.DATABASE_URL }}" -e CLOUDINARY_URL="${{ secrets.CLOUDINARY_URL }}" -e SECURITY_KEY="${{ secrets.SECURITY_KEY }}" \
             joubina/smartmoveback
