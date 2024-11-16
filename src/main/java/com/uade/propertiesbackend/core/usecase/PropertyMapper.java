@@ -16,9 +16,9 @@ public interface PropertyMapper {
 
   @Mapping(target = "favorite", source = "isFavorite")
   @Mapping(target = "rented", source = "isRented")
-  @Mapping(target = "delete", source = "delete")
+  @Mapping(target = "deleteEnabled", source = "deleteEnabled")
   PropertyDto propertyToPropertyDto(Property property, boolean isFavorite, boolean isRented,
-      boolean delete);
+      boolean deleteEnabled);
 
   @Mapping(target = "rented", source = "isRented")
   PropertyDto propertyToPropertyDto(Property property, boolean isRented);

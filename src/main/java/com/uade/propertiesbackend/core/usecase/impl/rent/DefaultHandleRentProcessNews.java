@@ -10,6 +10,7 @@ import com.uade.propertiesbackend.core.usecase.HandleRentProcessNews;
 import com.uade.propertiesbackend.core.usecase.HasPropertyCurrentRent;
 import com.uade.propertiesbackend.repository.PropertyRepository;
 import com.uade.propertiesbackend.repository.RentProcessRepository;
+import com.uade.propertiesbackend.router.sqs.publisher.PropertyUpdatedPublisher;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,14 +21,17 @@ public class DefaultHandleRentProcessNews implements HandleRentProcessNews {
   private final PropertyRepository propertyRepository;
   private final CreateRent createRent;
   private final HasPropertyCurrentRent hasPropertyCurrentRent;
+  private final PropertyUpdatedPublisher propertyUpdatedPublisher;
 
   public DefaultHandleRentProcessNews(RentProcessRepository rentProcessRepository,
       PropertyRepository propertyRepository, CreateRent createRent,
-      HasPropertyCurrentRent hasPropertyCurrentRent) {
+      HasPropertyCurrentRent hasPropertyCurrentRent,
+      PropertyUpdatedPublisher propertyUpdatedPublisher) {
     this.rentProcessRepository = rentProcessRepository;
     this.propertyRepository = propertyRepository;
     this.createRent = createRent;
     this.hasPropertyCurrentRent = hasPropertyCurrentRent;
+    this.propertyUpdatedPublisher = propertyUpdatedPublisher;
   }
 
   @Override
@@ -45,26 +49,12 @@ public class DefaultHandleRentProcessNews implements HandleRentProcessNews {
       throw new BadRequestException("Property already has a current rent");
     }
 
-    if (!RentProcessStatus.REJECTED.equals(model.getStatus())) {
-      switch (rentProcess.getStatus()) {
-        case PENDING_CONTRACT:
-          if (!RentProcessStatus.CONTRACT_CREATED.equals(model.getStatus())) {
-            throw new BadRequestException("Rent process status must be contract created");
-          }
-          break;
-        case CONTRACT_CREATED:
-          if (!RentProcessStatus.SUCCESS.equals(model.getStatus())) {
-            throw new BadRequestException("Rent process status must be success");
-          }
-          break;
-      }
-    }
-
     rentProcess.setStatus(model.getStatus());
 
     if (RentProcessStatus.SUCCESS.equals(model.getStatus())) {
       rentProcess.getProperty().setActive(false);
       propertyRepository.save(rentProcess.getProperty());
+      propertyUpdatedPublisher.apply(rentProcess.getProperty());
       createRent.accept(CreateRent.Model.builder().rentProcess(rentProcess).build());
     }
 

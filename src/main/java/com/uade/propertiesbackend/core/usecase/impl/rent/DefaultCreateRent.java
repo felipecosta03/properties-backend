@@ -9,6 +9,7 @@ import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.usecase.CreateRent;
 import com.uade.propertiesbackend.core.usecase.HasPropertyCurrentRent;
 import com.uade.propertiesbackend.repository.RentRepository;
+import java.time.OffsetDateTime;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +37,7 @@ public class DefaultCreateRent implements CreateRent {
 
     rentRepository.save(
         Rent.builder().rentProcess(model.getRentProcess()).status(RentStatus.PENDING_PAYMENT)
-            .build());
+            .dateCreated(OffsetDateTime.now()).build());
     log.info("Rent created successfully");
   }
 

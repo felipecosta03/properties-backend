@@ -30,6 +30,7 @@ import com.uade.propertiesbackend.core.usecase.HasPropertyCurrentRent;
 import com.uade.propertiesbackend.core.usecase.PropertyMapper;
 import com.uade.propertiesbackend.core.usecase.UpdateProperty;
 import com.uade.propertiesbackend.repository.PropertyRepository;
+import com.uade.propertiesbackend.router.sqs.publisher.PropertyUpdatedPublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -40,12 +41,15 @@ public class DefaultUpdateProperty implements UpdateProperty {
   private final PropertyRepository propertyRepository;
   private final HasPropertyCurrentRent hasPropertyCurrentRent;
   private final CreateImages createImages;
+  private final PropertyUpdatedPublisher propertyUpdatedPublisher;
 
   public DefaultUpdateProperty(PropertyRepository propertyRepository,
-      HasPropertyCurrentRent hasPropertyCurrentRent, CreateImages createImages) {
+      HasPropertyCurrentRent hasPropertyCurrentRent, CreateImages createImages,
+      PropertyUpdatedPublisher propertyUpdatedPublisher) {
     this.propertyRepository = propertyRepository;
     this.hasPropertyCurrentRent = hasPropertyCurrentRent;
     this.createImages = createImages;
+    this.propertyUpdatedPublisher = propertyUpdatedPublisher;
   }
 
   @Override
@@ -81,6 +85,8 @@ public class DefaultUpdateProperty implements UpdateProperty {
     property.setActive(model.getActive());
 
     propertyRepository.save(property);
+
+    propertyUpdatedPublisher.apply(property);
 
     log.info("Property with id={} updated", model.getId());
     return PropertyMapper.INSTANCE.propertyToPropertyDto(property);
