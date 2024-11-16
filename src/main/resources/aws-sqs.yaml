@@ -4,7 +4,10 @@ aws:
   secret:
     key: "${AWS_SECRET_KEY}"
   queue:
-    contract-cancelled: "contract-canceled"
-    contract-created: "contract-created"
-    contract-signed: "contract-signed"
-    property-created: "property-created"
+    contract-cancelled: "ContratoRechazado"
+    contract-created: "NuevoContratoInmueble"
+    contract-signed: "ContratoFirmado"
+    property-created: "PublicacionCreada"
+    property-updated: "PublicacionActualizada"
+    rent-process-created: "AlquilerSolicitado"
+    rent-paid: "PagoRealizado"

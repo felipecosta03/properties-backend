@@ -8,7 +8,7 @@ import lombok.Getter;
 @Builder
 @Getter
 @AllArgsConstructor
-public class ContractEvent {
+public class PaymentEvent {
 
   @JsonProperty("rent_process_id")
   private Long rentProcessId;
