@@ -45,7 +45,9 @@ jobs:
             DATABASE_URL: ${{ secrets.DATABASE_URL }}
             CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
             SECURITY_KEY: ${{ secrets.SECURITY_KEY }}
+            AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+            AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
         run: |
             sudo docker run -d -p 8080:8080 --name smartmovecontainer \
-            -e DATABASE_URL="${{ secrets.DATABASE_URL }}" -e CLOUDINARY_URL="${{ secrets.CLOUDINARY_URL }}" -e SECURITY_KEY="${{ secrets.SECURITY_KEY }}" \
+            -e DATABASE_URL="${{ secrets.DATABASE_URL }}" -e CLOUDINARY_URL="${{ secrets.CLOUDINARY_URL }}" -e SECURITY_KEY="${{ secrets.SECURITY_KEY }}" -e AWS_SECRET_KEY="${{ secrets.AWS_SECRET_KEY }}" -e AWS_ACCESS_KEY="${{ secrets.AWS_ACCESS_KEY }}" \
             joubina/smartmoveback
