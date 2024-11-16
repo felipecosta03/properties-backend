@@ -1,0 +1,10 @@
+aws:
+  access:
+    key: "${AWS_ACCESS_KEY}"
+  secret:
+    key: "${AWS_SECRET_KEY}"
+  queue:
+    contract-cancelled: "contract-canceled"
+    contract-created: "contract-created"
+    contract-signed: "contract-signed"
+    property-created: "property-created"

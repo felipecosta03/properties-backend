@@ -14,6 +14,7 @@ import com.uade.propertiesbackend.core.usecase.HasPropertyCurrentRent;
 import com.uade.propertiesbackend.core.usecase.PartialUpdateProperty;
 import com.uade.propertiesbackend.core.usecase.PropertyMapper;
 import com.uade.propertiesbackend.repository.PropertyRepository;
+import com.uade.propertiesbackend.router.sqs.publisher.PropertyUpdatedPublisher;
 import com.uade.propertiesbackend.util.ValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -25,12 +26,16 @@ public class DefaultPartialUpdateProperty implements PartialUpdateProperty {
   private final PropertyRepository propertyRepository;
   private final HasPropertyCurrentRent hasPropertyCurrentRent;
   private final CreateImages createImages;
+  private final PropertyUpdatedPublisher propertyUpdatedPublisher;
+
 
   public DefaultPartialUpdateProperty(PropertyRepository propertyRepository,
-      HasPropertyCurrentRent hasPropertyCurrentRent, CreateImages createImages) {
+      HasPropertyCurrentRent hasPropertyCurrentRent, CreateImages createImages,
+      PropertyUpdatedPublisher propertyUpdatedPublisher) {
     this.propertyRepository = propertyRepository;
     this.hasPropertyCurrentRent = hasPropertyCurrentRent;
     this.createImages = createImages;
+    this.propertyUpdatedPublisher = propertyUpdatedPublisher;
   }
 
   @Override
@@ -67,6 +72,8 @@ public class DefaultPartialUpdateProperty implements PartialUpdateProperty {
     property.setActive(model.getActive().orElse(property.isActive()));
 
     propertyRepository.save(property);
+
+    propertyUpdatedPublisher.apply(property);
 
     log.info("Property with id={} updated", model.getId());
     return PropertyMapper.INSTANCE.propertyToPropertyDto(property);
