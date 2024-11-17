@@ -27,6 +27,8 @@ import com.uade.propertiesbackend.core.usecase.CreateProperty;
 import com.uade.propertiesbackend.core.usecase.PropertyMapper;
 import com.uade.propertiesbackend.core.usecase.UserExists;
 import com.uade.propertiesbackend.repository.PropertyRepository;
+import com.uade.propertiesbackend.router.sqs.publisher.PropertyCreatedPublisher;
+import com.uade.propertiesbackend.router.sqs.publisher.Publisher;
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 
@@ -39,12 +41,14 @@ public class DefaultCreateProperty implements CreateProperty {
   private final PropertyRepository propertyRepository;
   private final UserExists userExists;
   private final CreateImages createImages;
+  private final Publisher<Property> propertyCreatedPublisher;
 
   public DefaultCreateProperty(PropertyRepository propertyRepository, UserExists userExists,
-      CreateImages createImages) {
+      CreateImages createImages, PropertyCreatedPublisher propertyCreatedPublisher) {
     this.propertyRepository = propertyRepository;
     this.userExists = userExists;
     this.createImages = createImages;
+    this.propertyCreatedPublisher = propertyCreatedPublisher;
   }
 
   @Override
@@ -62,10 +66,12 @@ public class DefaultCreateProperty implements CreateProperty {
             .surfaceCovered(model.getSurfaceCovered()).surfaceTotal(model.getSurfaceTotal())
             .title(model.getTitle()).description(model.getDescription())
             .latitude(model.getLatitude()).longitude(model.getLongitude())
-            .images(createImages.apply(model.getImages()))
-            .userId(model.getUserId()).zipcode(model.getZipcode()).address(model.getAddress())
-            .price(model.getPrice()).type(model.getType()).createdAt(LocalDateTime.now())
-            .active(model.getActive()).build());
+            .images(createImages.apply(model.getImages())).userId(model.getUserId())
+            .zipcode(model.getZipcode()).address(model.getAddress()).price(model.getPrice())
+            .type(model.getType()).createdAt(LocalDateTime.now()).active(model.getActive())
+            .build());
+
+    propertyCreatedPublisher.apply(property);
 
     return PropertyMapper.INSTANCE.propertyToPropertyDto(property);
   }

@@ -9,10 +9,10 @@ import com.uade.propertiesbackend.core.domain.RentProcess;
 import com.uade.propertiesbackend.core.domain.RentProcessStatus;
 import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.usecase.CreateRentProcess;
-import com.uade.propertiesbackend.core.usecase.SendRentProcessNews;
 import com.uade.propertiesbackend.core.usecase.UserExists;
 import com.uade.propertiesbackend.repository.PropertyRepository;
 import com.uade.propertiesbackend.repository.RentProcessRepository;
+import com.uade.propertiesbackend.router.sqs.publisher.CreateRentProcessPublisher;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,15 +21,15 @@ public class DefaultCreateRentProcess implements CreateRentProcess {
   private final RentProcessRepository rentProcessRepository;
   private final UserExists userExists;
   private final PropertyRepository propertyRepository;
-  private final SendRentProcessNews sendRentProcessNews;
+  private final CreateRentProcessPublisher createRentProcessPublisher;
 
   public DefaultCreateRentProcess(RentProcessRepository rentProcessRepository,
       UserExists userExists, PropertyRepository propertyRepository,
-      SendRentProcessNews sendRentProcessNews) {
+      CreateRentProcessPublisher createRentProcessPublisher) {
     this.rentProcessRepository = rentProcessRepository;
     this.userExists = userExists;
     this.propertyRepository = propertyRepository;
-    this.sendRentProcessNews = sendRentProcessNews;
+    this.createRentProcessPublisher = createRentProcessPublisher;
   }
 
   @Override
@@ -60,7 +60,7 @@ public class DefaultCreateRentProcess implements CreateRentProcess {
         RentProcess.builder().property(property).tenantId(model.getTenantId())
             .status(RentProcessStatus.PENDING_CONTRACT).build());
 
-    sendRentProcessNews.accept(rentProcess);
+    createRentProcessPublisher.apply(rentProcess);
   }
 
   private void validateModel(Model model) {

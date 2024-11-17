@@ -13,23 +13,26 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v3
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
 
-    - name: Build with Maven
-      env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
-        SECURITY_KEY: ${{ secrets.SECURITY_KEY }}
-      run: DATABASE_URL="$DATABASE_URL" CLOUDINARY="$CLOUDINARY_URL" SECURITY_KEY="$SECURITY_KEY" mvn clean verify
-    - name: Test Report
-      uses: actions/upload-artifact@v3
-      if: success() || failure()
-      with:
+      - name: Build with Maven
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+          SECURITY_KEY: ${{ secrets.SECURITY_KEY }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+        run: DATABASE_URL="$DATABASE_URL" CLOUDINARY="$CLOUDINARY_URL" SECURITY_KEY="$SECURITY_KEY" AWS_SECRET_KEY="$AWS_SECRET_KEY" AWS_ACCESS_KEY="$AWS_ACCESS_KEY"
+          mvn clean verify
+      - name: Test Report
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
+        with:
           name: SpringBoot Report               # Name of the folder
           path: target/site/serenity/           # Path to test results
