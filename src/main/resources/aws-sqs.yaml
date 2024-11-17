@@ -11,3 +11,5 @@ aws:
     property-updated: "PublicacionActualizada"
     rent-process-created: "AlquilerSolicitado"
     rent-paid: "PagoRealizado"
+  eventbridge:
+    arn: "arn:aws:events:us-east-1:205930646901:event-bus/event-bus"
