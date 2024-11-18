@@ -18,7 +18,8 @@ public class DefaultContractSigned implements ContractSigned {
   @Override
   public void accept(ContractEvent contractEvent) {
     handleRentProcessNews.accept(
-        HandleRentProcessNews.Model.builder().rentProcessId(contractEvent.getRentProcessId())
+        HandleRentProcessNews.Model.builder()
+            .rentProcessId(Long.valueOf(contractEvent.getRentProcessId()))
             .status(RentProcessStatus.SUCCESS)
             .build());
   }

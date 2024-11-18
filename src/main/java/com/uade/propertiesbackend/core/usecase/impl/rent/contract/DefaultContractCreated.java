@@ -18,7 +18,8 @@ public class DefaultContractCreated implements ContractCreated {
   @Override
   public void accept(ContractEvent contractEvent) {
     handleRentProcessNews.accept(
-        HandleRentProcessNews.Model.builder().rentProcessId(contractEvent.getRentProcessId())
+        HandleRentProcessNews.Model.builder()
+            .rentProcessId(Long.valueOf(contractEvent.getRentProcessId()))
             .status(RentProcessStatus.CONTRACT_CREATED)
             .build());
   }

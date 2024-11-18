@@ -33,12 +33,9 @@ public abstract class Publisher<T> {
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }
-
-    // Build the EventBridge request entry
     PutEventsRequestEntry requestEntry = PutEventsRequestEntry.builder().eventBusName(eventBusArn)
-        .detailType(queueName).source("inmuebles").detail(messageBody).build();
+        .detailType(queueName).source("SmartMove").detail(messageBody).build();
 
-    // Send the event to EventBridge
     PutEventsRequest request = PutEventsRequest.builder().entries(requestEntry).build();
 
     PutEventsResponse response = eventBridgeClient.putEvents(request);

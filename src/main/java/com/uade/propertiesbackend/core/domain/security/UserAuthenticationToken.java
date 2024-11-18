@@ -1,6 +1,5 @@
 package com.uade.propertiesbackend.core.domain.security;
 
-import com.uade.propertiesbackend.core.domain.UserRole;
 import java.io.Serial;
 import lombok.Getter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -13,10 +12,10 @@ public class UserAuthenticationToken extends AbstractAuthenticationToken {
 
   private final UserAuthenticationPrincipal principal;
 
-  public UserAuthenticationToken(Long userId, String role) {
+  public UserAuthenticationToken(Long userId, boolean isAdmin) {
     super(null);
 
-    this.principal = new UserAuthenticationPrincipal(userId, getUserRole(role));
+    this.principal = new UserAuthenticationPrincipal(userId, isAdmin);
     setAuthenticated(true);
   }
 
@@ -28,13 +27,5 @@ public class UserAuthenticationToken extends AbstractAuthenticationToken {
   @Override
   public UserAuthenticationPrincipal getPrincipal() {
     return principal;
-  }
-
-  private UserRole getUserRole(String role) {
-    try {
-      return UserRole.valueOf(role);
-    } catch (IllegalArgumentException e) {
-      return null;
-    }
   }
 }

@@ -1,6 +1,5 @@
 package com.uade.propertiesbackend.core.domain.security;
 
-import com.uade.propertiesbackend.core.domain.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class UserAuthenticationPrincipal {
 
   private Long id;
-  private UserRole role;
+  private boolean isAdmin;
 }

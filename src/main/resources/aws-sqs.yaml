@@ -4,12 +4,14 @@ aws:
   secret:
     key: "${AWS_SECRET_KEY}"
   queue:
-    contract-cancelled: "ContratoRechazado"
+    contract-cancelled: "ContratoCancelado"
     contract-created: "NuevoContratoInmueble"
     contract-signed: "ContratoFirmado"
     property-created: "PublicacionCreada"
     property-updated: "PublicacionActualizada"
     rent-process-created: "AlquilerSolicitado"
     rent-paid: "PagoRealizado"
+    user-created: "UsuarioCreado"
+    contract-rejected: "ContratoRechazado"
   eventbridge:
     arn: "arn:aws:events:us-east-1:205930646901:event-bus/event-bus"

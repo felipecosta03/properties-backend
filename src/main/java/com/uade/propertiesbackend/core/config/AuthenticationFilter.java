@@ -32,10 +32,11 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     }
 
     final String jwt = authHeader.substring(7);
-    final Long userId = Long.valueOf(jwtService.extractUsername(jwt));
-    final String role = jwtService.extractRole(jwt);
+    final Long userId = Long.valueOf(jwtService.extractUserId(jwt));
+    final boolean isAdmin = jwtService.extractIsAdmin(jwt);
 
-    SecurityContextHolder.getContext().setAuthentication(new UserAuthenticationToken(userId, role));
+    SecurityContextHolder.getContext()
+        .setAuthentication(new UserAuthenticationToken(userId, isAdmin));
 
     filterChain.doFilter(request, response);
   }

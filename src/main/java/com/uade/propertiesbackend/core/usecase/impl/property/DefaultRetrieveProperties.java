@@ -4,8 +4,8 @@ import static com.uade.propertiesbackend.util.SecurityUtils.getPrincipal;
 import static java.util.Objects.isNull;
 
 import com.uade.propertiesbackend.core.domain.Property;
-import com.uade.propertiesbackend.core.domain.UserRole;
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
+import com.uade.propertiesbackend.core.domain.security.UserAuthenticationPrincipal;
 import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.usecase.PropertyIsFavorite;
 import com.uade.propertiesbackend.core.usecase.PropertyIsRented;
@@ -66,7 +66,7 @@ public class DefaultRetrieveProperties implements RetrieveProperties {
         PageRequest.of(model.getPage().orElse(0), model.getSize().orElse(PAGE_SIZE), sortBy));
 
     final boolean delete = getPrincipal()
-        .map(p -> UserRole.ADMIN.equals(p.getRole())).orElse(false);
+        .map(UserAuthenticationPrincipal::isAdmin).orElse(false);
 
     return properties.map(property -> PropertyMapper.INSTANCE.propertyToPropertyDto(property,
         propertyIsFavorite.test(PropertyIsFavorite.Model.builder().userId(model.getUserId())
