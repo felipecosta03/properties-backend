@@ -26,6 +26,6 @@ public class DefaultContractCancelled implements ContractCancelled {
       throw new BadRequestException("RentProcessId cannot be null");
     }
     handleRentProcessNews.accept(HandleRentProcessNews.Model.builder()
-        .rentProcessId(contractCancelledEvent.getRentProcessId()).build());
+        .rentProcessId(Long.valueOf(contractCancelledEvent.getRentProcessId())).build());
   }
 }

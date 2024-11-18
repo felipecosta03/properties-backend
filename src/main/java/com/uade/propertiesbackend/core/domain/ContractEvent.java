@@ -11,6 +11,6 @@ import lombok.Getter;
 public class ContractEvent {
 
   @JsonProperty("rent_process_id")
-  private Long rentProcessId;
+  private String rentProcessId;
 
 }

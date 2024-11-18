@@ -26,7 +26,8 @@ public class DefaultRentPaid implements RentPaid {
     if (isNull(paymentEvent.getRentProcessId())) {
       throw new BadRequestException("RentId can't be null");
     }
-    handleRentNews.accept(HandleRentNews.Model.builder().rentId(paymentEvent.getRentProcessId())
-        .status(RentStatus.ACTIVE).build());
+    handleRentNews.accept(
+        HandleRentNews.Model.builder().rentId(Long.valueOf(paymentEvent.getRentProcessId()))
+            .status(RentStatus.ACTIVE).build());
   }
 }
