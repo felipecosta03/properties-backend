@@ -12,7 +12,7 @@ import software.amazon.awssdk.services.eventbridge.EventBridgeClient;
 public class CreateRentProcessPublisher extends Publisher<RentProcess> {
 
   protected CreateRentProcessPublisher(EventBridgeClient amazonSQSClient,
-      @Value("aws.queue.rent-process-created") String queueName, ObjectMapper objectMapper) {
+      @Value("${aws.queue.rent-process-created}") String queueName, ObjectMapper objectMapper) {
     super(amazonSQSClient, queueName, objectMapper);
   }
 
