@@ -12,7 +12,9 @@ import com.uade.propertiesbackend.core.usecase.CreateRentProcess;
 import com.uade.propertiesbackend.core.usecase.UserExists;
 import com.uade.propertiesbackend.repository.PropertyRepository;
 import com.uade.propertiesbackend.repository.RentProcessRepository;
+import com.uade.propertiesbackend.router.request.RentProcessNews;
 import com.uade.propertiesbackend.router.sqs.publisher.CreateRentProcessPublisher;
+import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -58,9 +60,17 @@ public class DefaultCreateRentProcess implements CreateRentProcess {
 
     RentProcess rentProcess = rentProcessRepository.save(
         RentProcess.builder().property(property).tenantId(model.getTenantId())
-            .status(RentProcessStatus.PENDING_CONTRACT).build());
+            .dateCreated(LocalDateTime.now()).status(RentProcessStatus.PENDING_CONTRACT).build());
 
-    createRentProcessPublisher.apply(rentProcess);
+    createRentProcessPublisher.apply(createRentProcessNews(rentProcess));
+  }
+
+  private RentProcessNews createRentProcessNews(RentProcess rentProcess) {
+    return RentProcessNews.builder().rentProcessId(rentProcess.getId())
+        .tenantId(rentProcess.getTenantId()).dateCreated(rentProcess.getDateCreated())
+        .landLordId(rentProcess.getProperty().getUserId())
+        .status(rentProcess.getStatus()).property(rentProcess.getProperty())
+        .build();
   }
 
   private void validateModel(Model model) {
