@@ -46,4 +46,5 @@ public class PropertyDto {
   private boolean favorite = false;
   @JsonProperty("rented")
   private boolean rented;
+  private boolean deleteEnabled;
 }

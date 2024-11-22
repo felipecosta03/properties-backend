@@ -1,5 +1,7 @@
 package com.uade.propertiesbackend.router.favorite;
 
+import static com.uade.propertiesbackend.util.SecurityUtils.getUserId;
+
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.usecase.AddFavoriteProperty;
 import com.uade.propertiesbackend.router.exception.ApiError;
@@ -36,10 +38,9 @@ public class AddFavoritePropertyRouter {
       @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @PostMapping("/properties/{propertyId}/favorites")
-  public ResponseEntity<Void> addFavoriteProperty(@PathVariable Long propertyId,
-      @RequestHeader(name = "userId") Long userId) {
+  public ResponseEntity<Void> addFavoriteProperty(@PathVariable Long propertyId) {
     addFavoriteProperty.accept(
-        AddFavoriteProperty.Model.builder().propertyId(propertyId).userId(userId).build());
+        AddFavoriteProperty.Model.builder().propertyId(propertyId).userId(getUserId()).build());
     return ResponseEntity.noContent().build();
   }
 }

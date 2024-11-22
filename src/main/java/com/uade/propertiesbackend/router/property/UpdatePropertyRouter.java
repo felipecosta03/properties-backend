@@ -1,5 +1,7 @@
 package com.uade.propertiesbackend.router.property;
 
+import static com.uade.propertiesbackend.util.SecurityUtils.getUserId;
+
 import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.usecase.UpdateProperty;
 import com.uade.propertiesbackend.router.exception.ApiError;
@@ -42,7 +44,7 @@ public class UpdatePropertyRouter {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @PutMapping("/properties/{propertyId}")
   public ResponseEntity<PropertyDto> update(@PathVariable Long propertyId,
-      @RequestBody PropertyRequest propertyRequest, @RequestHeader(value = "userId") Long userId) {
+      @RequestBody PropertyRequest propertyRequest) {
     log.info("Updating property with id: {}", propertyId);
 
     UpdateProperty.Model model =
@@ -59,7 +61,7 @@ public class UpdatePropertyRouter {
             .longitude(propertyRequest.getLongitude())
             .surfaceCovered(propertyRequest.getSurfaceCovered())
             .surfaceTotal(propertyRequest.getSurfaceTotal())
-            .userId(userId)
+            .userId(getUserId())
             .zipcode(propertyRequest.getZipcode())
             .address(propertyRequest.getAddress())
             .type(propertyRequest.getType())

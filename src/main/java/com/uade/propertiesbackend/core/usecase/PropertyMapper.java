@@ -12,14 +12,16 @@ public interface PropertyMapper {
 
   PropertyMapper INSTANCE = Mappers.getMapper(PropertyMapper.class);
 
-  PropertyDto propertyToPropertyDto(Property car);
+  PropertyDto propertyToPropertyDto(Property property);
 
   @Mapping(target = "favorite", source = "isFavorite")
   @Mapping(target = "rented", source = "isRented")
-  PropertyDto propertyToPropertyDto(Property car, boolean isFavorite, boolean isRented);
+  @Mapping(target = "deleteEnabled", source = "deleteEnabled")
+  PropertyDto propertyToPropertyDto(Property property, boolean isFavorite, boolean isRented,
+      boolean deleteEnabled);
 
   @Mapping(target = "rented", source = "isRented")
-  PropertyDto propertyToPropertyDto(Property car, boolean isRented);
+  PropertyDto propertyToPropertyDto(Property property, boolean isRented);
 
   @Mapping(target = "favorite", source = "isFavorite")
   @Mapping(target = "disable", source = "isDisable")

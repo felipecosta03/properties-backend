@@ -1,5 +1,7 @@
 package com.uade.propertiesbackend.router.property;
 
+import static com.uade.propertiesbackend.util.SecurityUtils.getUserId;
+
 import com.uade.propertiesbackend.core.domain.dto.PropertyDetailsDTO;
 import com.uade.propertiesbackend.core.domain.dto.PropertyParametersDTO;
 import com.uade.propertiesbackend.core.usecase.RetrieveProperty;
@@ -35,10 +37,9 @@ public class RetrievePropertyRouter {
       @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @GetMapping("/properties/{propertyId}")
-  public ResponseEntity<PropertyDetailsDTO> get(@PathVariable Long propertyId,
-      @RequestHeader(name = "userId") Long userId) {
+  public ResponseEntity<PropertyDetailsDTO> get(@PathVariable Long propertyId) {
     log.info("Retrieving property with id: {}", propertyId);
     return ResponseEntity.ok(retrieveProperty.apply(
-        PropertyParametersDTO.builder().propertyId(propertyId).userId(userId).build()));
+        PropertyParametersDTO.builder().propertyId(propertyId).userId(getUserId()).build()));
   }
 }

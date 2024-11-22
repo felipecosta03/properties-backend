@@ -6,6 +6,7 @@ import com.uade.propertiesbackend.core.domain.Rent;
 import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.usecase.HandleRentNews;
 import com.uade.propertiesbackend.repository.RentRepository;
+import java.time.OffsetDateTime;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,8 +24,8 @@ public class DefaultHandleRentNews implements HandleRentNews {
     Rent rent = rentRepository.findById(model.getRentId())
         .orElseThrow(() -> new BadRequestException("Rent not found"));
 
-    //TODO agregar logica de validacion de estado
     rent.setStatus(model.getStatus());
+    rent.setLastUpdatedDate(OffsetDateTime.now());
     rentRepository.save(rent);
   }
 

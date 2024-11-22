@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
+import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,5 +29,9 @@ public class Rent {
 
   @Enumerated(EnumType.STRING)
   private RentStatus status;
+
+  private OffsetDateTime dateCreated;
+
+  private OffsetDateTime lastUpdatedDate;
 
 }
