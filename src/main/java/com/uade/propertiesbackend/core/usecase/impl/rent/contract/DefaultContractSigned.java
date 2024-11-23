@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uade.propertiesbackend.core.domain.ContractEvent;
 import com.uade.propertiesbackend.core.domain.RentProcessStatus;
+import com.uade.propertiesbackend.core.exception.NotFoundException;
 import com.uade.propertiesbackend.core.usecase.ContractSigned;
 import com.uade.propertiesbackend.core.usecase.HandleRentProcessNews;
 import com.uade.propertiesbackend.core.usecase.RetrieveContractById;
@@ -24,7 +25,9 @@ public class DefaultContractSigned implements ContractSigned {
   }
 
   public void accept(ContractEvent contractEvent) {
-    Long rentProcessId = retrieveContractById.apply(contractEvent.getContractId()).get()
+    Long rentProcessId = retrieveContractById.apply(contractEvent.getContractId()).orElseThrow(
+            () -> new NotFoundException(
+                "Rent process with id " + contractEvent.getContractId() + " not found"))
         .getRentProcessId();
 
     handleRentProcessNews.accept(
