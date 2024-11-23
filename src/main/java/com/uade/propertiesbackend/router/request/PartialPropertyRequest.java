@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PartialPropertyRequest {
+
   private Integer beds;
   private Integer bathrooms;
   private String district;

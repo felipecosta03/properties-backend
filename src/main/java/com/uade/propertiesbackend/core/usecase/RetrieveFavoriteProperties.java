@@ -13,6 +13,7 @@ public interface RetrieveFavoriteProperties extends Function<Model, Page<Propert
   @Getter
   @Builder
   class Model {
+
     private Long userId;
     private Integer page;
     private Integer size;

@@ -38,6 +38,7 @@ public class Subscriber {
       if (!receiveMessageResult.getMessages().isEmpty()) {
         Message message = receiveMessageResult.getMessages().get(0);
         Map<String, Object> event = objectMapper.readValue(message.getBody(), Map.class);
+        log.info("Message: {}", event);
         retrieveConsumerStrategy.accept(RetrieveConsumerStrategy.Model.builder()
             .detailEvent(event.get("detail-type").toString())
             .detail(objectMapper.writeValueAsString(event.get("detail"))).build());

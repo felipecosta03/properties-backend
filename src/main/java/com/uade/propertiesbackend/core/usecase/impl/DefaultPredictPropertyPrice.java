@@ -26,7 +26,7 @@ public class DefaultPredictPropertyPrice implements PredictPropertyPrice {
   public PricePredictDto apply(Long propertyId) {
 
     PropertyDto propertyDto = retrieveProperty.apply(propertyId);
-    propertyDto.setPrice(propertyDto.getPrice()/DOLAR_RATE);
+    propertyDto.setPrice(propertyDto.getPrice() / DOLAR_RATE);
     PricePredictResponseDto responseDto = pricePredictRepository.predictPrice(propertyDto);
     String classification = classificateRealPrice(propertyDto.getPrice(),
         responseDto.getEstimatedPrice());

@@ -10,6 +10,7 @@ public interface AddFavoriteProperty extends Consumer<AddFavoriteProperty.Model>
   @Getter
   @Builder
   class Model {
+
     private Long userId;
     private Long propertyId;
   }

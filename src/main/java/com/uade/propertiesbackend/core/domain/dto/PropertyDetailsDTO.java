@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class PropertyDetailsDTO {
+
   private Long id;
   private Integer beds;
   private Integer bathrooms;

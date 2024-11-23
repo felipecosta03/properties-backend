@@ -10,6 +10,7 @@ public interface RemoveFavoriteProperty extends Consumer<RemoveFavoriteProperty.
   @Getter
   @Builder
   class Model {
+
     private Long userId;
     private Long propertyId;
   }

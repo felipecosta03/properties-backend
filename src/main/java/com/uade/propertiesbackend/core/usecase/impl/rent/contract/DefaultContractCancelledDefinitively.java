@@ -3,34 +3,34 @@ package com.uade.propertiesbackend.core.usecase.impl.rent.contract;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uade.propertiesbackend.core.domain.ContractEvent;
-import com.uade.propertiesbackend.core.domain.RentProcessStatus;
-import com.uade.propertiesbackend.core.usecase.ContractRejected;
-import com.uade.propertiesbackend.core.usecase.HandleRentProcessNews;
+import com.uade.propertiesbackend.core.domain.RentStatus;
+import com.uade.propertiesbackend.core.usecase.ContractCancelledDefinitively;
+import com.uade.propertiesbackend.core.usecase.HandleRentNews;
 import com.uade.propertiesbackend.core.usecase.RetrieveContractById;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DefaultContractRejected implements ContractRejected {
+public class DefaultContractCancelledDefinitively implements ContractCancelledDefinitively {
 
   private final RetrieveContractById retrieveContractById;
-  private final HandleRentProcessNews handleRentProcessNews;
   private final ObjectMapper mapper;
+  private final HandleRentNews handleRentNews;
 
-  public DefaultContractRejected(RetrieveContractById retrieveContractById,
-      HandleRentProcessNews handleRentProcessNews, ObjectMapper mapper) {
+  public DefaultContractCancelledDefinitively(RetrieveContractById retrieveContractById,
+      HandleRentNews handleRentNews, ObjectMapper mapper) {
     this.retrieveContractById = retrieveContractById;
-    this.handleRentProcessNews = handleRentProcessNews;
+    this.handleRentNews = handleRentNews;
     this.mapper = mapper;
   }
 
   public void accept(ContractEvent contractEvent) {
+
     Long rentProcessId = retrieveContractById.apply(contractEvent.getContractId()).get()
         .getRentProcessId();
 
-    handleRentProcessNews.accept(
-        HandleRentProcessNews.Model.builder()
-            .rentProcessId(rentProcessId)
-            .status(RentProcessStatus.REJECTED).build());
+    handleRentNews.accept(
+        HandleRentNews.Model.builder().status(RentStatus.CANCELLED)
+            .rentProcessId(rentProcessId).build());
   }
 
   @Override

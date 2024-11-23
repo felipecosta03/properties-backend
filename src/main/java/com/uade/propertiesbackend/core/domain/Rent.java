@@ -1,5 +1,6 @@
 package com.uade.propertiesbackend.core.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,7 +25,7 @@ public class Rent {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   private RentProcess rentProcess;
 
   @Enumerated(EnumType.STRING)

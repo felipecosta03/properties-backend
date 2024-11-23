@@ -2,7 +2,6 @@ package com.uade.propertiesbackend.router.favorite;
 
 import static com.uade.propertiesbackend.util.SecurityUtils.getUserId;
 
-import com.uade.propertiesbackend.core.domain.dto.PropertyDto;
 import com.uade.propertiesbackend.core.usecase.AddFavoriteProperty;
 import com.uade.propertiesbackend.router.exception.ApiError;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,8 +13,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

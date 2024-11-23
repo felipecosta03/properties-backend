@@ -6,9 +6,11 @@ import lombok.Value;
 
 @FunctionalInterface
 public interface PropertyIsDisable extends Predicate<PropertyIsDisable.Model> {
+
   @Value
   @Builder
   class Model {
+
     Long propertyId;
     Long propertyUserId;
     Long userId;

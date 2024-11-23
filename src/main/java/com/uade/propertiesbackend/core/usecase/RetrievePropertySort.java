@@ -5,4 +5,6 @@ import java.util.function.Function;
 import org.springframework.data.domain.Sort;
 
 @FunctionalInterface
-public interface RetrievePropertySort extends Function<PropertySortBy, Sort> { }
+public interface RetrievePropertySort extends Function<PropertySortBy, Sort> {
+
+}

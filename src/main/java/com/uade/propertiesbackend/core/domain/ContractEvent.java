@@ -1,16 +1,20 @@
 package com.uade.propertiesbackend.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 @Builder
 @Getter
-@AllArgsConstructor
+
 public class ContractEvent {
 
-  @JsonProperty("rent_process_id")
-  private String rentProcessId;
+  @JsonProperty("contractId")
+  private String contractId;
 
+  @JsonCreator
+  public ContractEvent(@JsonProperty("contractId") String contractId) {
+    this.contractId = contractId;
+  }
 }

@@ -6,6 +6,7 @@ import lombok.Value;
 @Value
 @Builder
 public class PropertyParametersDTO {
-    Long propertyId;
-    Long userId;
+
+  Long propertyId;
+  Long userId;
 }

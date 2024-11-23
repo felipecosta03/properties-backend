@@ -23,13 +23,14 @@ public class HandleRentProcessNewsRouter {
   public HandleRentProcessNewsRouter(HandleRentProcessNews handleRentProcessNews) {
     this.handleRentProcessNews = handleRentProcessNews;
   }
+
   @Operation(summary = "Handle rent process news")
   @ApiResponses(value = {
-          @ApiResponse(responseCode = "200", description = "Rent status updated"),
-          @ApiResponse(responseCode = "400", description = "Bad request", content = {
-                  @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
-          @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
-                  @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
+      @ApiResponse(responseCode = "200", description = "Rent status updated"),
+      @ApiResponse(responseCode = "400", description = "Bad request", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))}),
+      @ApiResponse(responseCode = "424", description = "Failed dependency", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})})
   @PostMapping("/rent-process/news")
   public ResponseEntity<Void> handleRentProcessNews(
       @RequestBody final RentProcessNews rentProcessNews) {

@@ -12,6 +12,7 @@ public interface HandleRentNews extends Consumer<HandleRentNews.Model> {
   @Getter
   class Model {
 
+    private Long rentProcessId;
     private Long rentId;
     private RentStatus status;
   }

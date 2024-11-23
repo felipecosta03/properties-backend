@@ -1,7 +1,6 @@
 package com.uade.propertiesbackend.router.sqs.publisher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.uade.propertiesbackend.core.domain.RentProcess;
 import com.uade.propertiesbackend.router.request.RentProcessNews;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

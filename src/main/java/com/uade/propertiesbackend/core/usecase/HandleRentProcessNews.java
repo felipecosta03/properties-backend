@@ -11,6 +11,7 @@ public interface HandleRentProcessNews extends Consumer<HandleRentProcessNews.Mo
   @Builder
   @Getter
   class Model {
+
     private Long rentProcessId;
     private RentProcessStatus status;
   }

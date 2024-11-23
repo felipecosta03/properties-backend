@@ -10,9 +10,11 @@ import lombok.Data;
 
 @FunctionalInterface
 public interface PartialUpdateProperty extends Function<PartialUpdateProperty.Model, PropertyDto> {
+
   @Data
   @Builder
   class Model {
+
     private Long id;
     private Optional<Integer> beds;
     private Optional<Integer> bathrooms;

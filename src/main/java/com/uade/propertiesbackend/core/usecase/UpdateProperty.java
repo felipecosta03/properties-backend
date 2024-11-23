@@ -13,6 +13,7 @@ public interface UpdateProperty extends Function<UpdateProperty.Model, PropertyD
   @Data
   @Builder
   class Model {
+
     private Long id;
     private Integer beds;
     private Integer bathrooms;

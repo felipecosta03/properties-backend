@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class Property {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
