@@ -70,7 +70,7 @@ public class DefaultCreateRentProcess implements CreateRentProcess {
         .tenantId(rentProcess.getTenantId()).dateCreated(rentProcess.getDateCreated())
         .landLordId(rentProcess.getProperty().getUserId())
         .status(rentProcess.getStatus()).property(rentProcess.getProperty())
-        .build();
+        .propertyId(rentProcess.getProperty().getId()).build();
   }
 
   private void validateModel(Model model) {

@@ -20,6 +20,8 @@ public class RentProcessNews {
   private RentProcessStatus status;
   private Long tenantId;
   private Long landLordId;
+  private Long propertyId;
   private Property property;
+
   private LocalDateTime dateCreated;
 }
