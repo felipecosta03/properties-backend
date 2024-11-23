@@ -11,9 +11,12 @@ import com.uade.propertiesbackend.core.usecase.HasPropertyCurrentRent;
 import com.uade.propertiesbackend.repository.PropertyRepository;
 import com.uade.propertiesbackend.repository.RentProcessRepository;
 import com.uade.propertiesbackend.router.sqs.publisher.PropertyUpdatedPublisher;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@Transactional
 public class DefaultHandleRentProcessNews implements HandleRentProcessNews {
 
 
@@ -40,7 +43,7 @@ public class DefaultHandleRentProcessNews implements HandleRentProcessNews {
 
     RentProcess rentProcess = rentProcessRepository.findById(model.getRentProcessId())
         .orElseThrow(() -> new BadRequestException("Rent process does not exist"));
-
+    Hibernate.initialize(rentProcess.getProperty());
     if (RentProcessStatus.SUCCESS.equals(rentProcess.getStatus())) {
       throw new BadRequestException("Rent process already finished");
     }

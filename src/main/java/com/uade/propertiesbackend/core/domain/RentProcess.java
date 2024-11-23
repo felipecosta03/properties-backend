@@ -5,6 +5,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -13,6 +14,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @AllArgsConstructor
@@ -24,7 +27,8 @@ public class RentProcess {
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.JOIN)
   private Property property;
   @Enumerated(EnumType.STRING)
   private RentProcessStatus status;

@@ -26,7 +26,7 @@ public class Subscriber {
     this.objectMapper = objectMapper;
   }
 
-  @Scheduled(fixedDelay = 5000)
+  @Scheduled(fixedDelay = 100)
   public void consumeMessages() {
     try {
       String queueUrl = amazonSQSClient.getQueueUrl("inmuebles").getQueueUrl();
@@ -36,14 +36,21 @@ public class Subscriber {
               .withMaxNumberOfMessages(10));
 
       if (!receiveMessageResult.getMessages().isEmpty()) {
-        Message message = receiveMessageResult.getMessages().get(0);
-        Map<String, Object> event = objectMapper.readValue(message.getBody(), Map.class);
-        log.info("Message: {}", event);
-        retrieveConsumerStrategy.accept(RetrieveConsumerStrategy.Model.builder()
-            .detailEvent(event.get("detail-type").toString())
-            .detail(objectMapper.writeValueAsString(event.get("detail"))).build());
+        for (Message message : receiveMessageResult.getMessages()) {
+          try {
+            Map<String, Object> event = objectMapper.readValue(message.getBody(), Map.class);
+            log.info("Message: {}", event);
+            retrieveConsumerStrategy.accept(RetrieveConsumerStrategy.Model.builder()
+                .detailEvent(event.get("detail-type").toString())
+                .detail(objectMapper.writeValueAsString(event.get("detail"))).build());
 
-        amazonSQSClient.deleteMessage(queueUrl, message.getReceiptHandle());
+            amazonSQSClient.deleteMessage(queueUrl, message.getReceiptHandle());
+          } catch (Exception e) {
+            log.error("Error processing message: {}", e.getMessage());
+          }
+
+        }
+
       }
 
     } catch (Exception e) {
