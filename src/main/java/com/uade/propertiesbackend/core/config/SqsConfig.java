@@ -30,13 +30,5 @@ public class SqsConfig {
         .withRegion(Regions.US_EAST_1).build();
   }
 
-  @Bean
-  public ObjectMapper objectMapper() {
-    ObjectMapper mapper = new ObjectMapper().configure(
-        DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    mapper.registerModule(new JavaTimeModule());
-    return mapper;
-  }
-
 
 }

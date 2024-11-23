@@ -35,7 +35,7 @@ jobs:
         run: sudo docker rm -f smartmovecontainer
 
       - name: Remove old image
-        run: sudo docker image prune -a -f --volumes
+        run: sudo docker image prune -a -f
 
       - name: Pull Image from docker hub
         run: sudo docker pull joubina/smartmoveback:latest

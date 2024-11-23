@@ -17,11 +17,15 @@ import lombok.NoArgsConstructor;
 public class PropertyRequest {
 
   @NotNull
-  @Min(value = 1, message = "Beds must be greater than 0")
-  private Integer beds;
+  @Positive
+  @JsonProperty("surface_total")
+  private Double surfaceTotal;
   @NotNull
   @Min(value = 1, message = "Bathrooms must be greater than 0")
   private Integer bathrooms;
+  @NotNull
+  @Min(value = 1, message = "Beds must be greater than 0")
+  private Integer beds;
   @NotBlank
   private String district;
   @NotNull
@@ -31,10 +35,7 @@ public class PropertyRequest {
   @Positive
   @JsonProperty("surface_covered")
   private Double surfaceCovered;
-  @NotNull
-  @Positive
-  @JsonProperty("surface_total")
-  private Double surfaceTotal;
+
   @NotBlank
   private String title;
   @NotBlank
