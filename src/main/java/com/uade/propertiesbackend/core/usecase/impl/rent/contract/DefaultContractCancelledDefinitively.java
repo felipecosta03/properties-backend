@@ -29,7 +29,7 @@ public class DefaultContractCancelledDefinitively implements ContractCancelledDe
         .getRentProcessId();
 
     handleRentNews.accept(
-        HandleRentNews.Model.builder().status(RentStatus.CANCELLED)
+        HandleRentNews.Model.builder().status(RentStatus.PENDING_CANCELLED)
             .rentProcessId(rentProcessId).build());
   }
 

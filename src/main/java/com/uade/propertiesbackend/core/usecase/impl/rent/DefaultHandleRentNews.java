@@ -9,11 +9,14 @@ import com.uade.propertiesbackend.core.exception.BadRequestException;
 import com.uade.propertiesbackend.core.usecase.HandleRentNews;
 import com.uade.propertiesbackend.repository.RentRepository;
 import java.time.OffsetDateTime;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DefaultHandleRentNews implements HandleRentNews {
 
+  private static final List<RentStatus> CANCELLED_STATUSES = List.of(RentStatus.CANCELLED,
+      RentStatus.PENDING_CANCELLED);
   private final RentRepository rentRepository;
 
   public DefaultHandleRentNews(RentRepository rentRepository) {
@@ -34,8 +37,9 @@ public class DefaultHandleRentNews implements HandleRentNews {
 
     rent.setStatus(model.getStatus());
     rent.setLastUpdatedDate(OffsetDateTime.now());
-    if (model.getStatus().equals(RentStatus.CANCELLED)) {
+    if (CANCELLED_STATUSES.contains(model.getStatus())) {
       rent.getRentProcess().setStatus(RentProcessStatus.REJECTED);
+      rent.getRentProcess().getProperty().setActive(true);
     }
     rentRepository.save(rent);
   }
