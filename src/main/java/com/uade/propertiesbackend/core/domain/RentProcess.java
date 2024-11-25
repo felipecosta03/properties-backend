@@ -2,6 +2,7 @@ package com.uade.propertiesbackend.core.domain;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -27,7 +28,7 @@ public class RentProcess {
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @Fetch(FetchMode.JOIN)
   private Property property;
   @Enumerated(EnumType.STRING)
