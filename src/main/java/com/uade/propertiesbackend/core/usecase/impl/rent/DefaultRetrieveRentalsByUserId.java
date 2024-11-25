@@ -51,8 +51,17 @@ public class DefaultRetrieveRentalsByUserId implements RetrieveRentalsByUserId {
 
     }
 
+    rentProcesses = filterRentProcesses(rentals, rentProcesses);
+
     return RentalsDto.builder().rentals(rentals.stream().map(this::toRentDto).toList())
         .rentProcesses(rentProcesses.stream().map(this::toRentProcessDto).toList()).build();
+  }
+
+  private List<RentProcess> filterRentProcesses(List<Rent> rents, List<RentProcess> rentProcesses) {
+    return rentProcesses.stream()
+        .filter(rentProcess -> rents.stream().noneMatch(rent -> rent.getRentProcess().getId()
+            .equals(rentProcess.getId()))).toList();
+
   }
 
   private void validateModel(Model model) {
