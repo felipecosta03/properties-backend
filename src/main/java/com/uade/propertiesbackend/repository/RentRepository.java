@@ -17,7 +17,7 @@ public interface RentRepository extends JpaRepository<Rent, Long> {
   @Query("SELECT r FROM Rent r WHERE r.rentProcess.property.userId = :ownerId")
   List<Rent> getRentalsByOwnerId(Long ownerId);
 
-  @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM Rent r WHERE r.rentProcess.property.id = :propertyId AND r.status <> 'CANCELLED'")
+  @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM Rent r WHERE r.rentProcess.property.id = :propertyId AND (r.status <> 'PENDING_CANCELLED' and r.status <> 'CANCELLED')")
   boolean existsByPropertyId(Long propertyId);
 
   @Query("SELECT r FROM Rent r WHERE r.rentProcess.id = :rentProcessId")
